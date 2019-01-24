@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".register.RegisterActivity"
-    android:background="@mipmap/Bitmap"
+    android:background="@mipmap/bitmap"
     android:orientation="vertical"
     >
     <!--昵称-->
@@ -56,7 +56,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="性别"
+            android:hint="@string/xb"
             android:textColorHint="#ffffff"
             android:textSize="16sp"
             android:textColor="#ffffff"
@@ -88,7 +88,7 @@
             android:id="@+id/reg_txt_dte"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="出生日期"
+            android:hint="@string/date"
             android:textColorHint="#ffffff"
             android:textSize="16sp"
             android:textColor="#ffffff"
@@ -144,8 +144,8 @@
         android:layout_gravity="center_horizontal"
         >
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
             android:background="@mipmap/register_icon_mail_default"
             />
         <EditText
