@@ -48,8 +48,8 @@ public class MyPresenter {
      * @param clazz
      * @param map
      */
-    public void onPostFormBodyDatas(String url, Class clazz, Map<String, String> map) {
-        mMyModel.onPostFormData(url, clazz, map, new MyCallback() {
+    public void onPostFormBodyDatas(String url, Map<String, String> map,Class clazz) {
+        mMyModel.onPostFormData(url,map, clazz, new MyCallback() {
             @Override
             public void onSuccess(Object data) {
                 mMyView.onMySuccess(data);
@@ -62,6 +62,13 @@ public class MyPresenter {
         });
     }
 
+    /**
+     * 普通post请求
+     *
+     * @param url
+     * @param clazz
+     * @param map
+     */
     public void onPostDatas(String url, Class clazz, Map<String, String> map) {
         mMyModel.onPost(url, clazz, map, new MyCallback() {
             @Override
@@ -74,5 +81,15 @@ public class MyPresenter {
                 mMyView.onMyFailed(error);
             }
         });
+    }
+
+    //解绑
+    public void onDecathed() {
+        if (mMyModel != null) {
+            mMyModel = null;
+        }
+        if (mMyView != null) {
+            mMyView = null;
+        }
     }
 }

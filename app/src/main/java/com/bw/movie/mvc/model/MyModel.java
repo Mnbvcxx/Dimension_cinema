@@ -56,7 +56,7 @@ public class MyModel {
      * @param map
      * @param callback
      */
-    public void onPostFormData(String url, final Class clazz, Map<String,String> map, final MyCallback callback){
+    public void onPostFormData(String url,Map<String,String> map, final Class clazz,  final MyCallback callback){
         Map<String, RequestBody> bodyMap = RetrofitManager.getInstance().generateRequestBody(map);
         RetrofitManager.getInstance().postFormBody(url, bodyMap, new RetrofitManager.HttpListener() {
             @Override

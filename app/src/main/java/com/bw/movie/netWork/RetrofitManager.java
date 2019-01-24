@@ -24,6 +24,13 @@ import rx.schedulers.Schedulers;
  */
 public class RetrofitManager {
 
+
+
+    /**
+     * 内网环境：172.17.8.100
+     *
+     * 外网环境：mobile.bwstudent.com
+     */
     private final String BASE_URL = "http://mobile.bwstudent.com/";
 
     private static RetrofitManager manager;
