@@ -176,8 +176,7 @@ public class RegisterActivity extends BaseActivity {
             map.put(UserApis.REG_KEY_EMAIL, email);
             map.put(UserApis.REG_KEY_PWD2,encrypt_pwd);
             doPost(Apis.REGISTER_URL, map, RegisterBean.class);
-        Log.i("TAG",map+"");
-        //}
+
     }
 
     /**
