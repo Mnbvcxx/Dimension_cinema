@@ -17,6 +17,7 @@ import com.bw.movie.base.BaseActivity;
 import com.bw.movie.netWork.RetrofitManager;
 import com.bw.movie.register.bean.RegisterBean;
 import com.bw.movie.utils.EncryptUtil;
+import com.bw.movie.utils.ToastUtil;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -45,12 +46,7 @@ public class RegisterActivity extends BaseActivity {
     EditText mRegTxtPwd;
     @BindView(R.id.reg_button)
     Button mRegButton;
-    private String mInput_nick;
-    private String mInput_dte;
-    private String mInput_pho;
-    private String mInput_eml;
-    private String mInput_pwd;
-    private String mInput_sex;
+
 
     @Override
     protected int getLayoutId() {
@@ -65,13 +61,7 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        //获取输入的数据
-        mInput_nick = mRegTxtNick.getText().toString();
-        mInput_sex = mRegTxtSex.getText().toString();
-        mInput_dte = mRegTxtDte.getText().toString();
-        mInput_pho = mRegTxtPho.getText().toString();
-        mInput_eml = mRegTxtEml.getText().toString();
-        mInput_pwd = mRegTxtPwd.getText().toString();
+
 
         //日期第三方
         mRegTxtDte.setOnTouchListener(new View.OnTouchListener() {
@@ -96,24 +86,21 @@ public class RegisterActivity extends BaseActivity {
         });
 
 
-
-
     }
 
+    //第三方控件  日期格式
     protected void showDatePickDlg() {
         Calendar calendar = Calendar.getInstance();
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                RegisterActivity.this.mRegTxtDte.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
+                RegisterActivity.this.mRegTxtDte.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
 
     }
-
-
 
 
     /**
@@ -125,68 +112,71 @@ public class RegisterActivity extends BaseActivity {
     }
 
 
-
-
     @OnClick(R.id.reg_button)
     public void onClick(View v) {
         switch (v.getId()) {
             default:
                 break;
             case R.id.reg_button:
+                ToastUtil.showToast("点击了______________");
                 initButton();
                 break;
         }
     }
 
     private void initButton() {
-
+        //获取输入的数据
+        String name = mRegTxtNick.getText().toString().trim();
+        String sex = mRegTxtSex.getText().toString().trim();
+        String date = mRegTxtDte.getText().toString().trim();
+        String phone = mRegTxtPho.getText().toString().trim();
+        String email = mRegTxtEml.getText().toString().trim();
+        String pwd = mRegTxtPwd.getText().toString().trim();
         //判断昵称
-        if (TextUtils.isEmpty(mInput_nick.trim())){
+        if (TextUtils.isEmpty(name)) {
             Toast.makeText(this, "输入的昵称不能为空", Toast.LENGTH_SHORT).show();
         }
         //判断性别
-        if (!mInput_sex.matches("男")||!mInput_sex.matches("女")){
+        if (TextUtils.isEmpty(sex)) {
             Toast.makeText(this, "请正确输入性别为“男”或“女”", Toast.LENGTH_SHORT).show();
         }
         //手机号
-        String REGEX="[1][3458]\\d{9}";
-        if (!mInput_pho.matches(REGEX)){
+        String REGEX = "[1][3458]\\d{9}";
+        if (TextUtils.isEmpty(phone) || !phone.matches(REGEX)) {
             Toast.makeText(this, "请正确输入手机号格式", Toast.LENGTH_SHORT).show();
         }
         //邮箱
-        String EMAIL="^[A-Za-z0-9][\\w\\._]*[a-zA-Z0-9]+@[A-Za-z0-9-_]+\\.([A-Za-z]{2,4})";
-        if (!mInput_eml.matches(EMAIL)){
+        String EMAIL = "^[A-Za-z0-9][\\w\\._]*[a-zA-Z0-9]+@[A-Za-z0-9-_]+\\.([A-Za-z]{2,4})";
+        if (TextUtils.isEmpty(email) || !email.matches(EMAIL)) {
             Toast.makeText(this, "请正确输入邮箱格式", Toast.LENGTH_SHORT).show();
         }
-        //登录密码
-        String PASSWORD="/^[A-Za-z]+[0-9]+[A-Za-z0-9]*|[0-9]+[A-Za-z]+[A-Za-z0-9]*$/g";
-        if (!mInput_pwd.matches(PASSWORD)){
-            Toast.makeText(this, "密码必须由6-16个英文字母和数字的字符串组成！", Toast.LENGTH_SHORT).show();
+
+        if (TextUtils.isEmpty(pwd)) {
+            Toast.makeText(this, "密码最低由六位数字组成！", Toast.LENGTH_SHORT).show();
         }
         //网络请求
-        if (!TextUtils.isEmpty(mInput_nick.trim())
-                &&mInput_sex.matches("男")||mInput_sex.matches("女")
-                &&mInput_pho.matches(REGEX)&&mInput_eml.matches(EMAIL)
-                &&mInput_pwd.matches(PASSWORD)){
+        if (TextUtils.isEmpty(name)
+                && sex.matches("男") || sex.matches("女")
+                && phone.matches(REGEX) && email.matches(EMAIL)
+                && phone.matches(pwd)) {
             //改变男女为1/2
-            if (mInput_sex.matches("男")){
-                mRegTxtSex.setText(1+"");
-            }else if (mInput_sex.matches("女")){
-                mRegTxtSex.setText(2+"");
+            if (sex.matches("男")) {
+                mRegTxtSex.setText(1 + "");
+            } else if (sex.matches("女")) {
+                mRegTxtSex.setText(2 + "");
             }
             //密码加密
-            String encrypt_pwd = EncryptUtil.encrypt(mInput_pwd);
+            String encrypt_pwd = EncryptUtil.encrypt(phone);
 
             HashMap<String, String> map = new HashMap<>();
-            map.put(UserApis.REG_KEY_nickName,mInput_nick);
-            map.put(UserApis.LOGIN_KEY_PHONE,mInput_pho);
-            map.put(UserApis.LOGIN_KEY_PWD,encrypt_pwd);
-            map.put(UserApis.REG_KEY_SEX,mInput_sex);
-            map.put(UserApis.REG_KEY_BIRTHDAY,mInput_dte);
-            map.put(UserApis.REG_KEY_EMAIL,mInput_eml);
-            doPostFormBodyDatas(Apis.REGISTER_URL,map,RegisterBean.class);
+            map.put(UserApis.REG_KEY_NICKNAME, name);
+            map.put(UserApis.LOGIN_KEY_PHONE, phone);
+            map.put(UserApis.LOGIN_KEY_PWD, encrypt_pwd);
+            map.put(UserApis.REG_KEY_SEX, sex);
+            map.put(UserApis.REG_KEY_BIRTHDAY, date);
+            map.put(UserApis.REG_KEY_EMAIL, email);
+            doPostFormBodyDatas(Apis.REGISTER_URL, map, RegisterBean.class);
         }
-
     }
 
     /**
@@ -196,15 +186,14 @@ public class RegisterActivity extends BaseActivity {
      */
     @Override
     protected void netSuccess(Object object) {
-            if (object instanceof RegisterBean){
-                RegisterBean registerBean=(RegisterBean)object;
-                if (registerBean.getMessage().equals("注册成功")){
-                    Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(this, registerBean.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+        if (object instanceof RegisterBean) {
+            RegisterBean registerBean = (RegisterBean) object;
+            if (registerBean.getStatus().equals("0000")) {
+                ToastUtil.showToast(registerBean.getMessage());
+            } else {
+                ToastUtil.showToast(registerBean.getMessage());
             }
+        }
     }
-
 
 }
