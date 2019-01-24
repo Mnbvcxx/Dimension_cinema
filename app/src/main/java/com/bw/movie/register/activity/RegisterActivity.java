@@ -11,7 +11,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+import com.bw.movie.apis.Apis;
+import com.bw.movie.apis.UserApis;
 import com.bw.movie.base.BaseActivity;
+import com.bw.movie.netWork.RetrofitManager;
+import com.bw.movie.register.bean.RegisterBean;
+import com.bw.movie.utils.EncryptUtil;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -109,15 +114,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
 
-    /**
-     * 网络请求成功
-     *
-     * @param object
-     */
-    @Override
-    protected void netSuccess(Object object) {
 
-    }
 
     /**
      * @param s
@@ -173,13 +170,41 @@ public class RegisterActivity extends BaseActivity {
                 &&mInput_pwd.matches(PASSWORD)){
             //改变男女为1/2
             if (mInput_sex.matches("男")){
-
+                mRegTxtSex.setText(1+"");
+            }else if (mInput_sex.matches("女")){
+                mRegTxtSex.setText(2+"");
             }
+            //密码加密
+            String encrypt_pwd = EncryptUtil.encrypt(mInput_pwd);
 
             HashMap<String, String> map = new HashMap<>();
-            map.put("nickName",mInput_nick);
-
+            map.put(UserApis.REG_KEY_nickName,mInput_nick);
+            map.put(UserApis.LOGIN_KEY_PHONE,mInput_pho);
+            map.put(UserApis.LOGIN_KEY_PWD,encrypt_pwd);
+            map.put(UserApis.REG_KEY_SEX,mInput_sex);
+            map.put(UserApis.REG_KEY_BIRTHDAY,mInput_dte);
+            map.put(UserApis.REG_KEY_EMAIL,mInput_eml);
+            doPostFormBodyDatas(Apis.REGISTER_URL,map,RegisterBean.class);
         }
 
     }
+
+    /**
+     * 网络请求成功
+     *
+     * @param object
+     */
+    @Override
+    protected void netSuccess(Object object) {
+            if (object instanceof RegisterBean){
+                RegisterBean registerBean=(RegisterBean)object;
+                if (registerBean.getMessage().equals("注册成功")){
+                    Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(this, registerBean.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+    }
+
+
 }
