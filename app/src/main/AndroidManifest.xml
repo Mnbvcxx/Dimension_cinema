@@ -24,25 +24,19 @@
         android:theme="@style/AppTheme">
 
         <!-- 主界面 -->
-        <activity android:name=".MainActivity">
-
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
-        </activity>
+        <activity android:name=".MainActivity"/>
         <!-- 引导页 -->
-        <activity android:name=".guideView.GuideViewActivity">
+        <activity android:name=".guideView.activity.GuideViewActivity"/>
+        <activity android:name=".register.RegisterActivity" />
+        <!-- 起始页 -->
+        <activity android:name=".homepage.HomePageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".register.RegisterActivity"></activity>
+        <activity android:name=".login.LoginActivity"/>
     </application>
 
 </manifest>

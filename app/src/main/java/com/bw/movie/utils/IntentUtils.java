@@ -24,7 +24,7 @@ public class IntentUtils {
      * @param cls
      *            泛型
      */
-    private void intent(Context fromContext, Class<?> cls) {
+    public void intent(Context fromContext, Class<?> cls) {
         Intent intent = new Intent(fromContext, cls);
         fromContext.startActivity(intent);
     }

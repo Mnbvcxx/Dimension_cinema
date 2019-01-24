@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_page_id"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/rectangle_26"
+    tools:context=".homepage.HomePageActivity">
+
+
+    <!-- 起始页 -->
+    <TextView
+        android:id="@+id/home_page_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/home_page_desc"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp_24"
+        android:text="@string/app_name"
+        android:textColor="@color/colorfff"
+        android:textSize="@dimen/sp_20" />
+
+    <TextView
+        android:id="@+id/home_page_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp_98"
+        android:text="一场不一样的视觉盛宴"
+        android:textColor="@color/colorfff"
+        android:textSize="@dimen/sp_14" />
+
+</RelativeLayout>

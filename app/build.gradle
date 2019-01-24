@@ -55,4 +55,6 @@ dependencies {
     implementation "io.reactivex:rxjava:$rootProject.rxjava"
     implementation "com.hwangjr.rxbus:rxbus:$rootProject.rxbus"
     implementation "com.squareup.retrofit2:adapter-rxjava:$rootProject.adapterRxjava"
+//轮播图  指示器依赖
+    implementation 'com.github.LinweiJ:ViewPagerIndicator:0.1.0'
 }
