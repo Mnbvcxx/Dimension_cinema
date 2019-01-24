@@ -90,7 +90,7 @@ public class MyModel {
      * @param map
      * @param callback
      */
-    public void onPost(String url, final Class clazz, Map<String,String> map, final MyCallback callback){
+    public void onPost(String url, Map<String,String> map, final Class clazz, final MyCallback callback){
         RetrofitManager.getInstance().post(url, map, new RetrofitManager.HttpListener() {
             @Override
             public void onSuccess(String data) {

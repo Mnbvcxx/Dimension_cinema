@@ -1,7 +1,6 @@
 package com.bw.movie.login;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,9 +8,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bw.movie.R;
+import com.bw.movie.apis.Apis;
+import com.bw.movie.apis.UserApis;
 import com.bw.movie.base.BaseActivity;
+import com.bw.movie.login.bean.LoginBean;
 import com.bw.movie.register.activity.RegisterActivity;
+import com.bw.movie.utils.EncryptUtil;
 import com.bw.movie.utils.IntentUtils;
+import com.bw.movie.utils.ToastUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,7 +54,12 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void netSuccess(Object object) {
-
+        if (object instanceof LoginBean) {
+            LoginBean loginBean = (LoginBean) object;
+            if (loginBean.getStatus().equals("0000")) {
+                ToastUtil.showToast(loginBean.getMessage());
+            }
+        }
     }
 
     @Override
@@ -65,10 +77,16 @@ public class LoginActivity extends BaseActivity {
             case R.id.login_pwd:
                 break;
             case R.id.login_reg:
-                IntentUtils.getInstence().intent(this,RegisterActivity.class);
-
+                IntentUtils.getInstence().intent(this, RegisterActivity.class);
                 break;
             case R.id.login_btn_go:
+                String phone = mLoginPhone.getText().toString().trim();
+                String pwd = mLoginPwd.getText().toString().trim();
+                String encrypt = EncryptUtil.encrypt(pwd);
+                Map<String, String> map = new HashMap<>();
+                map.put(UserApis.LOGIN_KEY_PHONE, phone);
+                map.put(UserApis.LOGIN_KEY_PWD, encrypt);
+                doPost(Apis.LOGIN_URL, map, LoginBean.class);
                 break;
             case R.id.login_wx:
                 break;

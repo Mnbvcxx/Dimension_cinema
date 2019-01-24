@@ -61,6 +61,18 @@ public abstract class BaseActivity extends AppCompatActivity implements MyView {
     }
 
     /**
+     * presenter层回调方法Post请求
+     * @param url
+     * @param map
+     * @param clazz
+     */
+    protected void doPost(String url, Map<String, String> map, Class clazz) {
+        if (mMyPresenter != null) {
+            mMyPresenter.onPostDatas(url, map, clazz);
+        }
+    }
+
+    /**
      * presenter层回调方法Get请求
      * @param url
      * @param clazz

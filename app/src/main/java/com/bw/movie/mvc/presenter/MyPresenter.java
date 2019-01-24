@@ -69,8 +69,8 @@ public class MyPresenter {
      * @param clazz
      * @param map
      */
-    public void onPostDatas(String url, Class clazz, Map<String, String> map) {
-        mMyModel.onPost(url, clazz, map, new MyCallback() {
+    public void onPostDatas(String url, Map<String, String> map, Class clazz) {
+        mMyModel.onPost(url, map,clazz,  new MyCallback() {
             @Override
             public void onSuccess(Object data) {
                 mMyView.onMySuccess(data);

@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.bw.movie.R;
 import com.bw.movie.base.BaseActivity;
@@ -16,7 +13,6 @@ import com.bw.movie.guideView.fragment.FragmentFirst;
 import com.bw.movie.guideView.fragment.FragmentFourth;
 import com.bw.movie.guideView.fragment.FragmentThe;
 import com.bw.movie.guideView.fragment.FragmentThird;
-import com.bw.movie.homepage.HomePageActivity;
 import com.bw.movie.login.LoginActivity;
 import com.bw.movie.utils.IntentUtils;
 
@@ -34,6 +30,8 @@ public class GuideViewActivity extends BaseActivity {
     @BindView(R.id.guide_vp)
     ViewPager mViewPager;
     private List<Fragment> mFragments;
+    private SharedPreferences ps;
+    private boolean isFirst;
 
     @Override
     protected int getLayoutId() {
@@ -47,6 +45,9 @@ public class GuideViewActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        //设置SharedPreferences 判断 是否第一次登陆
+        ps = getSharedPreferences("config", MODE_PRIVATE);
+        isFirst = ps.getBoolean("isFirst", false);
         mFragments = new ArrayList<>();
         mFragments.add(new FragmentFirst());
         mFragments.add(new FragmentThe());
@@ -70,9 +71,9 @@ public class GuideViewActivity extends BaseActivity {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            //进行跳转操作
-                            IntentUtils.getInstence().intent(GuideViewActivity.this, LoginActivity.class);
-                            finish();
+                            //进行跳转操作,如果是第一次进入,将在引导页结束后进行跳转
+                            ps.edit().putBoolean("isFirst", true).commit();
+                            onIntent();
                         }
                     }, 1000); //在欢迎界面停留1秒钟
 
@@ -84,6 +85,19 @@ public class GuideViewActivity extends BaseActivity {
 
             }
         });
+
+        /**
+         * 如果是第一次登陆的话 直接跳转到首页
+         */
+        if (isFirst) {
+            onIntent();
+        }
+    }
+
+    //跳转
+    private void onIntent() {
+        IntentUtils.getInstence().intent(GuideViewActivity.this, LoginActivity.class);
+        finish();
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.bw.movie.apis;
 
 /**
  * @author: pengbo
- * @date:2019/1/24 desc:网络请求
+ * @date:2019/1/24 desc:访问URL接口
  */
 public class Apis {
     //注册
