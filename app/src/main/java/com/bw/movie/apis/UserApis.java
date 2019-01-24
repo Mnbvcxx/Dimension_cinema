@@ -17,6 +17,7 @@ public class UserApis {
     public static final String REG_KEY_SEX = "sex";
     public static final String REG_KEY_BIRTHDAY = "birthday";
     public static final String REG_KEY_EMAIL = "email";
+    public static final String REG_KEY_PWD2 = "pwd2";
 
     /**
      * 登录所需参数

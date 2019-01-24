@@ -48,8 +48,6 @@ public class RegisterActivity extends BaseActivity {
     EditText mRegTxtPwd;
     @BindView(R.id.reg_button)
     Button mRegButton;
-    private String mNewmonthOfYear;
-    private String mNewdayOfMonth;
 
 
     @Override
@@ -99,12 +97,6 @@ public class RegisterActivity extends BaseActivity {
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//                if (monthOfYear<2){
-//                    mNewmonthOfYear = "0" + monthOfYear;
-//                }
-//                if (dayOfMonth<2){
-//                    mNewdayOfMonth = "0" + dayOfMonth;
-//                }
                 RegisterActivity.this.mRegTxtDte.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
@@ -166,12 +158,6 @@ public class RegisterActivity extends BaseActivity {
             Toast.makeText(this, "密码最低由六位数字组成！", Toast.LENGTH_SHORT).show();
         }
 
-        //网络请求
-//        if (!TextUtils.isEmpty(name)
-//                && (sex.matches("男") || sex.matches("女"))
-//                && phone.matches(REGEX) && email.matches(EMAIL)
-//                && phone.matches(pwd)) {
-
             //改变男女为1/2
             if (sex.matches("男")) {
                 sex=1+"";
@@ -183,15 +169,14 @@ public class RegisterActivity extends BaseActivity {
 
             Map<String, String> map = new HashMap<>();
             map.put(UserApis.REG_KEY_NICKNAME, name);
-            map.put(UserApis.LOGIN_KEY_PHONE, phone);
-            map.put(UserApis.LOGIN_KEY_PWD, encrypt_pwd);
+            map.put(UserApis.REG_KEY_PHONE, phone);
+            map.put(UserApis.REG_KEY_PWD, encrypt_pwd);
             map.put(UserApis.REG_KEY_SEX, sex);
             map.put(UserApis.REG_KEY_BIRTHDAY, date);
             map.put(UserApis.REG_KEY_EMAIL, email);
+            map.put(UserApis.REG_KEY_PWD2,encrypt_pwd);
+            doPost(Apis.REGISTER_URL, map, RegisterBean.class);
 
-            doPostFormBodyDatas(Apis.REGISTER_URL, map, RegisterBean.class);
-        Log.i("TAG",map+"");
-        //}
     }
 
     /**
@@ -202,14 +187,14 @@ public class RegisterActivity extends BaseActivity {
     @Override
     protected void netSuccess(Object object) {
         if (object instanceof RegisterBean) {
-            Toast.makeText(this, "爱上对方过后", Toast.LENGTH_SHORT).show();
             RegisterBean registerBean = (RegisterBean) object;
             if (registerBean.getStatus().equals("0000")) {
-                //ToastUtil.showToast(registerBean.getMessage());
-                Toast.makeText(this, "要走吧", Toast.LENGTH_SHORT).show();
+                ToastUtil.showToast(registerBean.getMessage());
+
+
             } else {
-                //ToastUtil.showToast(registerBean.getMessage());
-                Toast.makeText(this, registerBean.getMessage(), Toast.LENGTH_SHORT).show();
+                ToastUtil.showToast(registerBean.getMessage());
+
             }
         }
     }
