@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-	<dimen name="activity_horizontal_margin">36.0444dp</dimen>
-	<dimen name="activity_vertical_margin">36.0444dp</dimen>
-	<dimen name="card_bottom_info_height">337.9167dp</dimen>
-	<dimen name="card_extra_height">45.0556dp</dimen>
 	<dimen name="common_margin">@dimen/dp_15</dimen>
 	<dimen name="dp_m_60">-135.1667dp</dimen>
 	<dimen name="dp_m_30">-67.5833dp</dimen>
