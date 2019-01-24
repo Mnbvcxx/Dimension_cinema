@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.bw.movie.R;
 import com.bw.movie.base.BaseActivity;
+import com.bw.movie.register.activity.RegisterActivity;
+import com.bw.movie.utils.IntentUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,6 +65,8 @@ public class LoginActivity extends BaseActivity {
             case R.id.login_pwd:
                 break;
             case R.id.login_reg:
+                IntentUtils.getInstence().intent(this,RegisterActivity.class);
+
                 break;
             case R.id.login_btn_go:
                 break;

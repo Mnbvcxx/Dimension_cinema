@@ -27,7 +27,7 @@
         <activity android:name=".MainActivity"/>
         <!-- 引导页 -->
         <activity android:name=".guideView.activity.GuideViewActivity"/>
-        <activity android:name=".register.RegisterActivity" />
+        <activity android:name=".register.activity.RegisterActivity" />
         <!-- 起始页 -->
         <activity android:name=".homepage.HomePageActivity">
             <intent-filter>
