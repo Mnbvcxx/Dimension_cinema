@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".login.LoginActivity"
-    android:background="@mipmap/bitmap">
+    android:background="@mipmap/bit_map">
 
     <ImageView
         android:id="@+id/phone_login"
