@@ -35,4 +35,8 @@
     <string name="LoginPwd">登录密码</string>
     <string name="register">快速注册</string>
     <string name="error_netWork">糟糕，网络不给力呀！</string>
+    <string name="yichang">一场电影</string>
+    <string name="jinghua">净化你的灵魂</string>
+    <string name="rensheng">看遍人生百态</string>
+    <string name="xinling">荡涤你的心灵</string>
 </resources>
