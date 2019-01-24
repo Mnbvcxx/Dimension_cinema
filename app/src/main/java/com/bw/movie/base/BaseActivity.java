@@ -31,8 +31,9 @@ public abstract class BaseActivity extends AppCompatActivity implements MyView {
     //初始化
     protected abstract void initData();
 
+    //成功
     protected abstract void netSuccess(Object object);
-
+    //失败
     protected abstract void netFailed(String s);
 
     //成功回调方法
@@ -47,10 +48,26 @@ public abstract class BaseActivity extends AppCompatActivity implements MyView {
         netFailed(error);
     }
 
-    //presenter层回调方法
-    protected void doNetWorkRequest(String url, Map<String, String> map, Class clazz) {
+    /**
+     * presenter层回调方法PostFormBody表单请求
+     * @param url
+     * @param map
+     * @param clazz
+     */
+    protected void doPostFormBodyDatas(String url, Map<String, String> map, Class clazz) {
         if (mMyPresenter != null) {
             mMyPresenter.onPostFormBodyDatas(url, map, clazz);
+        }
+    }
+
+    /**
+     * presenter层回调方法Get请求
+     * @param url
+     * @param clazz
+     */
+    protected void doGetData(String url, Class clazz) {
+        if (mMyPresenter != null) {
+            mMyPresenter.onGetDatas(url, clazz);
         }
     }
 
