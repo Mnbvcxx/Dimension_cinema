@@ -35,6 +35,4 @@
     <string name="LoginPwd">登录密码</string>
     <string name="register">快速注册</string>
     <string name="error_netWork">糟糕，网络不给力呀！</string>
-    <string name="xb">性别</string>
-    <string name="date">出生日期</string>
 </resources>
