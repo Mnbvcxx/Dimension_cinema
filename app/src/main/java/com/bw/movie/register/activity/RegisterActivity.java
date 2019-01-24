@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.apis.Apis;
+import com.bw.movie.apis.UserApis;
 import com.bw.movie.base.BaseActivity;
 import com.bw.movie.netWork.RetrofitManager;
 import com.bw.movie.register.bean.RegisterBean;
@@ -177,13 +178,13 @@ public class RegisterActivity extends BaseActivity {
             String encrypt_pwd = EncryptUtil.encrypt(mInput_pwd);
 
             HashMap<String, String> map = new HashMap<>();
-            map.put("nickName",mInput_nick);
-            map.put("phone",mInput_pho);
-            map.put("pwd",encrypt_pwd);
-            map.put("sex",mInput_sex);
-            map.put("birthday",mInput_dte);
-            map.put("email",mInput_eml);
-            doPostFormBodyDatas(Apis.REGISTER,map,RegisterBean.class);
+            map.put(UserApis.REG_KEY_nickName,mInput_nick);
+            map.put(UserApis.LOGIN_KEY_PHONE,mInput_pho);
+            map.put(UserApis.LOGIN_KEY_PWD,encrypt_pwd);
+            map.put(UserApis.REG_KEY_SEX,mInput_sex);
+            map.put(UserApis.REG_KEY_BIRTHDAY,mInput_dte);
+            map.put(UserApis.REG_KEY_EMAIL,mInput_eml);
+            doPostFormBodyDatas(Apis.REGISTER_URL,map,RegisterBean.class);
         }
 
     }
