@@ -31,7 +31,7 @@ public class RetrofitManager {
      *
      * 外网环境：mobile.bwstudent.com
      */
-    private final String BASE_URL = "http://mobile.bwstudent.com/";
+    private final String BASE_URL = "http://mobile.bwstudent.com/movieApi/";
 
     private static RetrofitManager manager;
 
