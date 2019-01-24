@@ -6,5 +6,7 @@ package com.bw.movie.apis;
  */
 public class Apis {
     //注册
-    public static final String REGISTER="user/v1/registerUser";
+    public static final String REGISTER_URL = "user/v1/registerUser";
+    //登录
+    public static final String LOGIN_URL = "user/v1/login";
 }
