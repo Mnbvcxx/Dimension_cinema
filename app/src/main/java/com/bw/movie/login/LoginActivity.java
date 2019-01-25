@@ -1,20 +1,24 @@
 package com.bw.movie.login;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bw.movie.MainActivity;
+import com.bw.movie.activity.MainActivity;
 import com.bw.movie.R;
 import com.bw.movie.apis.Apis;
 import com.bw.movie.apis.UserApis;
@@ -32,8 +36,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 登录页面
+ *
+ * 1、记住密码状态
+ * 2、自动登录状态
+ * 3、快速注册跳转注册页面
+ *
+ */
 public class LoginActivity extends BaseActivity {
 
+    //初始化控件
     @BindView(R.id.login_phone)
     EditText mLoginPhone;
     @BindView(R.id.login_pwd)
@@ -61,6 +74,7 @@ public class LoginActivity extends BaseActivity {
     private String mPwd;
     private Intent mIntent;
 
+    //布局
     @Override
     protected int getLayoutId() {
         return R.layout.activity_login;
@@ -68,6 +82,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        //绑定ButterKnife
         ButterKnife.bind(this);
     }
 
@@ -76,12 +91,38 @@ public class LoginActivity extends BaseActivity {
         //创建SharedPreferences储存数据
         mSP = getSharedPreferences("config", MODE_PRIVATE);
         boolean isCheck = mSP.getBoolean("isCheck", false);//是否记住密码
+        boolean isLogin = mSP.getBoolean("isLogin", false);//是否自动登录
         mEdit = mSP.edit();
         if (isCheck) {
             mLoginPhone.setText(mSP.getString("phone", mPhone));
             mLoginPwd.setText(mSP.getString("pwd", mPwd));
             mLoginCheckbox.setChecked(true);
+            //判断自动登录多选状态
+            if (isLogin) {
+                mLoginCheckboxLogin.setChecked(true);
+                //跳转
+                mIntent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(mIntent);
+                finish();
+            }
         }
+        //复选框内容改变方法
+        initChecked();
+    }
+    //复选框内容改变方法
+    private void initChecked() {
+        mLoginCheckboxLogin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                //判断是否自动登录
+                if (mLoginCheckboxLogin.isChecked()) {
+                    mLoginCheckbox.setChecked(true);
+                    mEdit.putBoolean("isLogin", true).commit();
+                } else {
+                    mEdit.putBoolean("isLogin", false).commit();
+                }
+            }
+        });
     }
 
     @Override
@@ -99,8 +140,9 @@ public class LoginActivity extends BaseActivity {
                     mEdit.clear();
                     mEdit.commit();
                 }
-                Toast.makeText(this, loginBean.getMessage(), Toast.LENGTH_SHORT).show();
+                ToastUtil.showToast(loginBean.getMessage());
                 mIntent = new Intent(this, MainActivity.class);
+                //intent传值,后续会用到这些参数,尤其是我们的 RequestHeader  入参
                 mIntent.putExtra("userId", loginBean.getResult().getUserId());
                 mIntent.putExtra("sessionId", loginBean.getResult().getSessionId());
                 mIntent.putExtra("nickName", loginBean.getResult().getUserInfo().getNickName());
@@ -113,31 +155,34 @@ public class LoginActivity extends BaseActivity {
                         .commit();
                 finish();
             } else {
-                Toast.makeText(this, loginBean.getMessage(), Toast.LENGTH_SHORT).show();
+                ToastUtil.showToast(loginBean.getMessage());
             }
         }
     }
 
     @Override
     protected void netFailed(String s) {
-
+        ToastUtil.showToast(s);
     }
 
-    @OnClick({R.id.login_phone, R.id.login_pwd, R.id.login_reg, R.id.login_btn_go, R.id.login_wx, R.id.login_hint, R.id.login_checkbox, R.id.login_jz_pwd, R.id.login_checkbox_login, R.id.login_zd_login})
+    @OnClick({R.id.login_reg, R.id.login_btn_go, R.id.login_wx, R.id.login_hint, R.id.login_checkbox, R.id.login_jz_pwd, R.id.login_checkbox_login, R.id.login_zd_login})
     public void onClick(View v) {
         switch (v.getId()) {
             default:
-                break;
-            case R.id.login_phone:
-                break;
-            case R.id.login_pwd:
                 break;
             case R.id.login_reg:
                 IntentUtils.getInstence().intent(this, RegisterActivity.class);
                 break;
             case R.id.login_btn_go:
+                //动态权限
+                initPermission();
                 mPhone = mLoginPhone.getText().toString().trim();
                 mPwd = mLoginPwd.getText().toString().trim();
+                //手机号  正则表达式验证
+                String REGEX = "[1][3458]\\d{9}";
+                if (TextUtils.isEmpty(mPhone) || !mPhone.matches(REGEX)) {
+                    ToastUtil.showToast("请正确输入手机号格式");
+                }
                 String encrypt = EncryptUtil.encrypt(mPwd);
                 Map<String, String> map = new HashMap<>();
                 map.put(UserApis.LOGIN_KEY_PHONE, mPhone);
@@ -145,6 +190,7 @@ public class LoginActivity extends BaseActivity {
                 doPost(Apis.LOGIN_URL, map, LoginBean.class);
                 break;
             case R.id.login_wx:
+
                 break;
             case R.id.login_hint:
                 if (showPassword) {// 显示密码
@@ -159,15 +205,18 @@ public class LoginActivity extends BaseActivity {
                     showPassword = !showPassword;
                 }
                 break;
-            case R.id.login_checkbox:
-                break;
-            case R.id.login_jz_pwd:
-                break;
-            case R.id.login_checkbox_login:
-                break;
-            case R.id.login_zd_login:
-                break;
         }
     }
 
+    //动态权限
+    private void initPermission() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS, Manifest.permission.WRITE_APN_SETTINGS};
+            ActivityCompat.requestPermissions(this, mPermissionList, 123);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    }
 }
