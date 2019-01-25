@@ -26,8 +26,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <activity android:name=".activity.activity.MainActivity"/>
         <!-- 主界面 -->
-        <activity android:name=".activity.MainActivity" />
         <!-- 引导页 -->
         <activity android:name=".guideView.activity.GuideViewActivity" />
         <activity android:name=".register.activity.RegisterActivity" />

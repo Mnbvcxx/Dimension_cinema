@@ -19,8 +19,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bw.movie.activity.MainActivity;
 import com.bw.movie.R;
+import com.bw.movie.activity.activity.MainActivity;
 import com.bw.movie.apis.Apis;
 import com.bw.movie.apis.UserApis;
 import com.bw.movie.base.BaseActivity;

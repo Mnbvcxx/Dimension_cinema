@@ -1,4 +1,4 @@
-package com.bw.movie.activity;
+package com.bw.movie.activity.activity;
 
 import android.os.Build;
 import android.os.Bundle;
