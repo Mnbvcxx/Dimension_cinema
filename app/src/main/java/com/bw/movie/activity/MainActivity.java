@@ -4,8 +4,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
@@ -15,8 +15,6 @@ import com.bw.movie.activity.fragment.FilmFragment;
 import com.bw.movie.activity.fragment.MovieFragment;
 import com.bw.movie.activity.fragment.MyFragment;
 import com.bw.movie.base.BaseActivity;
-import com.bw.movie.register.activity.RegisterActivity;
-import com.bw.movie.utils.IntentUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,8 +51,12 @@ public class MainActivity extends BaseActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
         ButterKnife.bind(this);
-        //初始化显示第一个页面
+        //默认选中第一个,按钮变大
         mMainVp.setCurrentItem(0);
+        ViewGroup.LayoutParams mMainFilmparams = mMainFilm.getLayoutParams();
+        mMainFilmparams.height=200;
+        mMainFilmparams.width =200;
+        mMainFilm.setLayoutParams(mMainFilmparams);
     }
 
     //初始化数据
@@ -65,7 +67,6 @@ public class MainActivity extends BaseActivity {
         mFragments.add(new FilmFragment());
         mFragments.add(new MovieFragment());
         mFragments.add(new MyFragment());
-        //mMainVp.addOnPageChangeListener(new MyPagerChangeListener());//滑动监听事件
         //创建适配器实例
         mTabFragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), mFragments);
         mMainVp.setAdapter(mTabFragmentPagerAdapter);
@@ -90,65 +91,57 @@ public class MainActivity extends BaseActivity {
             case R.id.main_film:
                 mMainVp.setCurrentItem(0);
                 mMainFilm.setImageResource(R.mipmap.com_icon_film_selected);
+                ViewGroup.LayoutParams mMainFilmparams = mMainFilm.getLayoutParams();
+                mMainFilmparams.height=200;
+                mMainFilmparams.width =200;
+                mMainFilm.setLayoutParams(mMainFilmparams);
                 mMainCinema.setImageResource(R.mipmap.com_icon_cinema_default);
+                ViewGroup.LayoutParams mMainCinemapara = mMainCinema.getLayoutParams();
+                mMainCinemapara.height=180;
+                mMainCinemapara.width =180;
+                mMainCinema.setLayoutParams(mMainCinemapara);
                 mMainMy.setImageResource(R.mipmap.my_default);
+                ViewGroup.LayoutParams mMainMypara = mMainMy.getLayoutParams();
+                mMainMypara.height=180;
+                mMainMypara.width =180;
+                mMainMy.setLayoutParams(mMainMypara);
                 break;
             case R.id.main_cinema:
                 mMainVp.setCurrentItem(1);
                 mMainFilm.setImageResource(R.mipmap.com_icon_film_fault);
+                ViewGroup.LayoutParams param = mMainFilm.getLayoutParams();
+                param.height=180;
+                param.width =180;
+                mMainFilm.setLayoutParams(param);
                 mMainCinema.setImageResource(R.mipmap.com_icon_cinema_selected);
+                ViewGroup.LayoutParams mMainCinemaparams = mMainCinema.getLayoutParams();
+                mMainCinemaparams.height=200;
+                mMainCinemaparams.width =200;
+                mMainCinema.setLayoutParams(mMainCinemaparams);
                 mMainMy.setImageResource(R.mipmap.my_default);
+                ViewGroup.LayoutParams mMainMyparam = mMainMy.getLayoutParams();
+                mMainMyparam.height=180;
+                mMainMyparam.width =180;
+                mMainMy.setLayoutParams(mMainMyparam);
                 break;
             case R.id.main_my:
                 mMainVp.setCurrentItem(2);
                 mMainFilm.setImageResource(R.mipmap.com_icon_film_fault);
+                ViewGroup.LayoutParams mMainFilmparam = mMainFilm.getLayoutParams();
+                mMainFilmparam.height=180;
+                mMainFilmparam.width =180;
+                mMainFilm.setLayoutParams(mMainFilmparam);
                 mMainCinema.setImageResource(R.mipmap.com_icon_cinema_default);
+                ViewGroup.LayoutParams mMainCinemaparam = mMainCinema.getLayoutParams();
+                mMainCinemaparam.height=180;
+                mMainCinemaparam.width =180;
+                mMainCinema.setLayoutParams(mMainCinemaparam);
                 mMainMy.setImageResource(R.mipmap.com_icon_my_selected);
+                ViewGroup.LayoutParams mMainMyparams = mMainMy.getLayoutParams();
+                mMainMyparams.height=200;
+                mMainMyparams.width =200;
+                mMainMy.setLayoutParams(mMainMyparams);
                 break;
         }
     }
-
-    //滑动监听事件
-    /*private class MyPagerChangeListener implements ViewPager.OnPageChangeListener {
-
-        @Override
-        public void onPageScrolled(int i, float v, int i1) {
-
-        }
-
-        //滑动切换,改变按钮状态
-        @Override
-        public void onPageSelected(int i) {
-            switch (i){
-                default:
-                    break;
-                case 0:
-                    mMainFilm.setImageResource(R.mipmap.com_icon_film_selected);
-                    mMainFilm.setMaxWidth(70);
-                    mMainFilm.setMaxHeight(70);
-                    mMainCinema.setImageResource(R.mipmap.com_icon_cinema_default);
-                    mMainMy.setImageResource(R.mipmap.my_default);
-                    break;
-                case 1:
-                    mMainFilm.setImageResource(R.mipmap.com_icon_film_fault);
-                    mMainCinema.setImageResource(R.mipmap.com_icon_cinema_selected);
-                    mMainCinema.setMaxWidth(70);
-                    mMainCinema.setMaxHeight(70);
-                    mMainMy.setImageResource(R.mipmap.my_default);
-                    break;
-                case 2:
-                    mMainFilm.setImageResource(R.mipmap.com_icon_film_fault);
-                    mMainCinema.setImageResource(R.mipmap.com_icon_cinema_default);
-                    mMainMy.setImageResource(R.mipmap.com_icon_my_selected);
-                    mMainMy.setMaxWidth(70);
-                    mMainMy.setMaxHeight(70);
-                    break;
-            }
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int i) {
-
-        }
-    }*/
 }

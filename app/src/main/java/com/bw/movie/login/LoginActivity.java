@@ -131,6 +131,7 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
+    //访问数据成功
     @Override
     protected void netSuccess(Object object) {
         if (object instanceof LoginBean) {
@@ -147,7 +148,7 @@ public class LoginActivity extends BaseActivity {
                     mEdit.commit();
                 }
                 ToastUtil.showToast(loginBean.getMessage());
-                mIntent = new Intent(this, MainActivity.class);
+                mIntent = new Intent(LoginActivity.this, MainActivity.class);
                 //intent传值,后续会用到这些参数,尤其是我们的 RequestHeader  入参
                 mIntent.putExtra("userId", loginBean.getResult().getUserId());
                 mIntent.putExtra("sessionId", loginBean.getResult().getSessionId());
