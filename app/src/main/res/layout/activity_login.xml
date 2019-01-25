@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login.LoginActivity"
-    android:background="@mipmap/bit_map">
+    android:background="@mipmap/bit_map"
+    tools:context=".login.LoginActivity">
 
     <ImageView
         android:id="@+id/phone_login"
@@ -13,7 +13,7 @@
         android:layout_height="@dimen/dp_30"
         android:layout_alignBottom="@id/login_phone"
         android:layout_marginLeft="@dimen/dp_30"
-        android:src="@mipmap/log_icon_phone_default"/>
+        android:src="@mipmap/log_icon_phone_default" />
 
     <EditText
         android:id="@+id/login_phone"
@@ -32,26 +32,26 @@
         android:layout_width="@dimen/dp_305"
         android:layout_height="@dimen/dp_1"
         android:layout_below="@id/login_phone"
-        android:background="@color/colorFFF"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_10" />
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/colorFFF" />
 
     <ImageView
         android:id="@+id/lock"
         android:layout_width="@dimen/dp_30"
         android:layout_height="@dimen/dp_30"
-        android:layout_marginLeft="@dimen/dp_30"
         android:layout_alignTop="@+id/login_pwd"
-        android:src="@mipmap/log_icon_lock_default"/>
+        android:layout_marginLeft="@dimen/dp_30"
+        android:src="@mipmap/log_icon_lock_default" />
 
     <EditText
-        android:layout_toRightOf="@id/lock"
-        android:layout_marginLeft="@dimen/sp_20"
         android:id="@+id/login_pwd"
         android:layout_width="@dimen/dp_230"
         android:layout_height="@dimen/dp_30"
         android:layout_below="@id/login_phone"
+        android:layout_marginLeft="@dimen/sp_20"
         android:layout_marginTop="@dimen/dp_30"
+        android:layout_toRightOf="@id/lock"
         android:background="@null"
         android:hint="登录密码"
         android:password="true"
@@ -59,6 +59,7 @@
         android:textColorHint="@color/colorfff"
         android:textSize="@dimen/sp_18" />
 
+    <!-- 小眼睛,显示隐藏密码 -->
     <ImageView
         android:id="@+id/login_hint"
         android:layout_width="@dimen/dp_24"
@@ -66,8 +67,8 @@
         android:layout_alignTop="@+id/login_pwd"
         android:layout_alignParentRight="true"
         android:layout_marginTop="3dp"
-        android:src="@mipmap/log_icon_eye_default"
-        android:layout_marginRight="@dimen/dp_36" />
+        android:layout_marginRight="@dimen/dp_36"
+        android:src="@mipmap/login_icon_eye_y" />
 
     <View
         android:id="@+id/view_pwd"
@@ -76,9 +77,66 @@
         android:layout_below="@id/login_pwd"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_10"
-        android:background="@color/colorFFF"/>
+        android:background="@color/colorFFF" />
 
+    <!-- 记住密码 -->
+    <RelativeLayout
+        android:id="@+id/login_jz_pwd"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_26"
+        android:layout_below="@id/view_pwd"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_20">
 
+        <CheckBox
+            android:id="@+id/login_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/colorfff"
+            android:theme="@style/MyCheckBox" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_toRightOf="@id/login_checkbox"
+            android:text="记住密码"
+            android:textColor="@color/colorfff"
+            android:textSize="@dimen/sp_14" />
+
+    </RelativeLayout>
+
+    <!-- 自动登录 -->
+    <RelativeLayout
+        android:id="@+id/login_zd_login"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_26"
+        android:layout_below="@id/view_pwd"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_toRightOf="@id/login_jz_pwd">
+
+        <CheckBox
+            android:id="@+id/login_checkbox_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/colorfff"
+            android:theme="@style/MyCheckBox" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_toRightOf="@id/login_checkbox_login"
+            android:text="自动登录"
+            android:textColor="@color/colorfff"
+            android:textSize="@dimen/sp_14" />
+
+    </RelativeLayout>
+
+    <!-- 快速注册 -->
     <TextView
         android:id="@+id/login_reg"
         android:layout_width="wrap_content"
@@ -87,17 +145,18 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/dp_24"
         android:layout_marginRight="@dimen/dp_36"
-        android:textSize="@dimen/sp_14"
         android:text="快速注册"
-        android:textColor="@color/colorfff" />
+        android:textColor="@color/colorfff"
+        android:textSize="@dimen/sp_14" />
 
 
+    <!-- 登录按钮 -->
     <Button
         android:id="@+id/login_btn_go"
         android:layout_width="@dimen/dp_280"
         android:layout_height="@dimen/dp_40"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/login_reg"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_130"
         android:background="@drawable/shape_register_button"
         android:text="登录"
@@ -106,42 +165,45 @@
 
     <LinearLayout
         android:id="@+id/layout_login"
-        android:layout_marginTop="@dimen/dp_40"
-        android:layout_below="@id/login_btn_go"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true">
+        android:layout_below="@id/login_btn_go"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_40">
 
         <View
             android:layout_width="@dimen/dp_90"
             android:layout_height="@dimen/dp_2"
             android:layout_gravity="center_vertical"
-            android:background="@color/colorfff"/>
+            android:background="@color/colorfff" />
+
         <TextView
             android:id="@+id/dsf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_marginLeft="@dimen/dp_5"
             android:layout_marginRight="@dimen/dp_5"
             android:text="第三方账号快速登录"
-            android:textSize="@dimen/sp_10"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/colorfff"/>
+            android:textColor="@color/colorfff"
+            android:textSize="@dimen/sp_10" />
+
         <View
             android:layout_width="@dimen/dp_90"
             android:layout_height="@dimen/dp_2"
             android:layout_gravity="center_vertical"
-            android:background="@color/colorfff"/>
+            android:background="@color/colorfff" />
 
     </LinearLayout>
 
+    <!-- 微信 -->
     <ImageView
+        android:id="@+id/login_wx"
         android:layout_width="@dimen/dp_30"
         android:layout_height="@dimen/dp_30"
-        android:id="@+id/login_wx"
         android:layout_below="@id/layout_login"
-        android:src="@mipmap/log_icon_weixin_default"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_16"/>
+        android:layout_marginTop="@dimen/dp_16"
+        android:src="@mipmap/log_icon_weixin_default" />
 
 </RelativeLayout>

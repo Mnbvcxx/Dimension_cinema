@@ -8,7 +8,9 @@
     <color name="coloreee">#eeeeee</color>
     <color name="color8c">#8c8c8c</color>
     <color name="color8d">#8d8d8d</color>
+    <color name="colorD8">#6A999999</color>
     <color name="color333">#333333</color>
     <color name="color666">#666666</color>
     <color name="colorFFF">#1Affffff</color>
+    <color name="color999">#999999</color>
 </resources>
