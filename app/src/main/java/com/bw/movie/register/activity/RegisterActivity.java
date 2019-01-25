@@ -1,6 +1,7 @@
 package com.bw.movie.register.activity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bw.movie.MainActivity;
 import com.bw.movie.R;
 import com.bw.movie.apis.Apis;
 import com.bw.movie.apis.UserApis;
@@ -190,7 +192,9 @@ public class RegisterActivity extends BaseActivity {
             RegisterBean registerBean = (RegisterBean) object;
             if (registerBean.getStatus().equals("0000")) {
                 ToastUtil.showToast(registerBean.getMessage());
-
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                finish();
 
             } else {
                 ToastUtil.showToast(registerBean.getMessage());
