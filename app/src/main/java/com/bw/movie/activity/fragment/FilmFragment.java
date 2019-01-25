@@ -45,8 +45,6 @@ public class FilmFragment extends Fragment implements MyView {
     RecyclerCoverFlow mFilmRcf;
     @BindView(R.id.film_vpi)
     ViewPagerIndicator mFilmVpi;
-    @BindView(R.id.film_rv)
-    RecyclerView mFilmRv;
     private Unbinder unbinder;
     private CinemaFlowAdapter mCinemaFlowAdapter;
     private MyPresenter mMyPresenter;
@@ -61,7 +59,7 @@ public class FilmFragment extends Fragment implements MyView {
         return view;
     }
 
-    @OnClick({R.id.film_ress, R.id.film_rcf, R.id.film_vpi, R.id.film_rv})
+    @OnClick({R.id.film_ress, R.id.film_rcf, R.id.film_vpi})
     public void onClick(View v) {
         switch (v.getId()) {
             default:
@@ -71,8 +69,6 @@ public class FilmFragment extends Fragment implements MyView {
             case R.id.film_rcf:
                 break;
             case R.id.film_vpi:
-                break;
-            case R.id.film_rv:
                 break;
         }
     }

@@ -40,5 +40,9 @@
     <string name="rensheng">看遍人生百态</string>
     <string name="xinling">荡涤你的心灵</string>
     <string name="dn">带您开启一段美好的电影之旅</string>
-    <string name="baway">八维移动通信学院作品</string>
+    <string name="baway">©八维移动通信学院作品</string>
+    <string name="beijing">北京</string>
+    <string name="remen">热门电影</string>
+    <string name="jijiang">即将上映</string>
+    <string name="zhenzai">正在热映</string>
 </resources>

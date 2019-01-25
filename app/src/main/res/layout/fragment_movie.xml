@@ -3,11 +3,73 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:id="@+id/layout_movie_ress"
+        android:layout_width="@dimen/dp_48"
+        android:layout_height="@dimen/dp_48"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_15">
+
+        <ImageView
+            android:id="@+id/movie_ress"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/cinema_detail_icon_location_default" />
+
+    </RelativeLayout>
+
     <TextView
+        android:id="@+id/movie_ress_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_toRightOf="@id/layout_movie_ress"
+        android:text="@string/beijing"
+        android:textColor="@color/color333"
+        android:textSize="@dimen/sp_14" />
+
+    <RadioGroup
+        android:id="@+id/movie_rg"
+        android:layout_width="@dimen/dp_198"
+        android:layout_height="@dimen/dp_25"
+        android:layout_below="@id/layout_movie_ress"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_10">
+
+        <RadioButton
+            android:id="@+id/movie_recommended"
+            android:layout_width="@dimen/dp_83"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:button="@null"
+            android:text="推荐影院"
+            android:checked="true"
+            android:textColor="@color/colorfff"
+            android:background="@drawable/movie_selecter"
+            android:textSize="@dimen/sp_14" />
+
+        <RadioButton
+            android:id="@+id/movie_nearby"
+            android:layout_width="@dimen/dp_83"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:button="@null"
+            android:layout_marginLeft="@dimen/dp_32"
+            android:text="附近影院"
+            android:textColor="@color/color333"
+            android:background="@drawable/movie_selecter"
+            android:textSize="@dimen/sp_14" />
+
+    </RadioGroup>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/movie_vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="影院页面"
-        android:textSize="@dimen/dp_30"
-        android:gravity="center"/>
+        android:layout_below="@id/movie_rg"
+        android:layout_marginTop="@dimen/dp_10" />
 
 </RelativeLayout>
