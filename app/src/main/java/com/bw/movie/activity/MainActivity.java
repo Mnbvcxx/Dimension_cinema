@@ -65,7 +65,7 @@ public class MainActivity extends BaseActivity {
         mFragments.add(new FilmFragment());
         mFragments.add(new MovieFragment());
         mFragments.add(new MyFragment());
-        //mMainVp.addOnPageChangeListener(new MyPagerChangeListener());
+        //mMainVp.addOnPageChangeListener(new MyPagerChangeListener());//滑动监听事件
         //创建适配器实例
         mTabFragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), mFragments);
         mMainVp.setAdapter(mTabFragmentPagerAdapter);
@@ -89,18 +89,27 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.main_film:
                 mMainVp.setCurrentItem(0);
+                mMainFilm.setImageResource(R.mipmap.com_icon_film_selected);
+                mMainCinema.setImageResource(R.mipmap.com_icon_cinema_default);
+                mMainMy.setImageResource(R.mipmap.my_default);
                 break;
             case R.id.main_cinema:
                 mMainVp.setCurrentItem(1);
+                mMainFilm.setImageResource(R.mipmap.com_icon_film_fault);
+                mMainCinema.setImageResource(R.mipmap.com_icon_cinema_selected);
+                mMainMy.setImageResource(R.mipmap.my_default);
                 break;
             case R.id.main_my:
                 mMainVp.setCurrentItem(2);
+                mMainFilm.setImageResource(R.mipmap.com_icon_film_fault);
+                mMainCinema.setImageResource(R.mipmap.com_icon_cinema_default);
+                mMainMy.setImageResource(R.mipmap.com_icon_my_selected);
                 break;
         }
     }
 
     //滑动监听事件
-    private class MyPagerChangeListener implements ViewPager.OnPageChangeListener {
+    /*private class MyPagerChangeListener implements ViewPager.OnPageChangeListener {
 
         @Override
         public void onPageScrolled(int i, float v, int i1) {
@@ -141,5 +150,5 @@ public class MainActivity extends BaseActivity {
         public void onPageScrollStateChanged(int i) {
 
         }
-    }
+    }*/
 }

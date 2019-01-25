@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bw.movie.activity.MainActivity;
 import com.bw.movie.R;
@@ -28,6 +29,9 @@ import com.bw.movie.register.activity.RegisterActivity;
 import com.bw.movie.utils.EncryptUtil;
 import com.bw.movie.utils.IntentUtils;
 import com.bw.movie.utils.ToastUtil;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -73,6 +77,7 @@ public class LoginActivity extends BaseActivity {
     private String mPhone;
     private String mPwd;
     private Intent mIntent;
+    private IWXAPI mWxapi;
 
     //布局
     @Override
@@ -84,6 +89,7 @@ public class LoginActivity extends BaseActivity {
     protected void initView(Bundle savedInstanceState) {
         //绑定ButterKnife
         ButterKnife.bind(this);
+        registToWX();
     }
 
     @Override
@@ -175,7 +181,7 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.login_btn_go:
                 //动态权限
-                initPermission();
+                //initPermission();
                 mPhone = mLoginPhone.getText().toString().trim();
                 mPwd = mLoginPwd.getText().toString().trim();
                 //手机号  正则表达式验证
@@ -190,7 +196,8 @@ public class LoginActivity extends BaseActivity {
                 doPost(Apis.LOGIN_URL, map, LoginBean.class);
                 break;
             case R.id.login_wx:
-
+                initPermission();
+                initWxData();
                 break;
             case R.id.login_hint:
                 if (showPassword) {// 显示密码
@@ -206,6 +213,25 @@ public class LoginActivity extends BaseActivity {
                 }
                 break;
         }
+    }
+
+    private void initWxData() {
+        if (!mWxapi.isWXAppInstalled()) {
+            Toast.makeText(this, "您还未安装微信客户端", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        final SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "diandi_wx_login";
+        mWxapi.sendReq(req);
+    }
+
+    private void registToWX() {
+        //AppConst.WEIXIN.APP_ID是指你应用在微信开放平台上的AppID，记得替换。
+        String APP_ID = "wxb3852e6a6b7d9516";
+        mWxapi = WXAPIFactory.createWXAPI(this, APP_ID, false);
+        // 将该app注册到微信
+        mWxapi.registerApp(APP_ID);
     }
 
     //动态权限

@@ -6,19 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity">
 
-    <android.support.v4.view.ViewPager
+    <com.bw.movie.activity.customer.CustomerViewPager
         android:id="@+id/main_vp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:flipInterval="30"
+        android:persistentDrawingCache="animation"/>
 
     <ImageView
         android:id="@+id/main_film"
-        android:layout_width="@dimen/dp_60"
-        android:layout_height="@dimen/dp_60"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="@dimen/dp_70"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="@dimen/dp_24"
         android:layout_marginBottom="@dimen/dp_12"
-        android:src="@mipmap/com_icon_film_fault" />
+        android:src="@mipmap/com_icon_film_selected" />
 
     <ImageView
         android:id="@+id/main_cinema"

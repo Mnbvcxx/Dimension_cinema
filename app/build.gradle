@@ -58,5 +58,5 @@ dependencies {
 //轮播图  指示器依赖
     implementation 'com.github.LinweiJ:ViewPagerIndicator:0.1.0'
 //tencent微信第三方登录
-    /*implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'*/
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
 }
