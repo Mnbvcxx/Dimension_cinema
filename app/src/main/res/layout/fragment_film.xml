@@ -3,11 +3,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="影片页面"
-        android:textSize="@dimen/dp_30"
-        android:gravity="center"/>
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_186"
+                android:src="@mipmap/hdpi_2" />
+
+            <RelativeLayout
+                android:id="@+id/layout_ress"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_20">
+
+                <ImageView
+                    android:id="@+id/film_ress"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/com_icon_loc_white_default" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/film_ress_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_30"
+                android:layout_toRightOf="@id/layout_ress"
+                android:text="XXXXX"
+                android:textColor="@color/colorfff"
+                android:textSize="@dimen/sp_14" />
+
+
+            <recycler.coverflow.RecyclerCoverFlow
+                android:id="@+id/film_rcf"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_223"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_85" />
+
+            <com.lwj.widget.viewpagerindicator.ViewPagerIndicator
+                android:id="@+id/film_vpi"
+                android:layout_width="@dimen/dp_312"
+                android:layout_height="@dimen/dp_3"
+                android:layout_below="@id/film_rcf"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_20"
+                android:background="@drawable/film_shape_bg" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/film_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/film_vpi"
+                android:layout_marginTop="@dimen/dp_20" />
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 </RelativeLayout>
