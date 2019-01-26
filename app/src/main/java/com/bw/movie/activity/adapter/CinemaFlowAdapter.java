@@ -1,6 +1,7 @@
 package com.bw.movie.activity.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.activity.FilmDetailsActivity;
 import com.bw.movie.activity.bean.FilmBean;
 import com.bw.movie.utils.DateUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -47,6 +49,12 @@ public class CinemaFlowAdapter extends RecyclerView.Adapter<CinemaFlowAdapter.My
         myCinemaFlowViewHolder.mTextViewName.setText(mResultBeans.get(i).getName());
         String date = DateUtils.getDateToString(mResultBeans.get(i).getReleaseTime());
         myCinemaFlowViewHolder.mTextViewTiem.setText(date);
+        myCinemaFlowViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mContext.startActivity(new Intent(mContext, FilmDetailsActivity.class));
+            }
+        });
     }
 
     @Override

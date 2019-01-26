@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.activity.FilmDetailsActivity;
 import com.bw.movie.activity.adapter.CinemaFlowAdapter;
 import com.bw.movie.activity.adapter.MyFilmCinemaxAdapter;
 import com.bw.movie.activity.adapter.MyFilmComingSoonAdapter;
@@ -27,6 +28,7 @@ import com.bw.movie.activity.bean.FilmComingSoonBean;
 import com.bw.movie.apis.Apis;
 import com.bw.movie.mvc.presenter.MyPresenter;
 import com.bw.movie.mvc.view.MyView;
+import com.bw.movie.utils.IntentUtils;
 import com.bw.movie.utils.ToastUtil;
 import com.lwj.widget.viewpagerindicator.ViewPagerIndicator;
 
@@ -121,12 +123,22 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
     }
 
     @Override
-    @OnClick({R.id.film_ress, R.id.film_rcf, R.id.film_vpi, R.id.film_seach_ima, R.id.film_seach_text})
+    @OnClick({R.id.film_ress, R.id.film_rcf, R.id.film_vpi, R.id.film_seach_ima,
+            R.id.film_seach_text,R.id.film_rmdy,R.id.film_zzry,R.id.film_jjsy})
     public void onClick(View v) {
         switch (v.getId()) {
             default:
                 break;
             case R.id.film_ress:
+                break;
+            case R.id.film_rmdy:
+                IntentUtils.getInstence().intent(getContext(),FilmDetailsActivity.class);
+                break;
+            case R.id.film_zzry:
+                IntentUtils.getInstence().intent(getContext(),FilmDetailsActivity.class);
+                break;
+            case R.id.film_jjsy:
+                IntentUtils.getInstence().intent(getContext(),FilmDetailsActivity.class);
                 break;
             case R.id.film_rcf:
                 break;
@@ -227,6 +239,4 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
     public void onMyFailed(String error) {
 
     }
-
-
 }

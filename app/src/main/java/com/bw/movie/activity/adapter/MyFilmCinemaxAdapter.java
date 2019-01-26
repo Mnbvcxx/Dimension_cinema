@@ -51,7 +51,6 @@ public class MyFilmCinemaxAdapter extends RecyclerView.Adapter<MyFilmCinemaxAdap
             @Override
             public void onClick(View view) {
                 mContext.startActivity(new Intent(mContext,FilmDetailsActivity.class));
-                //IntentUtils.getInstence().intent(mContext, FilmDetailsActivity.class);
             }
         });
     }
