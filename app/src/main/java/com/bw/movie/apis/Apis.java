@@ -15,5 +15,10 @@ public class Apis {
     public static final String BANGDING_WX_URL = "user/v1/verify/bindWeChat";
     //是否绑定微信账号
     public static final String BANGDING_ISCHECK_WX_URL = "user/v1/verify/whetherToBindWeChat";
+    //正在热映和轮播图
     public static final String MOVIE_BANNER_URL = "movie/v1/findReleaseMovieList?page=1&count=10";
+    //热门电影
+    public static final String MOVIE_RM_URL = "movie/v1/findHotMovieList?page=1&count=10";
+    //即将上映
+    public static final String MOVIE_COMINGSOON_URL = "movie/v1/findComingSoonMovieList?page=1&count=10";
 }

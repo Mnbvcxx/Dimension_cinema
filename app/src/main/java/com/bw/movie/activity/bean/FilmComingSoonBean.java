@@ -4,11 +4,12 @@ import java.util.List;
 
 /**
  * @author : FangShiKang
- * @date : 2019/01/25.
+ * @date : 2019/01/26.
  * email : fangshikang@outlook.com
- * desc :       正在上映  和 轮播图    实体类
+ * desc :       即将上映  实体类
  */
-public class FilmBean {
+public class FilmComingSoonBean {
+
 
     private String message;
     private String status;

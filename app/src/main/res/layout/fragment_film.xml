@@ -92,6 +92,7 @@
                         android:background="@drawable/movie_shape_bg_failed" />
 
                     <ImageView
+                        android:id="@+id/film_rmdy"
                         android:layout_width="@dimen/dp_24"
                         android:layout_height="@dimen/dp_24"
                         android:layout_alignParentRight="true"
@@ -102,10 +103,9 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/film_rm_rv"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_200"
+                    android:layout_height="wrap_content"
                     android:layout_below="@id/layout_rm"
-                    android:layout_marginTop="@dimen/dp_20"
-                    android:background="@color/colorRed" />
+                    android:layout_marginTop="@dimen/dp_20" />
 
             </RelativeLayout>
 
@@ -139,6 +139,7 @@
                         android:background="@drawable/movie_shape_bg_failed" />
 
                     <ImageView
+                        android:id="@+id/film_zzry"
                         android:layout_width="@dimen/dp_24"
                         android:layout_height="@dimen/dp_24"
                         android:layout_alignParentRight="true"
@@ -149,10 +150,9 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/film_zz_rv"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_200"
+                    android:layout_height="wrap_content"
                     android:layout_below="@id/layout_zz"
-                    android:layout_marginTop="@dimen/dp_20"
-                    android:background="@color/colorRed" />
+                    android:layout_marginTop="@dimen/dp_20" />
 
             </RelativeLayout>
 
@@ -186,6 +186,7 @@
                         android:background="@drawable/movie_shape_bg_failed" />
 
                     <ImageView
+                        android:id="@+id/film_jjsy"
                         android:layout_width="@dimen/dp_24"
                         android:layout_height="@dimen/dp_24"
                         android:layout_alignParentRight="true"
@@ -196,10 +197,9 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/film_jij_rv"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_200"
+                    android:layout_height="wrap_content"
                     android:layout_below="@id/layout_jij"
-                    android:layout_marginTop="@dimen/dp_20"
-                    android:background="@color/colorRed" />
+                    android:layout_marginTop="@dimen/dp_20" />
 
             </RelativeLayout>
 
