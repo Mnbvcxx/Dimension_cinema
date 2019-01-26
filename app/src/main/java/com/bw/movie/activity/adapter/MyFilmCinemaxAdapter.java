@@ -1,6 +1,7 @@
 package com.bw.movie.activity.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.activity.FilmDetailsActivity;
 import com.bw.movie.activity.bean.FilmCinemaxBean;
+import com.bw.movie.utils.IntentUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
@@ -20,7 +23,7 @@ import java.util.List;
  * @author : FangShiKang
  * @date : 2019/01/26.
  * email : fangshikang@outlook.com
- * desc :       正在热映   适配器
+ * desc :       热门电影   适配器
  */
 public class MyFilmCinemaxAdapter extends RecyclerView.Adapter<MyFilmCinemaxAdapter.MyFilmCinemaxViewHolder> {
     private Context mContext;
@@ -44,6 +47,13 @@ public class MyFilmCinemaxAdapter extends RecyclerView.Adapter<MyFilmCinemaxAdap
         Uri uri = Uri.parse(imageUrl);
         myFilmCinemaxViewHolder.mSimpleDraweeView.setImageURI(uri);
         myFilmCinemaxViewHolder.mTextViewName.setText(mResultBeans.get(i).getName());
+        myFilmCinemaxViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mContext.startActivity(new Intent(mContext,FilmDetailsActivity.class));
+                //IntentUtils.getInstence().intent(mContext, FilmDetailsActivity.class);
+            }
+        });
     }
 
     @Override
