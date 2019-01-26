@@ -1,5 +1,6 @@
 package com.bw.movie.activity.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +14,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.fragment.myactivity.FeedBacksActivity;
+import com.bw.movie.activity.fragment.myactivity.InfoActivity;
+import com.bw.movie.activity.fragment.myactivity.MessageActivity;
 import com.bw.movie.utils.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -67,34 +71,40 @@ public class MyFragment extends Fragment {
             default:
                 break;
             case R.id.my_message:
-                ToastUtil.showToast("点击了");
+                ToastUtil.showToast("点击了系统消息页");
+                Intent message = new Intent(getActivity(), MessageActivity.class);
+                startActivity(message);
                 break;
             case R.id.my_icon:
-                ToastUtil.showToast("点击了");
+                ToastUtil.showToast("点击了我的头像");
                 break;
             case R.id.my_name:
-                ToastUtil.showToast("点击了");
+                ToastUtil.showToast("点击了我的名字");
                 break;
             case R.id.my_sign_in:
-                ToastUtil.showToast("点击了");
+                ToastUtil.showToast("点击了签到");
                 break;
             case R.id.my_info:
-                ToastUtil.showToast("点击了");
+                ToastUtil.showToast("点击了我的信息");
+                Intent info = new Intent(getActivity(), InfoActivity.class);
+                startActivity(info);
                 break;
             case R.id.my_attentions:
-                ToastUtil.showToast("点击了");
+                ToastUtil.showToast("点击了我的关注");
                 break;
             case R.id.my_rccord:
-                ToastUtil.showToast("点击了");
+                ToastUtil.showToast("点击了购票记录");
                 break;
             case R.id.my_feedbacks:
-                ToastUtil.showToast("点击了");
+                ToastUtil.showToast("点击了意见反馈");
+                Intent feedbacks = new Intent(getActivity(), FeedBacksActivity.class);
+                startActivity(feedbacks);
                 break;
             case R.id.my_version:
-                ToastUtil.showToast("点击了");
+                ToastUtil.showToast("点击了最新版本");
                 break;
             case R.id.my_logout:
-                ToastUtil.showToast("点击了");
+                ToastUtil.showToast("点击了退出登录");
                 break;
         }
     }

@@ -33,7 +33,50 @@
         android:text="@string/beijing"
         android:textColor="@color/color333"
         android:textSize="@dimen/sp_14" />
+    <!--搜索框-->
+    <RelativeLayout
+        android:id="@+id/film_seach_relative"
+        android:layout_width="@dimen/dp_220"
+        android:layout_height="@dimen/dp_24"
+        android:background="@drawable/film_seach_bg"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_m_170"
+        >
+        <ImageView
+            android:id="@+id/film_seach_ima"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:src="@mipmap/com_icon_search_default"
+            android:layout_marginLeft="@dimen/dp_8"
 
+            />
+        <EditText
+            android:id="@+id/film_seach_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/sp_12"
+            android:textColor="#f2f2f2"
+            android:hint="请输入关键字"
+            android:background="@null"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_toRightOf="@id/film_seach_ima"
+            android:visibility="gone"
+            />
+        <TextView
+            android:id="@+id/film_seach_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:text="搜索"
+            android:textSize="@dimen/sp_12"
+            android:textColor="#ffff"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_24"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            />
+    </RelativeLayout>
     <RadioGroup
         android:id="@+id/detail_rg"
         android:layout_width="@dimen/dp_312"
