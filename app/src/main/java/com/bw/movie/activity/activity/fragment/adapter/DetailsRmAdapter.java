@@ -1,6 +1,7 @@
 package com.bw.movie.activity.activity.fragment.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.activity.fragment.adapter.activity.MovieDetailsActivity;
 import com.bw.movie.activity.bean.FilmCinemaxBean;
+import com.bw.movie.utils.IntentUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
@@ -53,6 +56,17 @@ public class DetailsRmAdapter extends RecyclerView.Adapter<DetailsRmAdapter.Deta
                 if (mOnCheckedListener != null) {
                     mOnCheckedListener.onClicked(i);
                 }
+            }
+        });
+
+        //点击获取详情
+        detailsRmViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, MovieDetailsActivity.class);
+                int id = mResultBeans.get(i).getId();
+                intent.putExtra("movieId",id);
+                mContext.startActivity(intent);
             }
         });
     }

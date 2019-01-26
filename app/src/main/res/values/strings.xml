@@ -47,4 +47,8 @@
     <string name="zhenzai">正在热映</string>
     <string name="tuijian">推荐影院</string>
     <string name="fujin">附近影院</string>
+    <string name="dy">电影详情</string>
+    <string name="xq">详情</string>
+    <string name="gp">购票</string>
+    <string name="jqjj">剧情简介</string>
 </resources>
