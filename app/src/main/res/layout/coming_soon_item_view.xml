@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dp_24">
+
+    <!-- 热门电影 -->
+    <RelativeLayout
+        android:layout_width="@dimen/dp_126"
+        android:layout_height="@dimen/dp_164">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/soon_img"
+            android:layout_width="@dimen/dp_126"
+            android:layout_height="@dimen/dp_164"
+            app:roundedCornerRadius="@dimen/dp_8" />
+
+        <RelativeLayout
+            android:layout_width="@dimen/dp_126"
+            android:layout_height="@dimen/dp_40"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/shape_m_r_bg"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="@dimen/dp_3"
+                android:layout_height="@dimen/dp_18"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@drawable/movie_shape_bg_failed" />
+
+            <TextView
+                android:id="@+id/soon_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_toRightOf="@id/view"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="XXXX"
+                android:textColor="@color/colorfff"
+                android:textSize="@dimen/sp_16" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

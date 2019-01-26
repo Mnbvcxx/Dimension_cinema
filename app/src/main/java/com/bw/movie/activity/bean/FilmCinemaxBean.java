@@ -8,7 +8,7 @@ import java.util.List;
  * email : fangshikang@outlook.com
  * desc :       热门电影  实体类
  */
-public class FilmBannerBean {
+public class FilmCinemaxBean {
 
     private String message;
     private String status;
