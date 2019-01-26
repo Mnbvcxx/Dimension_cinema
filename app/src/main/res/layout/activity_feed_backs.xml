@@ -1,9 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.fragment.myactivity.FeedBacksActivity">
+    <TextView
+        android:id="@+id/yijina"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="意见反馈"
+        android:textSize="@dimen/sp_14"
+        android:textColor="#333333"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginLeft="@dimen/dp_24"
+        />
+    <ScrollView
+        android:id="@+id/scro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/yijina"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginLeft="@dimen/dp_24"
+        >
+        <RelativeLayout
+            android:layout_width="@dimen/dp_312"
+            android:layout_height="@dimen/dp_64"
+            android:background="@drawable/frag_myacty_infoacty"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_margin="@dimen/dp_20"
+                android:textColor="#999999"
+                android:textSize="@dimen/sp_12"
+                android:hint="写下您对产品的感受吧"
+                />
 
-</android.support.constraint.ConstraintLayout>
+        </RelativeLayout>
+
+    </ScrollView>
+    <Button
+        android:id="@+id/feedback_butn"
+        android:layout_width="@dimen/dp_48"
+        android:layout_height="@dimen/dp_25"
+        android:layout_below="@id/scro"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_24"
+        android:text="提交"
+        android:textSize="@dimen/sp_12"
+        android:textColor="#ffffff"
+        android:background="@mipmap/rectangle_12"
+        />
+
+</RelativeLayout>

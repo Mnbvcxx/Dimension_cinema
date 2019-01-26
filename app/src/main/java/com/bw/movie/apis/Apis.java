@@ -21,6 +21,10 @@ public class Apis {
     public static final String MOVIE_RM_URL = "movie/v1/findHotMovieList?page=1&count=10";
     //即将上映
     public static final String MOVIE_COMINGSOON_URL = "movie/v1/findComingSoonMovieList?page=1&count=10";
+    //查询用户当前未读消息数量
+    public static final String MESSAGE_UNREAND_COUNT="tool/v1/verify/findUnreadMessageCount";
+    //查询系统消息列表
+    public static final String MESSAGE_ALLSYS_LIST="tool/v1/verify/findAllSysMsgList";
     //用户关注电影
     public static final String USER_MOVIE_ATTENTION_URL = "movie/v1/verify/followMovie?movieId=";
     //根据电影id查看电影详情
