@@ -45,4 +45,6 @@
     <string name="remen">热门电影</string>
     <string name="jijiang">即将上映</string>
     <string name="zhenzai">正在热映</string>
+    <string name="tuijian">推荐影院</string>
+    <string name="fujin">附近影院</string>
 </resources>

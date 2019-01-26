@@ -79,7 +79,7 @@ public class MovieFragment extends Fragment {
 
 
     //点击事件
-    @OnClick({R.id.movie_ress, R.id.layout_movie_ress, R.id.movie_ress_name, R.id.movie_recommended, R.id.movie_nearby, R.id.movie_rg, R.id.movie_vp})
+    @OnClick({R.id.movie_ress, R.id.layout_movie_ress, R.id.movie_ress_name, R.id.movie_recommended, R.id.movie_nearby, R.id.movie_rg})
     public void onClick(View v) {
         switch (v.getId()) {
             default:
