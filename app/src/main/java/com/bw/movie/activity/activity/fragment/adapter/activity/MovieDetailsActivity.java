@@ -160,6 +160,6 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
 
     @Override
     public void onMyFailed(String error) {
-
+        ToastUtil.showToast(error);
     }
 }
