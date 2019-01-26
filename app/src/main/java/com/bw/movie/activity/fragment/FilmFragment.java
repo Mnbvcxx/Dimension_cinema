@@ -1,14 +1,17 @@
 package com.bw.movie.activity.fragment;
 
+import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bw.movie.R;
@@ -29,13 +32,15 @@ import butterknife.Unbinder;
 import recycler.coverflow.CoverFlowLayoutManger;
 import recycler.coverflow.RecyclerCoverFlow;
 
+import static android.view.View.VISIBLE;
+
 /**
  * @author : FangShiKang
  * @date : 2019/01/25.
  * email : fangshikang@outlook.com
  * desc :   影片  页面
  */
-public class FilmFragment extends Fragment implements MyView {
+public class FilmFragment extends Fragment implements MyView, View.OnClickListener {
 
     @BindView(R.id.film_ress)
     ImageView mFilmRess;
@@ -48,6 +53,15 @@ public class FilmFragment extends Fragment implements MyView {
     private Unbinder unbinder;
     private CinemaFlowAdapter mCinemaFlowAdapter;
     private MyPresenter mMyPresenter;
+    private View view;
+    @BindView(R.id.film_seach_ima)
+     ImageView mFilmSeachIma;
+    @BindView(R.id.film_seach_edit)
+     EditText mFilmSeachEdit;
+   @BindView(R.id.film_seach_text)
+     TextView mFilmSeachText;
+   @BindView(R.id.film_seach_relative)
+     RelativeLayout mFilmSeachRelative;
 
     @Nullable
     @Override
@@ -59,7 +73,8 @@ public class FilmFragment extends Fragment implements MyView {
         return view;
     }
 
-    @OnClick({R.id.film_ress, R.id.film_rcf, R.id.film_vpi})
+    @Override
+    @OnClick({R.id.film_ress, R.id.film_rcf, R.id.film_vpi,R.id.film_seach_ima,R.id.film_seach_text})
     public void onClick(View v) {
         switch (v.getId()) {
             default:
@@ -70,8 +85,55 @@ public class FilmFragment extends Fragment implements MyView {
                 break;
             case R.id.film_vpi:
                 break;
+            case R.id.film_seach_ima:
+                initfsi();
+                break;
+            case R.id.film_seach_text:
+                initfst();
+                break;
         }
     }
+
+
+
+    public static int dp2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
+    }
+
+    //点击图标拉伸搜索框
+    boolean mBoolean=true;
+    private void initfsi() {
+        if (mBoolean){
+            ObjectAnimator translationX = ObjectAnimator.ofFloat(mFilmSeachRelative, "translationX", 0,(dp2px(getActivity(),-170)));
+            ObjectAnimator alpha = ObjectAnimator.ofFloat(mFilmSeachEdit, "alpha", 0.0f, 1.0f);
+            ObjectAnimator alphaButton = ObjectAnimator.ofFloat(mFilmSeachText, "alpha", 0.0f, 1.0f);
+            alphaButton.setDuration(1000);
+            mFilmSeachText.setVisibility(VISIBLE);
+            alphaButton.start();
+            alpha.setDuration(1000);
+            mFilmSeachEdit.setVisibility(VISIBLE);
+            alpha.start();
+            //动画时间
+            translationX.setDuration(1000);
+            translationX.start();
+            mBoolean=!mBoolean;
+        }
+    }
+    //收缩搜索框
+    private void initfst() {
+        ObjectAnimator translationX = ObjectAnimator.ofFloat(mFilmSeachRelative, "translationX",(dp2px(getActivity(),-170)),0 );
+        ObjectAnimator alpha = ObjectAnimator.ofFloat(mFilmSeachEdit, "alpha", 1.0f,0.5f, 0.0f);
+        ObjectAnimator alphaButton = ObjectAnimator.ofFloat(mFilmSeachText, "alpha", 1.0f,0.5f, 0.0f);
+        alphaButton.setDuration(1000);
+        alphaButton.start();
+        alpha.setDuration(1000);
+        alpha.start();
+        translationX.setDuration(1000);
+        translationX.start();
+        mBoolean=!mBoolean;
+    }
+
 
     @Override
     public void onDestroyView() {
@@ -101,4 +163,6 @@ public class FilmFragment extends Fragment implements MyView {
     public void onMyFailed(String error) {
 
     }
+
+
 }
