@@ -21,4 +21,6 @@ public class Apis {
     public static final String MOVIE_RM_URL = "movie/v1/findHotMovieList?page=1&count=10";
     //即将上映
     public static final String MOVIE_COMINGSOON_URL = "movie/v1/findComingSoonMovieList?page=1&count=10";
+    //用户关注电影
+    public static final String USER_MOVIE_ATTENTION_URL = "movie/v1/verify/followMovie?movieId=";
 }
