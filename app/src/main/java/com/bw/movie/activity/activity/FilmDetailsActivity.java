@@ -1,9 +1,12 @@
 package com.bw.movie.activity.activity;
 
+import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -24,6 +27,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.view.View.VISIBLE;
 
 /**
  * 影片详情  页面
@@ -46,6 +51,15 @@ public class FilmDetailsActivity extends BaseActivity {
     RadioGroup mDetailRg;
     @BindView(R.id.detail_vp)
     ViewPager mDetailVp;
+    @BindView(R.id.film_seach_ima)
+    ImageView mFilmSeachIma;
+    @BindView(R.id.film_seach_edit)
+    EditText mFilmSeachEdit;
+    @BindView(R.id.film_seach_text)
+    TextView mFilmSeachText;
+    @BindView(R.id.film_seach_relative)
+    RelativeLayout mFilmSeachRelative;
+
     private List<Fragment> mFragments;
     private MyDetailsAdapter mMyDetailsAdapter;
 
@@ -88,9 +102,12 @@ public class FilmDetailsActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.layout_detail_ress, R.id.detail_ress_name, R.id.detail_rm_movie, R.id.detail_zz_ry, R.id.detail_soon, R.id.detail_rg, R.id.detail_vp})
+    @OnClick({R.id.layout_detail_ress, R.id.detail_ress_name, R.id.detail_rm_movie, R.id.detail_zz_ry,
+            R.id.detail_soon, R.id.detail_rg, R.id.detail_vp, R.id.film_seach_ima, R.id.film_seach_text})
     public void onClick(View v) {
         switch (v.getId()) {
+            default:
+                break;
             case R.id.layout_detail_ress:
                 break;
             case R.id.detail_ress_name:
@@ -111,7 +128,52 @@ public class FilmDetailsActivity extends BaseActivity {
                 break;
             case R.id.detail_vp:
                 break;
+            case R.id.film_seach_ima:
+                initfsi();
+                break;
+            case R.id.film_seach_text:
+                initfst();
+                break;
         }
+    }
+    public static int dp2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
+    }
+
+    //点击图标拉伸搜索框
+    boolean mBoolean = true;
+
+    private void initfsi() {
+        if (mBoolean) {
+            ObjectAnimator translationX = ObjectAnimator.ofFloat(mFilmSeachRelative, "translationX", 0, (dp2px(this, -170)));
+            ObjectAnimator alpha = ObjectAnimator.ofFloat(mFilmSeachEdit, "alpha", 0.0f, 1.0f);
+            ObjectAnimator alphaButton = ObjectAnimator.ofFloat(mFilmSeachText, "alpha", 0.0f, 1.0f);
+            alphaButton.setDuration(1000);
+            mFilmSeachText.setVisibility(VISIBLE);
+            alphaButton.start();
+            alpha.setDuration(1000);
+            mFilmSeachEdit.setVisibility(VISIBLE);
+            alpha.start();
+            //动画时间
+            translationX.setDuration(1000);
+            translationX.start();
+            mBoolean = !mBoolean;
+        }
+    }
+
+    //收缩搜索框
+    private void initfst() {
+        ObjectAnimator translationX = ObjectAnimator.ofFloat(mFilmSeachRelative, "translationX", (dp2px(this, -170)), 0);
+        ObjectAnimator alpha = ObjectAnimator.ofFloat(mFilmSeachEdit, "alpha", 1.0f, 0.5f, 0.0f);
+        ObjectAnimator alphaButton = ObjectAnimator.ofFloat(mFilmSeachText, "alpha", 1.0f, 0.5f, 0.0f);
+        alphaButton.setDuration(1000);
+        alphaButton.start();
+        alpha.setDuration(1000);
+        alpha.start();
+        translationX.setDuration(1000);
+        translationX.start();
+        mBoolean = !mBoolean;
     }
 
     /**
