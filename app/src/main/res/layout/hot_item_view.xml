@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginTop="@dimen/dp_10"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/layout_rm"
+        android:layout_width="@dimen/dp_312"
+        android:layout_height="@dimen/dp_139"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_123"
+            android:layout_alignParentBottom="true"
+            android:background="@mipmap/hdpi_" />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/rm_img"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_width="@dimen/dp_103"
+            android:layout_height="@dimen/dp_129"
+            android:layout_marginLeft="@dimen/dp_10"
+            app:roundedCornerRadius="@dimen/dp_8"/>
+
+        <TextView
+            android:id="@+id/rm_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_60"
+            android:layout_toRightOf="@id/rm_img"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textColor="@color/colorfff"
+            android:textSize="@dimen/sp_14" />
+
+        <ImageView
+            android:id="@+id/rm_like"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginRight="@dimen/dp_10"
+            android:src="@mipmap/xin" />
+
+        <TextView
+            android:id="@+id/rm_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rm_name"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_toRightOf="@id/rm_img"
+            android:ellipsize="end"
+            android:lines="5"
+            android:textColor="@color/colorfff"
+            android:textSize="@dimen/sp_12" />
+
+    </RelativeLayout>
+    <ImageView
+        android:layout_below="@id/layout_rm"
+        android:layout_width="@dimen/dp_312"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/fgx"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

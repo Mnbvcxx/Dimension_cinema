@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/hdpi"
+    tools:context=".activity.activity.fragment.adapter.activity.MovieDetailsActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_24"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_30">
+
+            <ImageView
+                android:id="@+id/dy"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="match_parent"
+                android:src="@mipmap/com_icon_movie_default" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_6"
+                android:layout_toRightOf="@id/dy"
+                android:text="@string/dy"
+                android:textColor="@color/colorfff"
+                android:textSize="@dimen/sp_14" />
+
+            <ImageView
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dp_24"
+                android:src="@mipmap/xin" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/dy_details_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_70"
+            android:text="XXXX"
+            android:textColor="@color/colorfff"
+            android:textSize="@dimen/sp_20" />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/dy_details_img"
+            android:layout_width="@dimen/dp_259"
+            android:layout_height="@dimen/dp_360"
+            android:layout_below="@id/dy_details_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_30" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_32"
+            android:layout_marginTop="@dimen/dp_40"
+            android:layout_below="@id/dy_details_img"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginRight="@dimen/dp_24">
+
+            <TextView
+                android:id="@+id/dy_details_details"
+                android:layout_width="@dimen/dp_58"
+                android:layout_height="match_parent"
+                android:background="@drawable/details_dy_shape_bg"
+                android:gravity="center"
+                android:text="@string/xq"
+                android:textColor="@color/colorfff"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/dy_details_prediction"
+                android:layout_width="@dimen/dp_58"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:layout_toRightOf="@id/dy_details_details"
+                android:background="@drawable/details_dy_shape_bg"
+                android:gravity="center"
+                android:text="预告"
+                android:textColor="@color/colorfff"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/dy_details_stills"
+                android:layout_width="@dimen/dp_58"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/dp_24"
+                android:layout_toLeftOf="@id/dy_details_review"
+                android:background="@drawable/details_dy_shape_bg"
+                android:gravity="center"
+                android:text="剧照"
+                android:textColor="@color/colorfff"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/dy_details_review"
+                android:layout_width="@dimen/dp_58"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/details_dy_shape_bg"
+                android:gravity="center"
+                android:text="影评"
+                android:textColor="@color/colorfff"
+                android:textSize="@dimen/sp_14" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_100"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/details_dy_back_shape_bg">
+
+            <ImageView
+                android:id="@+id/dy_details_back"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:layout_marginBottom="@dimen/sp_20"
+                android:src="@mipmap/com_icon_default" />
+
+            <TextView
+                android:id="@+id/dy_details_ticket"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:layout_marginRight="@dimen/dp_24"
+                android:layout_marginBottom="@dimen/sp_20"
+                android:background="@drawable/ticket_details_shape_bg"
+                android:gravity="center"
+                android:text="@string/gp"
+                android:textColor="@color/colorfff"
+                android:textSize="@dimen/sp_20" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

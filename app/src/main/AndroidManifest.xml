@@ -44,8 +44,9 @@
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:taskAffinity="net.sourceforge.simcpux"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
-        <activity android:name=".activity.activity.FilmDetailsActivity"></activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".activity.activity.FilmDetailsActivity" />
+        <activity android:name=".activity.activity.fragment.adapter.activity.MovieDetailsActivity"></activity>
     </application>
 
 </manifest>
