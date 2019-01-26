@@ -85,7 +85,7 @@
         android:id="@+id/detail_vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/movie_rg"
+        android:layout_below="@id/detail_rg"
         android:layout_marginTop="@dimen/dp_10" />
 
 

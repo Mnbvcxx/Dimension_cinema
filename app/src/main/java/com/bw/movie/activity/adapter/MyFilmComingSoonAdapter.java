@@ -1,6 +1,7 @@
 package com.bw.movie.activity.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.activity.FilmDetailsActivity;
 import com.bw.movie.activity.bean.FilmBean;
 import com.bw.movie.activity.bean.FilmComingSoonBean;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -40,11 +42,17 @@ public class MyFilmComingSoonAdapter extends RecyclerView.Adapter<MyFilmComingSo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyFilmComingSoonViewHolder myFilmCinemaxViewHolder, int i) {
+    public void onBindViewHolder(@NonNull MyFilmComingSoonViewHolder myFilmComingSoonViewHolder, int i) {
         String imageUrl = mResultBeans.get(i).getImageUrl();
         Uri uri = Uri.parse(imageUrl);
-        myFilmCinemaxViewHolder.mSimpleDraweeView.setImageURI(uri);
-        myFilmCinemaxViewHolder.mTextViewName.setText(mResultBeans.get(i).getName());
+        myFilmComingSoonViewHolder.mSimpleDraweeView.setImageURI(uri);
+        myFilmComingSoonViewHolder.mTextViewName.setText(mResultBeans.get(i).getName());
+        myFilmComingSoonViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mContext.startActivity(new Intent(mContext,FilmDetailsActivity.class));
+            }
+        });
     }
 
     @Override

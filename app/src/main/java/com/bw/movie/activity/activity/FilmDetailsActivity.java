@@ -88,6 +88,7 @@ public class FilmDetailsActivity extends BaseActivity {
 
     }
 
+    //点击监听事件
     @OnClick({R.id.layout_detail_ress, R.id.detail_ress_name, R.id.detail_rm_movie, R.id.detail_zz_ry, R.id.detail_soon, R.id.detail_rg, R.id.detail_vp})
     public void onClick(View v) {
         switch (v.getId()) {
@@ -96,20 +97,19 @@ public class FilmDetailsActivity extends BaseActivity {
             case R.id.detail_ress_name:
                 break;
             case R.id.detail_rm_movie:
-                ToastUtil.showToast("点击了");
                 mDetailVp.setCurrentItem(0);
                 break;
             case R.id.detail_zz_ry:
                 mDetailVp.setCurrentItem(1);
-                ToastUtil.showToast("点击了");
                 break;
             case R.id.detail_soon:
                 mDetailVp.setCurrentItem(2);
-                ToastUtil.showToast("点击了");
                 break;
             case R.id.detail_rg:
                 break;
             case R.id.detail_vp:
+                break;
+            default:
                 break;
         }
     }
