@@ -20,6 +20,7 @@
         android:textSize="@dimen/sp_12"
         android:textColor="#333333"
         android:layout_below="@id/adapter_title"
+        android:layout_toLeftOf="@id/adapter_pushtime"
         />
     <TextView
         android:id="@+id/adapter_pushtime"
@@ -27,7 +28,7 @@
         android:layout_height="wrap_content"
         android:textColor="#333333"
         android:textSize="@dimen/sp_12"
-        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_22"
         android:layout_alignParentRight="true"
         />
     <TextView

@@ -59,7 +59,7 @@ public class MessageActivity extends BaseActivity {
     protected void initData() {
         //TODO:请求网络出错，提示登录？？？？？
         //请求网络查询用户当前未读消息数量
-      //  doGetData(Apis.MESSAGE_UNREAND_COUNT,MessageUnreadBean.class);
+       doGetData(Apis.MESSAGE_UNREAND_COUNT,MessageUnreadBean.class);
         //recycler
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(OrientationHelper.VERTICAL);
@@ -67,7 +67,7 @@ public class MessageActivity extends BaseActivity {
         mUnreadAdapter = new UnreadAdapter(this);
         mMessageRecycler.setAdapter(mUnreadAdapter);
         //查询系统消息列表
-      //  doGetData(Apis.MESSAGE_ALLSYS_LIST+"?page="+1+"&count="+5,MessageRecyclerBean.class);
+        doGetData(Apis.MESSAGE_ALLSYS_LIST+"?page="+1+"&count="+5,MessageRecyclerBean.class);
     }
 
     /**
