@@ -27,6 +27,8 @@ public class Apis {
     public static final String MESSAGE_ALLSYS_LIST="tool/v1/verify/findAllSysMsgList";
     //用户关注电影
     public static final String USER_MOVIE_ATTENTION_URL = "movie/v1/verify/followMovie?movieId=";
+    //用户取消关注电影
+    public static final String USER_MOVIE_CANCEL_URL = "movie/v1/verify/cancelFollowMovie?movieId=";
     //根据电影id查看电影详情
     public static final String MOVIE_DETAILS_URL = "movie/v1/findMoviesDetail?movieId=";
     //意见反馈
@@ -35,4 +37,6 @@ public class Apis {
     public static final String RECOMMEND_URL = "cinema/v1/findRecommendCinemas?page=1&count=10";
     //附近影院
     public static final String NEARBY_URL = "cinema/v1/findNearbyCinemas?page=1&count=10";
+    //根据电影院名称,模糊查询电影院
+    public static final String SEACH_NAME_URL = "cinema/v1/findAllCinemas?page=1&count=10&cinemaName=";
 }

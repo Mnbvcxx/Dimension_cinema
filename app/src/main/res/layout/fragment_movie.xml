@@ -29,26 +29,71 @@
         android:text="@string/beijing"
         android:textColor="@color/color333"
         android:textSize="@dimen/sp_14" />
+    <!--搜索框-->
+    <RelativeLayout
+        android:id="@+id/movie_seach_relative"
+        android:layout_width="@dimen/dp_220"
+        android:layout_height="@dimen/dp_24"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_m_170"
+        android:background="@drawable/film_seach_bg">
+
+        <ImageView
+            android:id="@+id/movie_seach_ima"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:src="@mipmap/com_icon_search_default"
+
+            />
+
+        <EditText
+            android:id="@+id/movie_seach_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_toRightOf="@id/movie_seach_ima"
+            android:background="@null"
+            android:hint="请输入关键字"
+            android:textColor="#f2f2f2"
+            android:textSize="@dimen/sp_12"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/movie_seach_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_24"
+            android:background="@null"
+            android:text="搜索"
+            android:textColor="#ffff"
+            android:textSize="@dimen/sp_12"
+            android:visibility="gone" />
+    </RelativeLayout>
+
 
     <RadioGroup
         android:id="@+id/movie_rg"
         android:layout_width="@dimen/dp_198"
         android:layout_height="@dimen/dp_25"
         android:layout_below="@id/layout_movie_ress"
-        android:orientation="horizontal"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_10">
+        android:layout_marginTop="@dimen/dp_10"
+        android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/movie_recommended"
             android:layout_width="@dimen/dp_83"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:button="@null"
-            android:text="@string/tuijian"
-            android:checked="true"
-            android:textColor="@color/colorfff"
             android:background="@drawable/movie_selecter"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:text="@string/tuijian"
+            android:textColor="@color/colorfff"
             android:textSize="@dimen/sp_14" />
 
         <RadioButton
@@ -56,20 +101,29 @@
             android:layout_width="@dimen/dp_83"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:button="@null"
             android:layout_marginLeft="@dimen/dp_32"
+            android:background="@drawable/movie_selecter"
+            android:button="@null"
+            android:gravity="center"
             android:text="@string/fujin"
             android:textColor="@color/color333"
-            android:background="@drawable/movie_selecter"
             android:textSize="@dimen/sp_14" />
 
     </RadioGroup>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/movie_vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/movie_rg"
         android:layout_marginTop="@dimen/dp_10" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/movie_seach_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/movie_rg"
+        android:layout_marginTop="@dimen/dp_10"
+        android:visibility="gone" />
 
 </RelativeLayout>

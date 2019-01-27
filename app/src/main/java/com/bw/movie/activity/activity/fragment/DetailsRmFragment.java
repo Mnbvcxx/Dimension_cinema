@@ -14,7 +14,6 @@ import android.widget.ImageView;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.activity.fragment.adapter.DetailsRmAdapter;
-import com.bw.movie.activity.activity.fragment.adapter.DetailsRyAdapter;
 import com.bw.movie.activity.bean.FilmCinemaxBean;
 import com.bw.movie.apis.Apis;
 import com.bw.movie.mvc.presenter.MyPresenter;
@@ -44,6 +43,7 @@ public class DetailsRmFragment extends Fragment implements MyView {
     private Unbinder unbinder;
     private MyPresenter mMyPresenter;
     private DetailsRmAdapter mDetailsRmAdapter;
+    private boolean isCheck = false;
 
     @Nullable
     @Override
@@ -69,9 +69,19 @@ public class DetailsRmFragment extends Fragment implements MyView {
                 mRmDetailsRv.setAdapter(mDetailsRmAdapter);
                 mDetailsRmAdapter.setOnCheckedListener(new DetailsRmAdapter.onCheckedListener() {
                     @Override
-                    public void onClicked(int position) {
-                        int id = result.get(position).getId();
-                        mMyPresenter.onGetDatas(Apis.USER_MOVIE_ATTENTION_URL + id+"", RegisterBean.class);
+                    public void onClicked(int position,List<FilmCinemaxBean.ResultBean> mjihe, ImageView imageView) {
+                            int id = mjihe.get(position).getId();
+                        if (isCheck == false) {
+                            mMyPresenter.onGetDatas(Apis.USER_MOVIE_ATTENTION_URL + id, RegisterBean.class);
+                            isCheck = true;
+                            imageView.setImageResource(R.mipmap.com_icon_collection_selected);
+                            mDetailsRmAdapter.notifyDataSetChanged();
+                        } else {
+                            mMyPresenter.onGetDatas(Apis.USER_MOVIE_CANCEL_URL + id, RegisterBean.class);
+                            isCheck = false;
+                            imageView.setImageResource(R.mipmap.com_icon_collection_default);
+                            mDetailsRmAdapter.notifyDataSetChanged();
+                        }
                     }
                 });
             }
@@ -79,8 +89,6 @@ public class DetailsRmFragment extends Fragment implements MyView {
         } else if (data instanceof RegisterBean) {
             RegisterBean registerBean = (RegisterBean) data;
             if (registerBean.getStatus().equals("0000")) {
-                ToastUtil.showToast(registerBean.getMessage());
-            } else {
                 ToastUtil.showToast(registerBean.getMessage());
             }
         }

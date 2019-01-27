@@ -26,7 +26,7 @@ import java.util.List;
  * email : fangshikang@outlook.com
  * desc :   热门  全部列表  适配器
  */
-public class DetailsRmAdapter extends RecyclerView.Adapter<DetailsRmAdapter.DetailsRmViewHolder>{
+public class DetailsRmAdapter extends RecyclerView.Adapter<DetailsRmAdapter.DetailsRmViewHolder> {
     private Context mContext;
     private List<FilmCinemaxBean.ResultBean> mResultBeans = new ArrayList<>();
 
@@ -43,18 +43,24 @@ public class DetailsRmAdapter extends RecyclerView.Adapter<DetailsRmAdapter.Deta
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DetailsRmViewHolder detailsRmViewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final DetailsRmViewHolder detailsRmViewHolder, final int i) {
         String imageUrl = mResultBeans.get(i).getImageUrl();
         Uri uri = Uri.parse(imageUrl);
         detailsRmViewHolder.mSimpleDraweeView.setImageURI(uri);
         detailsRmViewHolder.mTextViewNam.setText(mResultBeans.get(i).getName());
         detailsRmViewHolder.mTextViewDesc.setText(mResultBeans.get(i).getSummary());
+
+        if (mResultBeans.get(i).getFollowMovie()%2 == 1) {
+            detailsRmViewHolder.mImageView.setImageResource(R.mipmap.com_icon_collection_selected);
+        }else {
+            detailsRmViewHolder.mImageView.setImageResource(R.mipmap.com_icon_collection_default);
+        }
         //点赞
         detailsRmViewHolder.mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mOnCheckedListener != null) {
-                    mOnCheckedListener.onClicked(i);
+                    mOnCheckedListener.onClicked(i,mResultBeans, detailsRmViewHolder.mImageView);
                 }
             }
         });
@@ -65,7 +71,7 @@ public class DetailsRmAdapter extends RecyclerView.Adapter<DetailsRmAdapter.Deta
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, MovieDetailsActivity.class);
                 int id = mResultBeans.get(i).getId();
-                intent.putExtra("movieId",id);
+                intent.putExtra("movieId", id);
                 mContext.startActivity(intent);
             }
         });
@@ -77,9 +83,9 @@ public class DetailsRmAdapter extends RecyclerView.Adapter<DetailsRmAdapter.Deta
         return mResultBeans == null ? 0 : mResultBeans.size();
     }
 
-    class DetailsRmViewHolder extends RecyclerView.ViewHolder{
+    class DetailsRmViewHolder extends RecyclerView.ViewHolder {
         SimpleDraweeView mSimpleDraweeView;
-        TextView mTextViewNam,mTextViewDesc;
+        TextView mTextViewNam, mTextViewDesc;
         ImageView mImageView;
 
         public DetailsRmViewHolder(@NonNull View itemView) {
@@ -90,6 +96,7 @@ public class DetailsRmAdapter extends RecyclerView.Adapter<DetailsRmAdapter.Deta
             mImageView = itemView.findViewById(R.id.rm_like);
         }
     }
+
     private onCheckedListener mOnCheckedListener;
 
     public void setOnCheckedListener(onCheckedListener onCheckedListener) {
@@ -98,6 +105,6 @@ public class DetailsRmAdapter extends RecyclerView.Adapter<DetailsRmAdapter.Deta
 
     //自定义接口回调
     public interface onCheckedListener {
-        void onClicked(int position);
+        void onClicked(int positon,List<FilmCinemaxBean.ResultBean> mjihe , ImageView imageView);
     }
 }
