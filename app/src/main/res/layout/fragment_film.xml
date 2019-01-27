@@ -148,6 +148,7 @@
                     android:id="@+id/film_rm_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_24"
                     android:layout_below="@id/layout_rm"
                     android:layout_marginTop="@dimen/dp_20" />
 
@@ -197,6 +198,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/layout_zz"
+                    android:layout_marginLeft="@dimen/dp_24"
                     android:layout_marginTop="@dimen/dp_20" />
 
             </RelativeLayout>
@@ -245,6 +247,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/layout_jij"
+                    android:layout_marginLeft="@dimen/dp_24"
                     android:layout_marginTop="@dimen/dp_20" />
 
             </RelativeLayout>

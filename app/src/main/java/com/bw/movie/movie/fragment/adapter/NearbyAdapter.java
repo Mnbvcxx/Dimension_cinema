@@ -63,6 +63,9 @@ public class NearbyAdapter extends RecyclerView.Adapter<NearbyAdapter.NearbyView
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, CinemaDetailsActivity.class);
                 intent.putExtra("cinemaId", mResultBeans.get(i).getId());
+                intent.putExtra("logo",mResultBeans.get(i).getLogo());
+                intent.putExtra("name",mResultBeans.get(i).getName());
+                intent.putExtra("address",mResultBeans.get(i).getAddress());
                 mContext.startActivity(intent);
             }
         });
