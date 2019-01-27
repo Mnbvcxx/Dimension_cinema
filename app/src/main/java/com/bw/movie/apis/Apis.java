@@ -29,4 +29,8 @@ public class Apis {
     public static final String USER_MOVIE_ATTENTION_URL = "movie/v1/verify/followMovie?movieId=";
     //根据电影id查看电影详情
     public static final String MOVIE_DETAILS_URL = "movie/v1/findMoviesDetail?movieId=";
+    //推荐影院
+    public static final String RECOMMEND_URL = "cinema/v1/findRecommendCinemas?page=1&count=10";
+    //附近影院
+    public static final String NEARBY_URL = "cinema/v1/findNearbyCinemas?page=1&count=10";
 }

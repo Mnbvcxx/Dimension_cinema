@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dp_10">
+
+    <RelativeLayout
+        android:layout_width="@dimen/dp_312"
+        android:layout_height="@dimen/dp_95"
+        android:background="@drawable/recommended_shape_bg"
+        android:layout_centerHorizontal="true">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/recommended_img"
+            android:layout_width="@dimen/dp_70"
+            android:layout_height="@dimen/dp_70"
+            app:roundedCornerRadius="@dimen/dp_3"
+            android:layout_margin="@dimen/dp_10"
+            app:roundingBorderWidth="@dimen/dp_1"
+            app:roundingBorderColor="@color/colorA999" />
+
+        <TextView
+            android:id="@+id/recommended_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_20"
+            android:layout_toRightOf="@id/recommended_img"
+            android:ellipsize="end"
+            android:lines="1"
+            android:includeFontPadding="false"
+            android:textColor="@color/color333"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:id="@+id/recommended_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recommended_name"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginRight="@dimen/dp_20"
+            android:layout_toRightOf="@id/recommended_img"
+            android:ellipsize="end"
+            android:lines="2"
+            android:includeFontPadding="false"
+            android:textColor="@color/color333"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:id="@+id/recommended_km"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/recommended_img"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_toRightOf="@id/recommended_img"
+            android:ellipsize="end"
+            android:lines="1"
+            android:includeFontPadding="false"
+            android:textColor="@color/color333"
+            android:textSize="@dimen/sp_12" />
+
+        <ImageView
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
+            android:id="@+id/recommended_concern"
+            android:src="@mipmap/com_icon_collection_default"
+            android:layout_alignBottom="@id/recommended_img"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_20"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

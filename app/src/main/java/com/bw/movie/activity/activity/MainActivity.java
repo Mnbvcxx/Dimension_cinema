@@ -1,5 +1,6 @@
 package com.bw.movie.activity.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -62,6 +63,12 @@ public class MainActivity extends BaseActivity {
     //初始化数据
     @Override
     protected void initData() {
+        Intent intent = getIntent();
+        String sessionId = intent.getStringExtra("sessionId");
+        String userId = intent.getStringExtra("userId");
+        String nickName = intent.getStringExtra("nickName");
+        String headPic = intent.getStringExtra("headPic");
+        String phone = intent.getStringExtra("phone");
         //创建一个集合,用来添加我们所需要的fragment
         mFragments = new ArrayList<>();
         mFragments.add(new FilmFragment());
