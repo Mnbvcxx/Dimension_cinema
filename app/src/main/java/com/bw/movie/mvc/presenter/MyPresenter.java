@@ -83,6 +83,25 @@ public class MyPresenter {
         });
     }
 
+
+    public void onPostImage(String path, Map<String, String> map, Class clazz) {
+        mMyModel.requestImage(path, map, clazz, new MyCallback() {
+            @Override
+            public void onSuccess(Object data) {
+                mMyView.onMySuccess(data);
+            }
+
+            @Override
+            public void onFailed(String error) {
+                mMyView.onMyFailed(error);
+            }
+        });
+    }
+
+
+
+
+
     //解绑
     public void onDecathed() {
         if (mMyModel != null) {

@@ -24,6 +24,7 @@ import com.bw.movie.activity.activity.MainActivity;
 import com.bw.movie.apis.Apis;
 import com.bw.movie.apis.UserApis;
 import com.bw.movie.base.BaseActivity;
+import com.bw.movie.login.bean.EventBusInfoBean;
 import com.bw.movie.login.bean.LoginBean;
 import com.bw.movie.register.activity.RegisterActivity;
 import com.bw.movie.utils.EncryptUtil;
@@ -33,7 +34,12 @@ import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -160,6 +166,10 @@ public class LoginActivity extends BaseActivity {
                         .putString("userId", loginBean.getResult().getUserId() + "")
                         .putString("sessionId", loginBean.getResult().getSessionId())
                         .commit();
+                infoBean.setInfoemail(mLoginPwd.getText().toString());
+                infoBean.setInfopwd(mLoginPwd.getText().toString());
+                EventBus.getDefault().postSticky(infoBean);
+
                 finish();
             } else {
                 ToastUtil.showToast(loginBean.getMessage());
@@ -169,7 +179,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void netFailed(String s) {
-        ToastUtil.showToast(s);
+//        ToastUtil.showToast(s);
     }
 
     @OnClick({R.id.login_reg, R.id.login_btn_go, R.id.login_wx, R.id.login_hint, R.id.login_checkbox, R.id.login_jz_pwd, R.id.login_checkbox_login, R.id.login_zd_login})
@@ -246,4 +256,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
     }
+
+    EventBusInfoBean infoBean;
+
 }

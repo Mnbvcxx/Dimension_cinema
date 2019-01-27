@@ -83,6 +83,19 @@ public abstract class BaseActivity extends AppCompatActivity implements MyView {
         }
     }
 
+    /**
+     * presenter层回调方法postImage请求
+     * @param url
+     * @param map
+     * @param clazz
+     */
+    protected void doPostImageData(String url,Map<String,String>map,Class clazz){
+        if (mMyPresenter != null) {
+            mMyPresenter.onPostImage(url,map, clazz);
+        }
+    }
+
+
     //解绑
     @Override
     protected void onDestroy() {

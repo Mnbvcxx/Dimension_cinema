@@ -2,8 +2,10 @@ package com.bw.movie.netWork;
 
 import java.util.Map;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -47,4 +49,12 @@ public interface BaseApis {
     @Multipart
     @PUT
     Observable<ResponseBody> put(@Url String url, @PartMap Map<String, RequestBody> map);
+    /**
+     * 上传图片
+     * @param path
+     * @param multipartBody
+     * @return
+     */
+    @POST
+    Observable<ResponseBody> upImage(@Url String path,@Body MultipartBody multipartBody);
 }

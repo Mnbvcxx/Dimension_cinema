@@ -2,12 +2,14 @@ package com.bw.movie.netWork;
 
 import com.bw.movie.utils.CustomIntercept;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -213,4 +215,34 @@ public class RetrofitManager {
 
         void onFailed(String error);//失败
     }
+
+    /**
+     * 10.图片传入
+     *  创建MultipartBody.Builder，类型为Form
+     */
+    public static MultipartBody filesMultipar(Map<String,String> map) {
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            File file = new File(entry.getValue());
+            builder.addFormDataPart(entry.getKey(), "tp.png",
+                    RequestBody.create(MediaType.parse("multipart/form-data"), file));
+        }
+        builder.setType(MultipartBody.FORM);
+        MultipartBody multipartBody = builder.build();
+        return multipartBody;
+    }
+
+    public RetrofitManager upImage(String path,Map<String,String>map,HttpListener httpListener){
+        if (map==null){
+            map=new HashMap<>();
+        }
+        MultipartBody multipartBody = filesMultipar(map);
+        mBaseApis.upImage(path,multipartBody)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(getObserver(httpListener));
+        return manager;
+    }
+
+
 }

@@ -35,4 +35,12 @@ public class Apis {
     public static final String RECOMMEND_URL = "cinema/v1/findRecommendCinemas?page=1&count=10";
     //附近影院
     public static final String NEARBY_URL = "cinema/v1/findNearbyCinemas?page=1&count=10";
+    //根据用户ID查询用户信息
+    public static final String MESSAGE_USERINFO="user/v1/verify/getUserInfoByUserId";
+    //上传头像
+    public static final String MESSAGE_INFO_HEAD="user/v1/verify/uploadHeadPic";
+    //修改用户信息
+    public static final String MESSAGE_INFO_USER="user/v1/verify/modifyUserInfo";
+    //修改密码
+    public static final String MESSAGE_INFO_PWD="user/v1/verify/modifyUserPwd";
 }
