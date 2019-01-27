@@ -111,7 +111,7 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
     private MyFilmComingSoonAdapter mMyFilmComingSoonAdapter;
     private MyFilmHosMoviesAdapter mMyFilmHosMoviesAdapter;
 
-    @SuppressLint("HandlerLeak")
+    /*@SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -120,7 +120,7 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
             mFilmRcf.scrollToPosition(pos + 1);
             mHandler.sendEmptyMessageDelayed(0, 3000);
         }
-    };
+    };*/
     private List<String> mListImg;
 
     @Nullable
@@ -235,7 +235,7 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
                 mFilmRcf.setFlatFlow(false);
                 mFilmRcf.setAdapter(mCinemaFlowAdapter);
                 mFilmRcf.scrollToPosition(2);
-                mHandler.sendEmptyMessageDelayed(0, 3000);
+                //mHandler.sendEmptyMessageDelayed(0, 3000);
                 /*mFilmRcf.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {
                     @Override
                     public void onItemSelected(int position) {
