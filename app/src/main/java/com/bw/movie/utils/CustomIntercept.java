@@ -14,22 +14,22 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- *      自定义拦截器
+ * 自定义拦截器
  */
 public class CustomIntercept implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Request original  = chain.request();
-        SharedPreferences sharedPreferences = MyApplication.getmContext().getSharedPreferences("UserShao", Context.MODE_PRIVATE);
+        Request original = chain.request();
+        SharedPreferences sharedPreferences = MyApplication.getmContext().getSharedPreferences("config", Context.MODE_PRIVATE);
         String userId = sharedPreferences.getString("userId", "");
         String sessionId = sharedPreferences.getString("sessionId", "");
 
         Request.Builder newBuilder = original.newBuilder();
-        newBuilder.method(original.method(),original.body());
-        if (!TextUtils.isEmpty(userId)&&!TextUtils.isEmpty(sessionId)){
-            newBuilder.addHeader("userId",userId);
-            newBuilder.addHeader("sessionId",sessionId);
+        newBuilder.method(original.method(), original.body());
+        if (!TextUtils.isEmpty(userId) && !TextUtils.isEmpty(sessionId)) {
+            newBuilder.addHeader("userId", userId);
+            newBuilder.addHeader("sessionId", sessionId);
         }
         Request request = newBuilder.build();
         return chain.proceed(request);

@@ -31,4 +31,8 @@ public class Apis {
     public static final String MOVIE_DETAILS_URL = "movie/v1/findMoviesDetail?movieId=";
     //意见反馈
     public static final String FEED_BACKS="tool/v1/verify/recordFeedBack";
+    //推荐影院
+    public static final String RECOMMEND_URL = "cinema/v1/findRecommendCinemas?page=1&count=10";
+    //附近影院
+    public static final String NEARBY_URL = "cinema/v1/findNearbyCinemas?page=1&count=10";
 }
