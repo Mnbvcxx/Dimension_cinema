@@ -13,4 +13,5 @@
         android:background="@drawable/movie_shape_bg_failed"
         android:layout_marginTop="@dimen/dp_50"
         />
+
 </RelativeLayout>
