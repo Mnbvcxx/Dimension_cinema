@@ -116,4 +116,30 @@ public class MyModel {
         });
     }
 
+
+    public void requestImage(String path, Map<String, String> map, final Class clazz, final MyCallback callback) {
+        RetrofitManager.getInstance().upImage(path, map, new RetrofitManager.HttpListener() {
+            @Override
+            public void onSuccess(String data) {
+                try {
+                    Object o = new Gson().fromJson(data, clazz);
+                    if (callback != null) {
+                        callback.onSuccess(o);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    if (callback != null) {
+                        callback.onFailed(e.getMessage());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailed(String error) {
+                if (callback!=null){
+                    callback.onFailed(error);
+                }
+            }
+        });
+    }
 }
