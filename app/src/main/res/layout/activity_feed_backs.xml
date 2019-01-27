@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,7 +17,7 @@
         android:layout_marginLeft="@dimen/dp_24"
         />
     <ScrollView
-        android:id="@+id/scro"
+        android:id="@+id/feebak_scro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/yijina"
@@ -30,6 +30,7 @@
             android:background="@drawable/frag_myacty_infoacty"
             >
             <EditText
+                android:id="@+id/feebak_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -42,11 +43,51 @@
         </RelativeLayout>
 
     </ScrollView>
+    <!--反馈成功-->
+    <LinearLayout
+        android:id="@+id/feebak_success"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:visibility="gone"
+        >
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:layout_width="@dimen/dp_70"
+            android:layout_height="@dimen/dp_70"
+            fresco:placeholderImage="@mipmap/group_2"
+            android:layout_marginTop="@dimen/dp_142"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="反馈成功"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:layout_marginTop="@dimen/dp_30"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_12"
+            android:textColor="#666666"
+            android:text="感谢您对维度影院的关注与支持，我们会认真处理您的反"
+            android:layout_marginTop="@dimen/dp_30"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="馈，尽快修复和完善相关功能"
+            android:textSize="@dimen/sp_12"
+            android:textColor="#666666"
+            />
+    </LinearLayout>
+
     <Button
         android:id="@+id/feedback_butn"
         android:layout_width="@dimen/dp_48"
         android:layout_height="@dimen/dp_25"
-        android:layout_below="@id/scro"
+        android:layout_below="@id/feebak_scro"
         android:layout_marginTop="@dimen/dp_20"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/dp_24"
@@ -55,5 +96,16 @@
         android:textColor="#ffffff"
         android:background="@mipmap/rectangle_12"
         />
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/feebak_requst"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_60"
+        fresco:placeholderImage="@mipmap/com_icon_default"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:visibility="gone"
+        />
+
 
 </RelativeLayout>

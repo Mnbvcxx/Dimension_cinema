@@ -29,4 +29,6 @@ public class Apis {
     public static final String USER_MOVIE_ATTENTION_URL = "movie/v1/verify/followMovie?movieId=";
     //根据电影id查看电影详情
     public static final String MOVIE_DETAILS_URL = "movie/v1/findMoviesDetail?movieId=";
+    //意见反馈
+    public static final String FEED_BACKS="tool/v1/verify/recordFeedBack";
 }
