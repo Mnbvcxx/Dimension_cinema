@@ -44,6 +44,7 @@ public class DetailsRmFragment extends Fragment implements MyView {
     private MyPresenter mMyPresenter;
     private DetailsRmAdapter mDetailsRmAdapter;
     private boolean isCheck = false;
+    private int num;
 
     @Nullable
     @Override
@@ -67,20 +68,19 @@ public class DetailsRmFragment extends Fragment implements MyView {
                 final List<FilmCinemaxBean.ResultBean> result = filmCinemaxBean.getResult();
                 mDetailsRmAdapter = new DetailsRmAdapter(getActivity(), result);
                 mRmDetailsRv.setAdapter(mDetailsRmAdapter);
+                //关注电影
                 mDetailsRmAdapter.setOnCheckedListener(new DetailsRmAdapter.onCheckedListener() {
                     @Override
-                    public void onClicked(int position,List<FilmCinemaxBean.ResultBean> mjihe, ImageView imageView) {
-                            int id = mjihe.get(position).getId();
-                        if (isCheck == false) {
-                            mMyPresenter.onGetDatas(Apis.USER_MOVIE_ATTENTION_URL + id, RegisterBean.class);
-                            isCheck = true;
-                            imageView.setImageResource(R.mipmap.com_icon_collection_selected);
-                            mDetailsRmAdapter.notifyDataSetChanged();
-                        } else {
-                            mMyPresenter.onGetDatas(Apis.USER_MOVIE_CANCEL_URL + id, RegisterBean.class);
-                            isCheck = false;
+                    public void onClicked(int position, ImageView imageView) {
+                        num++;
+                        if (num % 2 == 0) {
+                            //为偶数时取消关注
+                            mMyPresenter.onGetDatas(Apis.USER_MOVIE_CANCEL_URL + position, RegisterBean.class);
                             imageView.setImageResource(R.mipmap.com_icon_collection_default);
-                            mDetailsRmAdapter.notifyDataSetChanged();
+                        } else {
+                            //为奇数时关注成功
+                            mMyPresenter.onGetDatas(Apis.USER_MOVIE_ATTENTION_URL + position, RegisterBean.class);
+                            imageView.setImageResource(R.mipmap.com_icon_collection_selected);
                         }
                     }
                 });

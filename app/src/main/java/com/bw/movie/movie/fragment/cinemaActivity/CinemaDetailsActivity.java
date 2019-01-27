@@ -24,6 +24,9 @@ import butterknife.OnClick;
 import recycler.coverflow.CoverFlowLayoutManger;
 import recycler.coverflow.RecyclerCoverFlow;
 
+/**
+ * 影院旗下所排期电影
+ */
 public class CinemaDetailsActivity extends BaseActivity {
 
     @BindView(R.id.cin_rcf)

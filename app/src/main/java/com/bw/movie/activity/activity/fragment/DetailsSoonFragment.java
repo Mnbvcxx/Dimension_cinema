@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.activity.fragment.adapter.DetailsRmAdapter;
 import com.bw.movie.activity.activity.fragment.adapter.DetailsRyAdapter;
 import com.bw.movie.activity.activity.fragment.adapter.DetailsSoonAdapter;
 import com.bw.movie.activity.bean.FilmBean;
@@ -44,6 +45,7 @@ public class DetailsSoonFragment extends Fragment implements MyView {
     private Unbinder unbinder;
     private MyPresenter mMyPresenter;
     private DetailsSoonAdapter mDetailsSoonAdapter;
+    private int num;
 
     @Nullable
     @Override
@@ -83,23 +85,30 @@ public class DetailsSoonFragment extends Fragment implements MyView {
 
                 mDetailsSoonAdapter = new DetailsSoonAdapter(getActivity(), result);
                 mSoonDetailsRv.setAdapter(mDetailsSoonAdapter);
+                //关注电影
                 mDetailsSoonAdapter.setOnCheckedListener(new DetailsSoonAdapter.onCheckedListener() {
                     @Override
-                    public void onClicked(int position) {
-                        int id = result.get(position).getId();
-                        mMyPresenter.onGetDatas(Apis.USER_MOVIE_ATTENTION_URL + id, RegisterBean.class);
+                    public void onClicked(int position, ImageView imageView) {
+                        num++;
+                        if (num % 2 == 0) {
+                            //为偶数时取消关注
+                            mMyPresenter.onGetDatas(Apis.USER_MOVIE_CANCEL_URL + position, RegisterBean.class);
+                            imageView.setImageResource(R.mipmap.com_icon_collection_default);
+                        } else {
+                            //为奇数时关注成功
+                            mMyPresenter.onGetDatas(Apis.USER_MOVIE_ATTENTION_URL + position, RegisterBean.class);
+                            imageView.setImageResource(R.mipmap.com_icon_collection_selected);
+                        }
                     }
                 });
             }
+
         } else if (data instanceof RegisterBean) {
             RegisterBean registerBean = (RegisterBean) data;
             if (registerBean.getStatus().equals("0000")) {
                 ToastUtil.showToast(registerBean.getMessage());
-            }else {
-                ToastUtil.showToast(registerBean.getMessage());
             }
         }
-
     }
 
     @Override

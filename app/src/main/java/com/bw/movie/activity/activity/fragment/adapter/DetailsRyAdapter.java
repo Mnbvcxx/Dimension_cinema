@@ -43,18 +43,23 @@ public class DetailsRyAdapter extends RecyclerView.Adapter<DetailsRyAdapter.Deta
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DetailsRyViewHolder detailsRyViewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final DetailsRyViewHolder detailsRyViewHolder, final int i) {
         String imageUrl = mResultBeans.get(i).getImageUrl();
         Uri uri = Uri.parse(imageUrl);
         detailsRyViewHolder.mSimpleDraweeView.setImageURI(uri);
         detailsRyViewHolder.mTextViewNam.setText(mResultBeans.get(i).getName());
         detailsRyViewHolder.mTextViewDesc.setText(mResultBeans.get(i).getSummary());
-        //点赞
+        if (mResultBeans.get(i).getFollowMovie() == 1) {
+            detailsRyViewHolder.mImageView.setImageResource(R.mipmap.com_icon_collection_selected);
+        } else if (mResultBeans.get(i).getFollowMovie() == 2) {
+            detailsRyViewHolder.mImageView.setImageResource(R.mipmap.com_icon_collection_default);
+        }
+        //关注点击事件
         detailsRyViewHolder.mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mOnCheckedListener != null) {
-                    mOnCheckedListener.onClicked(i);
+                    mOnCheckedListener.onClicked(mResultBeans.get(i).getId(),detailsRyViewHolder.mImageView);
                 }
             }
         });
@@ -96,6 +101,6 @@ public class DetailsRyAdapter extends RecyclerView.Adapter<DetailsRyAdapter.Deta
 
     //自定义接口回调
     public interface onCheckedListener {
-        void onClicked(int position);
+        void onClicked(int position,ImageView imageView);
     }
 }

@@ -15,6 +15,7 @@ import com.bw.movie.R;
 import com.bw.movie.activity.activity.FilmDetailsActivity;
 import com.bw.movie.activity.bean.FilmCinemaxBean;
 import com.bw.movie.activity.bean.SeachBean;
+import com.bw.movie.movie.fragment.cinemaActivity.CinemaDetailsActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
@@ -43,13 +44,21 @@ public class MyMovieSeachAdapter extends RecyclerView.Adapter<MyMovieSeachAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyMovieSeachViewHolder myMovieSeachViewHolder, int i) {
+    public void onBindViewHolder(@NonNull MyMovieSeachViewHolder myMovieSeachViewHolder, final int i) {
         String logo = mResultBeans.get(i).getLogo();
         Uri uri = Uri.parse(logo);
         myMovieSeachViewHolder.mSimpleDraweeView.setImageURI(uri);
         myMovieSeachViewHolder.mTextViewName.setText(mResultBeans.get(i).getName());
         myMovieSeachViewHolder.mTextViewDesc.setText(mResultBeans.get(i).getAddress());
         myMovieSeachViewHolder.mTextViewKm.setText(mResultBeans.get(i).getDistance() + "km");
+        myMovieSeachViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, CinemaDetailsActivity.class);
+                intent.putExtra("cinemaId", mResultBeans.get(i).getId());
+                mContext.startActivity(intent);
+            }
+        });
 
     }
 

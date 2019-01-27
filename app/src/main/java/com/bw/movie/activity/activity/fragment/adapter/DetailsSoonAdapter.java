@@ -43,18 +43,23 @@ public class DetailsSoonAdapter extends RecyclerView.Adapter<DetailsSoonAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DetailsSoonViewHolder detailsSoonViewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final DetailsSoonViewHolder detailsSoonViewHolder, final int i) {
         String imageUrl = mResultBeans.get(i).getImageUrl();
         Uri uri = Uri.parse(imageUrl);
         detailsSoonViewHolder.mSimpleDraweeView.setImageURI(uri);
         detailsSoonViewHolder.mTextViewNam.setText(mResultBeans.get(i).getName());
         detailsSoonViewHolder.mTextViewDesc.setText(mResultBeans.get(i).getSummary());
-        //点赞
+        if (mResultBeans.get(i).getFollowMovie() == 1) {
+            detailsSoonViewHolder.mImageView.setImageResource(R.mipmap.com_icon_collection_selected);
+        } else if (mResultBeans.get(i).getFollowMovie() == 2) {
+            detailsSoonViewHolder.mImageView.setImageResource(R.mipmap.com_icon_collection_default);
+        }
+        //关注点击事件
         detailsSoonViewHolder.mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mOnCheckedListener != null) {
-                    mOnCheckedListener.onClicked(i);
+                    mOnCheckedListener.onClicked(mResultBeans.get(i).getId(),detailsSoonViewHolder.mImageView);
                 }
             }
         });
@@ -97,6 +102,6 @@ public class DetailsSoonAdapter extends RecyclerView.Adapter<DetailsSoonAdapter.
 
     //自定义接口回调
     public interface onCheckedListener {
-        void onClicked(int position);
+        void onClicked(int position,ImageView imageView);
     }
 }
