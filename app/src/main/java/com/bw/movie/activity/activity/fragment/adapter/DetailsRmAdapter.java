@@ -50,9 +50,9 @@ public class DetailsRmAdapter extends RecyclerView.Adapter<DetailsRmAdapter.Deta
         detailsRmViewHolder.mTextViewNam.setText(mResultBeans.get(i).getName());
         detailsRmViewHolder.mTextViewDesc.setText(mResultBeans.get(i).getSummary());
 
-        if (mResultBeans.get(i).getFollowMovie()%2 == 1) {
+        if (mResultBeans.get(i).getFollowMovie() == 1) {
             detailsRmViewHolder.mImageView.setImageResource(R.mipmap.com_icon_collection_selected);
-        }else {
+        } else {
             detailsRmViewHolder.mImageView.setImageResource(R.mipmap.com_icon_collection_default);
         }
         //点赞
@@ -60,7 +60,7 @@ public class DetailsRmAdapter extends RecyclerView.Adapter<DetailsRmAdapter.Deta
             @Override
             public void onClick(View view) {
                 if (mOnCheckedListener != null) {
-                    mOnCheckedListener.onClicked(i,mResultBeans, detailsRmViewHolder.mImageView);
+                    mOnCheckedListener.onClicked(i, mResultBeans, detailsRmViewHolder.mImageView);
                 }
             }
         });
@@ -105,6 +105,6 @@ public class DetailsRmAdapter extends RecyclerView.Adapter<DetailsRmAdapter.Deta
 
     //自定义接口回调
     public interface onCheckedListener {
-        void onClicked(int positon,List<FilmCinemaxBean.ResultBean> mjihe , ImageView imageView);
+        void onClicked(int positon, List<FilmCinemaxBean.ResultBean> mjihe, ImageView imageView);
     }
 }

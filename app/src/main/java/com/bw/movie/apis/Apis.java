@@ -39,4 +39,8 @@ public class Apis {
     public static final String NEARBY_URL = "cinema/v1/findNearbyCinemas?page=1&count=10";
     //根据电影院名称,模糊查询电影院
     public static final String SEACH_NAME_URL = "cinema/v1/findAllCinemas?page=1&count=10&cinemaName=";
+    //根据影院id查询该影院当前排期的电影列表
+    public static final String CINEMA_ID_URL = "movie/v1/findMovieListByCinemaId?cinemaId=";
+    //根据电影ID和影院ID查询电影排期列表   2&movieId=3
+    public static final String MOVIEANDCINEMA_ID_URL = "movie/v1/findMovieScheduleList?cinemasId=";
 }

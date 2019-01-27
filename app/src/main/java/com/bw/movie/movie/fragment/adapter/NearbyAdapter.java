@@ -1,6 +1,7 @@
 package com.bw.movie.movie.fragment.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.bw.movie.R;
 import com.bw.movie.movie.fragment.bean.NearbyBean;
 import com.bw.movie.movie.fragment.bean.RecommendedBean;
+import com.bw.movie.movie.fragment.cinemaActivity.CinemaDetailsActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
@@ -42,13 +44,22 @@ public class NearbyAdapter extends RecyclerView.Adapter<NearbyAdapter.NearbyView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NearbyViewHolde nearbyViewHolde, int i) {
+    public void onBindViewHolder(@NonNull NearbyViewHolde nearbyViewHolde, final int i) {
         String logo = mResultBeans.get(i).getLogo();
         Uri uri = Uri.parse(logo);
         nearbyViewHolde.mSimpleDraweeView.setImageURI(uri);
         nearbyViewHolde.mTextViewName.setText(mResultBeans.get(i).getName());
         nearbyViewHolde.mTextViewDesc.setText(mResultBeans.get(i).getAddress());
         nearbyViewHolde.mTextViewKm.setText(mResultBeans.get(i).getDistance() + "km");
+        //点击跳转到影院旗下的所有电影列表信息页面
+        nearbyViewHolde.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, CinemaDetailsActivity.class);
+                intent.putExtra("cinemaId", mResultBeans.get(i).getId());
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override

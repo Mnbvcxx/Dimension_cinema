@@ -53,8 +53,9 @@
         <activity android:name=".activity.fragment.myactivity.MessageActivity" />
         <!-- 我的信息页面 -->
         <activity android:name=".activity.fragment.myactivity.InfoActivity" />
-        <!--意见反馈-->
-        <activity android:name=".activity.fragment.myactivity.FeedBacksActivity"></activity>
+        <!-- 意见反馈 -->
+        <activity android:name=".activity.fragment.myactivity.FeedBacksActivity" />
+        <activity android:name=".movie.fragment.cinemaActivity.CinemaDetailsActivity"></activity>
     </application>
 
 </manifest>
