@@ -28,9 +28,11 @@ import java.util.List;
 public class CinemaFlowAdapter extends RecyclerView.Adapter<CinemaFlowAdapter.MyCinemaFlowViewHolder> {
     private Context mContext;
     private List<FilmBean.ResultBean> mResultBeans = new ArrayList<>();
+    private List<String> mListImg = new ArrayList<>();
 
-    public CinemaFlowAdapter(Context context, List<FilmBean.ResultBean> resultBeans) {
+    public CinemaFlowAdapter(Context context, List<String> listImg, List<FilmBean.ResultBean> resultBeans) {
         mContext = context;
+        mListImg = listImg;
         mResultBeans = resultBeans;
     }
 
@@ -43,7 +45,7 @@ public class CinemaFlowAdapter extends RecyclerView.Adapter<CinemaFlowAdapter.My
 
     @Override
     public void onBindViewHolder(@NonNull MyCinemaFlowViewHolder myCinemaFlowViewHolder, int i) {
-        String imageUrl = mResultBeans.get(i).getImageUrl();
+        String imageUrl = mResultBeans.get(i % mListImg.size()).getImageUrl();
         Uri uri = Uri.parse(imageUrl);
         myCinemaFlowViewHolder.mSimpleDraweeView.setImageURI(uri);
         myCinemaFlowViewHolder.mTextViewName.setText(mResultBeans.get(i).getName());

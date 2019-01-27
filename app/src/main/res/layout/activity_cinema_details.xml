@@ -9,7 +9,54 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_186"
-        android:background="@mipmap/hdpi_2"/>
+        android:background="@mipmap/hdpi_2" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_30">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/cin_img"
+            android:layout_width="@dimen/dp_55"
+            android:layout_height="@dimen/dp_55" />
+
+        <TextView
+            android:id="@+id/cin_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_toRightOf="@id/cin_img"
+            android:text="XXXX"
+            android:textColor="@color/colorfff"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:id="@+id/cin_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cin_name"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_6"
+            android:layout_toRightOf="@id/cin_img"
+            android:layout_marginRight="@dimen/dp_55"
+            android:ellipsize="end"
+            android:lines="2"
+            android:text="XXXX"
+            android:textColor="@color/colorfff"
+            android:textSize="@dimen/sp_12" />
+
+        <ImageView
+            android:id="@+id/cin_navigation"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_24"
+            android:src="@mipmap/com_icon_navigation_default" />
+
+    </RelativeLayout>
 
     <!-- 轮播图 -->
     <recycler.coverflow.RecyclerCoverFlow
@@ -17,7 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_223"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_85" />
+        android:layout_marginTop="@dimen/dp_90" />
 
     <!-- 指示器 -->
     <com.lwj.widget.viewpagerindicator.ViewPagerIndicator
@@ -31,18 +78,18 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cin_rv"
-        android:layout_below="@id/cin_vpi"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/cin_vpi" />
 
     <ImageView
+        android:id="@+id/cin_back"
         android:layout_width="@dimen/dp_60"
         android:layout_height="@dimen/dp_60"
-        android:id="@+id/cin_back"
-        android:src="@mipmap/com_icon_default"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="@dimen/dp_24"
-        android:layout_marginBottom="@dimen/dp_20"/>
+        android:layout_marginBottom="@dimen/dp_20"
+        android:src="@mipmap/com_icon_default" />
 
 
 </RelativeLayout>

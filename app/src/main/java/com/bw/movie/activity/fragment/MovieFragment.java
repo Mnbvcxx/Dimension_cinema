@@ -20,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.adapter.MyMovieSeachAdapter;
@@ -28,8 +29,10 @@ import com.bw.movie.apis.Apis;
 import com.bw.movie.movie.adapter.MyMovieFragmentAdapter;
 import com.bw.movie.movie.fragment.FragmentNearby;
 import com.bw.movie.movie.fragment.FragmentRecommended;
+import com.bw.movie.movie.fragment.adapter.NearbyAdapter;
 import com.bw.movie.mvc.presenter.MyPresenter;
 import com.bw.movie.mvc.view.MyView;
+import com.bw.movie.register.bean.RegisterBean;
 import com.bw.movie.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -78,6 +81,7 @@ public class MovieFragment extends Fragment implements MyView {
     private MyMovieFragmentAdapter mMyMovieFragmentAdapter;
     private MyPresenter mMyPresenter;
     private MyMovieSeachAdapter mMyMovieSeachAdapter;
+    private int num;
 
     @Nullable
     @Override
@@ -136,10 +140,10 @@ public class MovieFragment extends Fragment implements MyView {
             case R.id.movie_seach_text://根据关键字查询电影院
                 initfst();
                 String movieName = mFilmSeachEdit.getText().toString().trim();
-                if (TextUtils.isEmpty(movieName)){
+                if (TextUtils.isEmpty(movieName)) {
                     ToastUtil.showToast("不能为空");
-                }else {
-                    mMyPresenter.onGetDatas(Apis.SEACH_NAME_URL,SeachBean.class);
+                } else {
+                    mMyPresenter.onGetDatas(Apis.SEACH_NAME_URL, SeachBean.class);
                 }
                 break;
 
@@ -154,6 +158,7 @@ public class MovieFragment extends Fragment implements MyView {
 
     //点击图标拉伸搜索框
     boolean mBoolean = true;
+
     private void initfsi() {
         if (mBoolean) {
             ObjectAnimator translationX = ObjectAnimator.ofFloat(mFilmSeachRelative, "translationX", 0, (dp2px(getActivity(), -170)));
@@ -197,16 +202,36 @@ public class MovieFragment extends Fragment implements MyView {
 
     @Override
     public void onMySuccess(Object data) {
-        if (data instanceof SeachBean){
+        if (data instanceof SeachBean) {
             SeachBean seachBean = (SeachBean) data;
-            if (seachBean.getStatus().equals("0000")){
+            if (seachBean.getStatus().equals("0000")) {
                 List<SeachBean.ResultBean> result = seachBean.getResult();
                 ToastUtil.showToast(seachBean.getMessage());
                 mMovieVp.setVisibility(View.GONE);
                 mFilmSeachRv.setVisibility(VISIBLE);
                 mMyMovieSeachAdapter = new MyMovieSeachAdapter(getActivity(), result);
-                mFilmSeachRv.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+                mFilmSeachRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
                 mFilmSeachRv.setAdapter(mMyMovieSeachAdapter);
+                mMyMovieSeachAdapter.setOnClickedListenrt(new MyMovieSeachAdapter.onClickedListenrt() {
+                    @Override
+                    public void onClicked(int position, ImageView imageView) {
+                        num++;
+                        if (num % 2 == 0) {
+                            //为偶数时取消关注
+                            mMyPresenter.onGetDatas(Apis.CANCELFOLLOW_CINEMA_ID_URL + position, RegisterBean.class);
+                            imageView.setImageResource(R.mipmap.com_icon_collection_default);
+                        } else {
+                            //为奇数时关注成功
+                            mMyPresenter.onGetDatas(Apis.FOLLOW_CINEMA_ID_URL + position, RegisterBean.class);
+                            imageView.setImageResource(R.mipmap.com_icon_collection_selected);
+                        }
+                    }
+                });
+            }
+        } else if (data instanceof RegisterBean) {
+            RegisterBean registerBean = (RegisterBean) data;
+            if (registerBean.getStatus().equals("0000")) {
+                Toast.makeText(getActivity(), registerBean.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }

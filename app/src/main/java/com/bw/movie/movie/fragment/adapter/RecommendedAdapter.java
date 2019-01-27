@@ -71,9 +71,12 @@ public class RecommendedAdapter extends RecyclerView.Adapter<RecommendedAdapter.
         recommendedViewHolde.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    Intent intent = new Intent(mContext, CinemaDetailsActivity.class);
-                    intent.putExtra("cinemaId", mResultBeans.get(i).getId());
-                    mContext.startActivity(intent);
+                Intent intent = new Intent(mContext, CinemaDetailsActivity.class);
+                intent.putExtra("cinemaId", mResultBeans.get(i).getId());
+                intent.putExtra("logo", mResultBeans.get(i).getLogo());
+                intent.putExtra("name", mResultBeans.get(i).getName());
+                intent.putExtra("address", mResultBeans.get(i).getAddress());
+                mContext.startActivity(intent);
             }
         });
     }
@@ -88,6 +91,7 @@ public class RecommendedAdapter extends RecyclerView.Adapter<RecommendedAdapter.
         TextView mTextViewName, mTextViewDesc, mTextViewKm;
         ImageView mImageView;
         RelativeLayout mRelativeLayout;
+
         public RecommendedViewHolde(@NonNull View itemView) {
             super(itemView);
             mSimpleDraweeView = itemView.findViewById(R.id.recommended_img);
@@ -107,6 +111,6 @@ public class RecommendedAdapter extends RecyclerView.Adapter<RecommendedAdapter.
     }
 
     public interface onClickedListenrt {
-        void onClicked(int position,ImageView imageView);
+        void onClicked(int position, ImageView imageView);
     }
 }

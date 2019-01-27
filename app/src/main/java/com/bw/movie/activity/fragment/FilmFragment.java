@@ -1,8 +1,11 @@
 package com.bw.movie.activity.fragment;
 
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -32,6 +35,7 @@ import com.bw.movie.utils.IntentUtils;
 import com.bw.movie.utils.ToastUtil;
 import com.lwj.widget.viewpagerindicator.ViewPagerIndicator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -107,6 +111,18 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
     private MyFilmComingSoonAdapter mMyFilmComingSoonAdapter;
     private MyFilmHosMoviesAdapter mMyFilmHosMoviesAdapter;
 
+    /*@SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            int pos = mFilmRcf.getSelectedPos();
+            mFilmRcf.scrollToPosition(pos + 1);
+            mHandler.sendEmptyMessageDelayed(0, 3000);
+        }
+    };*/
+    private List<String> mListImg;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -116,15 +132,15 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
         mMyPresenter.onGetDatas(Apis.MOVIE_BANNER_URL, FilmBean.class);
         mMyPresenter.onGetDatas(Apis.MOVIE_RM_URL, FilmCinemaxBean.class);
         mMyPresenter.onGetDatas(Apis.MOVIE_COMINGSOON_URL, FilmComingSoonBean.class);
-        mFilmRmRv.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
-        mFilmZzRv.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
-        mFilmJijRv.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+        mFilmRmRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        mFilmZzRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        mFilmJijRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         return view;
     }
 
     @Override
     @OnClick({R.id.film_ress, R.id.film_rcf, R.id.film_vpi, R.id.film_seach_ima,
-            R.id.film_seach_text,R.id.film_rmdy,R.id.film_zzry,R.id.film_jjsy})
+            R.id.film_seach_text, R.id.film_rmdy, R.id.film_zzry, R.id.film_jjsy})
     public void onClick(View v) {
         switch (v.getId()) {
             default:
@@ -132,13 +148,13 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
             case R.id.film_ress:
                 break;
             case R.id.film_rmdy:
-                IntentUtils.getInstence().intent(getContext(),FilmDetailsActivity.class);
+                IntentUtils.getInstence().intent(getContext(), FilmDetailsActivity.class);
                 break;
             case R.id.film_zzry:
-                IntentUtils.getInstence().intent(getContext(),FilmDetailsActivity.class);
+                IntentUtils.getInstence().intent(getContext(), FilmDetailsActivity.class);
                 break;
             case R.id.film_jjsy:
-                IntentUtils.getInstence().intent(getContext(),FilmDetailsActivity.class);
+                IntentUtils.getInstence().intent(getContext(), FilmDetailsActivity.class);
                 break;
             case R.id.film_rcf:
                 break;
@@ -206,18 +222,26 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
         if (data instanceof FilmBean) {
             FilmBean filmBean = (FilmBean) data;
             if (filmBean.getStatus().equals("0000")) {
+                mListImg = new ArrayList<>();
                 final List<FilmBean.ResultBean> result = filmBean.getResult();
-                mCinemaFlowAdapter = new CinemaFlowAdapter(getActivity(), result);
+                for (int i = 0; i < result.size(); i++) {
+                    mListImg.add(result.get(i).getImageUrl());
+                }
+                mCinemaFlowAdapter = new CinemaFlowAdapter(getActivity(), mListImg, result);
                 mMyFilmHosMoviesAdapter = new MyFilmHosMoviesAdapter(getActivity(), result);
                 mFilmZzRv.setAdapter(mMyFilmHosMoviesAdapter);
+                mFilmRcf.setIntervalRatio(0.3f);
+                mFilmRcf.setGreyItem(true);
+                mFilmRcf.setFlatFlow(false);
                 mFilmRcf.setAdapter(mCinemaFlowAdapter);
                 mFilmRcf.scrollToPosition(2);
-                mFilmRcf.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {
+                //mHandler.sendEmptyMessageDelayed(0, 3000);
+                /*mFilmRcf.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {
                     @Override
                     public void onItemSelected(int position) {
                         ToastUtil.showToast(result.get(position).getName());
                     }
-                });
+                });*/
             }
         } else if (data instanceof FilmCinemaxBean) {
             FilmCinemaxBean filmCinemaxBean = (FilmCinemaxBean) data;
@@ -226,7 +250,7 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
                 mMyFilmCinemaxAdapter = new MyFilmCinemaxAdapter(getActivity(), result);
                 mFilmRmRv.setAdapter(mMyFilmCinemaxAdapter);
             }
-        }else if (data instanceof FilmComingSoonBean) {
+        } else if (data instanceof FilmComingSoonBean) {
             FilmComingSoonBean filmComingSoonBean = (FilmComingSoonBean) data;
             if (filmComingSoonBean.getStatus().equals("0000")) {
                 List<FilmComingSoonBean.ResultBean> result = filmComingSoonBean.getResult();

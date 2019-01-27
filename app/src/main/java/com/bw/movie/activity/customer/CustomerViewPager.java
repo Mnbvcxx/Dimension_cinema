@@ -40,7 +40,6 @@ public class CustomerViewPager extends ViewPager {
         } else {
             return false;
         }
-
     }
 
     @Override
@@ -63,7 +62,5 @@ public class CustomerViewPager extends ViewPager {
         } else {
             return false;
         }
-
     }
-
 }
