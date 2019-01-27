@@ -65,7 +65,7 @@
         android:layout_below="@id/layout_my"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_10"
-        android:background="@drawable/my_shape_layout_bg">
+        android:background="@drawable/recommended_shape_bg">
 
         <RelativeLayout
             android:id="@+id/my_info"
@@ -100,7 +100,7 @@
         android:layout_below="@id/layout_mysss"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_10"
-        android:background="@drawable/my_shape_layout_bg">
+        android:background="@drawable/recommended_shape_bg">
 
         <RelativeLayout
             android:id="@+id/my_attentions"
@@ -161,7 +161,7 @@
         android:layout_below="@id/layout_mys"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_10"
-        android:background="@drawable/my_shape_layout_bg">
+        android:background="@drawable/recommended_shape_bg">
 
 
         <RelativeLayout

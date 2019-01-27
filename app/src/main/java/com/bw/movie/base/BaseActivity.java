@@ -19,8 +19,8 @@ public abstract class BaseActivity extends AppCompatActivity implements MyView {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         initView(savedInstanceState);
-        initData();
         mMyPresenter = new MyPresenter(this);
+        initData();
     }
 
     //子类向父传递的layout
