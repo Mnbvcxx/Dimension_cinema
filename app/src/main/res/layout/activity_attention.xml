@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Button
+        android:id="@+id/attention_move"
+        android:layout_width="@dimen/dp_83"
+        android:layout_height="@dimen/dp_25"
+        android:text="电影"
+        android:textColor="@color/colorfff"
+        android:textSize="@dimen/sp_14"
+        android:background="@drawable/movie_shape_bg_failed"
+        android:layout_marginTop="@dimen/dp_50"
+        />
+</RelativeLayout>
