@@ -113,16 +113,13 @@ public class FilmDetailsActivity extends BaseActivity {
             case R.id.detail_ress_name:
                 break;
             case R.id.detail_rm_movie:
-                ToastUtil.showToast("点击了");
                 mDetailVp.setCurrentItem(0);
                 break;
             case R.id.detail_zz_ry:
                 mDetailVp.setCurrentItem(1);
-                ToastUtil.showToast("点击了");
                 break;
             case R.id.detail_soon:
                 mDetailVp.setCurrentItem(2);
-                ToastUtil.showToast("点击了");
                 break;
             case R.id.detail_rg:
                 break;
