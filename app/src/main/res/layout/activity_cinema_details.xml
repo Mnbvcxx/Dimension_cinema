@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".movie.fragment.cinemaActivity.CinemaDetailsActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_186"
+        android:background="@mipmap/hdpi_2"/>
+
+    <!-- 轮播图 -->
+    <recycler.coverflow.RecyclerCoverFlow
+        android:id="@+id/cin_rcf"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_223"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_85" />
+
+    <!-- 指示器 -->
+    <com.lwj.widget.viewpagerindicator.ViewPagerIndicator
+        android:id="@+id/cin_vpi"
+        android:layout_width="@dimen/dp_312"
+        android:layout_height="@dimen/dp_3"
+        android:layout_below="@id/cin_rcf"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@drawable/film_shape_bg" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/cin_rv"
+        android:layout_below="@id/cin_vpi"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <ImageView
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_60"
+        android:id="@+id/cin_back"
+        android:src="@mipmap/com_icon_default"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginBottom="@dimen/dp_20"/>
+
+
+</RelativeLayout>

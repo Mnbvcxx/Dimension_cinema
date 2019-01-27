@@ -45,7 +45,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="@dimen/dp_16"
             android:layout_marginRight="@dimen/dp_10"
-            android:src="@mipmap/xin" />
+            android:src="@mipmap/com_icon_collection_default" />
 
         <TextView
             android:id="@+id/rm_desc"

@@ -211,6 +211,7 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
                 mMyFilmHosMoviesAdapter = new MyFilmHosMoviesAdapter(getActivity(), result);
                 mFilmZzRv.setAdapter(mMyFilmHosMoviesAdapter);
                 mFilmRcf.setAdapter(mCinemaFlowAdapter);
+                mFilmRcf.scrollToPosition(2);
                 mFilmRcf.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {
                     @Override
                     public void onItemSelected(int position) {

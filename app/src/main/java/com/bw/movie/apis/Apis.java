@@ -22,15 +22,17 @@ public class Apis {
     //即将上映
     public static final String MOVIE_COMINGSOON_URL = "movie/v1/findComingSoonMovieList?page=1&count=10";
     //查询用户当前未读消息数量
-    public static final String MESSAGE_UNREAND_COUNT="tool/v1/verify/findUnreadMessageCount";
+    public static final String MESSAGE_UNREAND_COUNT = "tool/v1/verify/findUnreadMessageCount";
     //查询系统消息列表
-    public static final String MESSAGE_ALLSYS_LIST="tool/v1/verify/findAllSysMsgList";
+    public static final String MESSAGE_ALLSYS_LIST = "tool/v1/verify/findAllSysMsgList";
     //用户关注电影
     public static final String USER_MOVIE_ATTENTION_URL = "movie/v1/verify/followMovie?movieId=";
+    //用户取消关注电影
+    public static final String USER_MOVIE_CANCEL_URL = "movie/v1/verify/cancelFollowMovie?movieId=";
     //根据电影id查看电影详情
     public static final String MOVIE_DETAILS_URL = "movie/v1/findMoviesDetail?movieId=";
     //意见反馈
-    public static final String FEED_BACKS="tool/v1/verify/recordFeedBack";
+    public static final String FEED_BACKS = "tool/v1/verify/recordFeedBack";
     //推荐影院
     public static final String RECOMMEND_URL = "cinema/v1/findRecommendCinemas?page=1&count=10";
     //附近影院
@@ -43,4 +45,14 @@ public class Apis {
     public static final String MESSAGE_INFO_USER="user/v1/verify/modifyUserInfo";
     //修改密码
     public static final String MESSAGE_INFO_PWD="user/v1/verify/modifyUserPwd";
+    //根据电影院名称,模糊查询电影院
+    public static final String SEACH_NAME_URL = "cinema/v1/findAllCinemas?page=1&count=10&cinemaName=";
+    //根据影院id查询该影院当前排期的电影列表
+    public static final String CINEMA_ID_URL = "movie/v1/findMovieListByCinemaId?cinemaId=";
+    //根据电影ID和影院ID查询电影排期列表   2&movieId=3
+    public static final String MOVIEANDCINEMA_ID_URL = "movie/v1/findMovieScheduleList?cinemasId=";
+    //关注影院
+    public static final String FOLLOW_CINEMA_ID_URL = "cinema/v1/verify/followCinema?cinemaId=";
+    //取消关注影院
+    public static final String CANCELFOLLOW_CINEMA_ID_URL = "cinema/v1/verify/cancelFollowCinema?cinemaId=";
 }

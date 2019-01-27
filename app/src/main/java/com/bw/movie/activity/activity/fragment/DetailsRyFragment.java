@@ -45,6 +45,7 @@ public class DetailsRyFragment extends Fragment implements MyView {
     private Unbinder unbinder;
     private MyPresenter mMyPresenter;
     private DetailsRyAdapter mDetailsRyAdapter;
+    private int num;
 
     @Nullable
     @Override
@@ -83,19 +84,27 @@ public class DetailsRyFragment extends Fragment implements MyView {
                 final List<FilmBean.ResultBean> result = filmCinemaxBean.getResult();
                 mDetailsRyAdapter = new DetailsRyAdapter(getActivity(), result);
                 mRyDetailsRv.setAdapter(mDetailsRyAdapter);
+                //关注电影
                 mDetailsRyAdapter.setOnCheckedListener(new DetailsRyAdapter.onCheckedListener() {
                     @Override
-                    public void onClicked(int position) {
-                        int id = result.get(position).getId();
-                        mMyPresenter.onGetDatas(Apis.USER_MOVIE_ATTENTION_URL + id, RegisterBean.class);
+                    public void onClicked(int position, ImageView imageView) {
+                        num++;
+                        if (num % 2 == 0) {
+                            //为偶数时取消关注
+                            mMyPresenter.onGetDatas(Apis.USER_MOVIE_CANCEL_URL + position, RegisterBean.class);
+                            imageView.setImageResource(R.mipmap.com_icon_collection_default);
+                        } else {
+                            //为奇数时关注成功
+                            mMyPresenter.onGetDatas(Apis.USER_MOVIE_ATTENTION_URL + position, RegisterBean.class);
+                            imageView.setImageResource(R.mipmap.com_icon_collection_selected);
+                        }
                     }
                 });
             }
+
         } else if (data instanceof RegisterBean) {
             RegisterBean registerBean = (RegisterBean) data;
             if (registerBean.getStatus().equals("0000")) {
-                ToastUtil.showToast(registerBean.getMessage());
-            }else {
                 ToastUtil.showToast(registerBean.getMessage());
             }
         }
