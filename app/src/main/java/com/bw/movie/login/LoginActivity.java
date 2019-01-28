@@ -83,7 +83,6 @@ public class LoginActivity extends BaseActivity {
     private String mPhone;
     private String mPwd;
     private Intent mIntent;
-    private IWXAPI mWxapi;
 
     //布局
     @Override
@@ -95,7 +94,6 @@ public class LoginActivity extends BaseActivity {
     protected void initView(Bundle savedInstanceState) {
         //绑定ButterKnife
         ButterKnife.bind(this);
-        //registToWX();
     }
 
     @Override
@@ -179,7 +177,6 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void netFailed(String s) {
-        //ToastUtil.showToast("获取请求失败");
     }
 
     @OnClick({R.id.login_reg, R.id.login_btn_go, R.id.login_wx, R.id.login_hint, R.id.login_checkbox, R.id.login_jz_pwd, R.id.login_checkbox_login, R.id.login_zd_login})
@@ -208,7 +205,6 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.login_wx:
                 //initPermission();
-                //initWxData();
                 //微信登录
                 if (!WeiXinUtil.success(this)) {
                     Toast.makeText(this, "您还未安装微信客户端", Toast.LENGTH_SHORT).show();
@@ -235,25 +231,6 @@ public class LoginActivity extends BaseActivity {
                 break;
         }
     }
-
-    /*private void initWxData() {
-        if (!mWxapi.isWXAppInstalled()) {
-            Toast.makeText(this, "您还未安装微信客户端", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        final SendAuth.Req req = new SendAuth.Req();
-        req.scope = "snsapi_userinfo";
-        req.state = "diandi_wx_login";
-        mWxapi.sendReq(req);
-    }
-
-    private void registToWX() {
-        //AppConst.WEIXIN.APP_ID是指你应用在微信开放平台上的AppID，记得替换。
-        String APP_ID = "wxb3852e6a6b7d9516";
-        mWxapi = WXAPIFactory.createWXAPI(this, APP_ID, false);
-        // 将该app注册到微信
-        mWxapi.registerApp(APP_ID);
-    }*/
 
     //动态权限
     private void initPermission() {

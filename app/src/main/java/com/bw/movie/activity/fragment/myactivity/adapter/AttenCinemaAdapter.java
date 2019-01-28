@@ -18,7 +18,8 @@ import java.util.List;
 
 /**
  * @author: pengbo
- * @date:2019/1/28 desc:关注的影院适配器
+ * @date:2019/1/28
+ * desc:关注的影院适配器
  */
 public class AttenCinemaAdapter extends RecyclerView.Adapter<AttenCinemaAdapter.ViewHolder> {
             private Context mContext;

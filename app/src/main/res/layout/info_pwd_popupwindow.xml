@@ -29,6 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#999999"
+            android:layout_weight="9"
+            android:hint="请输入原始密码"
             android:textSize="@dimen/sp_14"
             android:layout_marginRight="@dimen/dp_20"
             android:background="@null"
@@ -63,6 +65,8 @@
             android:layout_height="wrap_content"
             android:textColor="#999999"
             android:textSize="@dimen/sp_14"
+            android:layout_weight="9"
+            android:hint="请输入新密码"
             android:layout_marginRight="@dimen/dp_20"
             android:background="@null"
             />
@@ -87,7 +91,7 @@
             android:textSize="@dimen/sp_14"
             android:textColor="#333333"
             android:layout_marginLeft="@dimen/dp_20"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:layout_gravity="center_vertical"
             />
         <EditText
@@ -95,6 +99,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#999999"
+            android:layout_weight="9"
+            android:hint="请再次输入新密码"
             android:textSize="@dimen/sp_14"
             android:layout_marginRight="@dimen/dp_20"
             android:background="@null"
@@ -113,7 +119,7 @@
         android:layout_height="@dimen/dp_30"
         android:layout_marginTop="@dimen/dp_20"
         android:text="确定"
-        android:background="#cfc"
+        android:background="@drawable/movie_shape_bg_failed"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/dp_20"
         />

@@ -12,8 +12,10 @@ import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
@@ -65,6 +67,7 @@ public class InfoActivity extends BaseActivity {
     private MessageInfoBean.ResultBean mResult;
     private String filepath = Environment.getExternalStorageDirectory()
             + "/file.png";
+    private WindowManager.LayoutParams mParams;
 
     @Override
     protected int getLayoutId() {
@@ -223,12 +226,12 @@ public class InfoActivity extends BaseActivity {
         mPhotograph = (TextView) mView.findViewById(R.id.Photograph);
         //1.创建popupwindow   contentView 子布局  width,宽   height 高
         msdvWindow = new PopupWindow(mView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        //设置显示位置,findViewById获取的是包含当前整个页面的view
         //设置焦点
         msdvWindow.setFocusable(true);
         msdvWindow.setBackgroundDrawable(new ColorDrawable(Color.RED));
         //设置是否可以触摸
         msdvWindow.setTouchable(true);
-
     }
 
     /**
@@ -259,7 +262,7 @@ public class InfoActivity extends BaseActivity {
         mUserEmail = (EditText) mView.findViewById(R.id.user_email);
         mUserBut = (Button)mView.findViewById(R.id.user_but);
         //1.创建popupwindow   contentView 子布局  width,宽   height 高
-        userWindow = new PopupWindow(mView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        userWindow = new PopupWindow(mView, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
         //设置焦点
         userWindow.setFocusable(true);
         userWindow.setBackgroundDrawable(new ColorDrawable(Color.RED));

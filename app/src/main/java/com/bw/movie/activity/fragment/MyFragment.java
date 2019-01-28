@@ -1,6 +1,7 @@
 package com.bw.movie.activity.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +19,10 @@ import com.bw.movie.activity.fragment.myactivity.AttentionActivity;
 import com.bw.movie.activity.fragment.myactivity.FeedBacksActivity;
 import com.bw.movie.activity.fragment.myactivity.InfoActivity;
 import com.bw.movie.activity.fragment.myactivity.MessageActivity;
+import com.bw.movie.activity.fragment.myactivity.bean.MessageInfoBean;
+import com.bw.movie.apis.Apis;
+import com.bw.movie.mvc.presenter.MyPresenter;
+import com.bw.movie.mvc.view.MyView;
 import com.bw.movie.utils.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -32,7 +37,7 @@ import butterknife.Unbinder;
  * email : fangshikang@outlook.com
  * desc :       我的  页面
  */
-public class MyFragment extends Fragment {
+public class MyFragment extends Fragment implements MyView {
     @BindView(R.id.my_message)
     ImageView mMyMessage;
     @BindView(R.id.my_icon)
@@ -53,8 +58,8 @@ public class MyFragment extends Fragment {
     RelativeLayout mMyVersion;
     @BindView(R.id.my_logout)
     RelativeLayout mMyLogout;
-    private View view;
     private Unbinder unbinder;
+    private MyPresenter mMyPresenter;
 
     @Nullable
     @Override
@@ -62,6 +67,9 @@ public class MyFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my, container, false);
         //绑定ButterKnife
         unbinder = ButterKnife.bind(this, view);
+        mMyPresenter = new MyPresenter(this);
+        //根据用户ID查询用户信息
+        mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
         return view;
     }
 
@@ -116,5 +124,27 @@ public class MyFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onMySuccess(Object data) {
+        if (data instanceof MessageInfoBean) {
+            MessageInfoBean infoBean = (MessageInfoBean) data;
+            if (infoBean.getStatus().equals("0000")) {
+                MessageInfoBean.ResultBean result = infoBean.getResult();
+                String headPic = result.getHeadPic();
+                Uri parse = Uri.parse(headPic);
+                String nickName = result.getNickName();
+                mMyIcon.setImageURI(parse);
+                mMyName.setText(nickName);
+                //根据用户ID查询用户信息
+                mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
+            }
+        }
+    }
+
+    @Override
+    public void onMyFailed(String error) {
+
     }
 }
