@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.fragment.myactivity.AttentionActivity;
 import com.bw.movie.activity.fragment.myactivity.FeedBacksActivity;
 import com.bw.movie.activity.fragment.myactivity.InfoActivity;
 import com.bw.movie.activity.fragment.myactivity.MessageActivity;
@@ -91,6 +92,8 @@ public class MyFragment extends Fragment {
                 break;
             case R.id.my_attentions:
                 ToastUtil.showToast("点击了我的关注");
+                Intent attent = new Intent(getActivity(), AttentionActivity.class);
+                startActivity(attent);
                 break;
             case R.id.my_rccord:
                 ToastUtil.showToast("点击了购票记录");

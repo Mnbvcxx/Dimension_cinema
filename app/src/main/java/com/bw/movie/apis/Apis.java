@@ -55,4 +55,8 @@ public class Apis {
     public static final String FOLLOW_CINEMA_ID_URL = "cinema/v1/verify/followCinema?cinemaId=";
     //取消关注影院
     public static final String CANCELFOLLOW_CINEMA_ID_URL = "cinema/v1/verify/cancelFollowCinema?cinemaId=";
+    //我关注的电影列表
+    public static final String ATTEN_MOVE="movie/v1/verify/findMoviePageList";
+    //我关注的影院列表
+    public static final String ATTEN_CINEMA="cinema/v1/verify/findCinemaPageList";
 }
