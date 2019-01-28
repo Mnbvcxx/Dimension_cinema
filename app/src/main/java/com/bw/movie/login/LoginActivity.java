@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,20 +28,15 @@ import com.bw.movie.base.BaseActivity;
 import com.bw.movie.login.bean.EventBusInfoBean;
 import com.bw.movie.login.bean.LoginBean;
 import com.bw.movie.register.activity.RegisterActivity;
+import com.bw.movie.utils.CustomDialog;
 import com.bw.movie.utils.EncryptUtil;
 import com.bw.movie.utils.IntentUtils;
 import com.bw.movie.utils.ToastUtil;
 import com.bw.movie.utils.WeiXinUtil;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -190,6 +186,9 @@ public class LoginActivity extends BaseActivity {
             case R.id.login_btn_go:
                 //动态权限
                 //initPermission();
+                CustomDialog customDialog = new CustomDialog(this );
+                customDialog.show();//显示,显示时页面不可点击,只能点击返回
+                //customDialog.dismiss();//消失
                 mPhone = mLoginPhone.getText().toString().trim();
                 mPwd = mLoginPwd.getText().toString().trim();
                 //手机号  正则表达式验证
@@ -214,6 +213,7 @@ public class LoginActivity extends BaseActivity {
                     req.scope = "snsapi_userinfo";
                     req.state = "wechat_sdk_demo_test";
                     WeiXinUtil.reg(LoginActivity.this).sendReq(req);
+                    finish();
                 }
                 break;
             case R.id.login_hint:

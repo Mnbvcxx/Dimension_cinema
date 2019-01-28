@@ -243,7 +243,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_20"
             android:text="下滑查看更多"
-            android:textColor="@color/gray_33" />
+            android:textColor="@color/color333" />
 
     </RelativeLayout>
 
