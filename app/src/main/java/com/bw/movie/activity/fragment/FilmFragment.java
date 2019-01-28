@@ -219,7 +219,7 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
 
     @Override
     public void onMySuccess(Object data) {
-        if (data instanceof FilmBean) {
+        if (data instanceof FilmBean) {//正在热播和轮播图
             FilmBean filmBean = (FilmBean) data;
             if (filmBean.getStatus().equals("0000")) {
                 mListImg = new ArrayList<>();
@@ -227,7 +227,9 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
                 for (int i = 0; i < result.size(); i++) {
                     mListImg.add(result.get(i).getImageUrl());
                 }
+                //创建轮播图适配器
                 mCinemaFlowAdapter = new CinemaFlowAdapter(getActivity(), mListImg, result);
+                //创建正在热播适配器
                 mMyFilmHosMoviesAdapter = new MyFilmHosMoviesAdapter(getActivity(), result);
                 mFilmZzRv.setAdapter(mMyFilmHosMoviesAdapter);
                 mFilmRcf.setIntervalRatio(0.3f);
@@ -244,16 +246,20 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
                 });*/
             }
         } else if (data instanceof FilmCinemaxBean) {
+            //热门电影
             FilmCinemaxBean filmCinemaxBean = (FilmCinemaxBean) data;
             if (filmCinemaxBean.getStatus().equals("0000")) {
                 List<FilmCinemaxBean.ResultBean> result = filmCinemaxBean.getResult();
+                //创建热门电影适配器
                 mMyFilmCinemaxAdapter = new MyFilmCinemaxAdapter(getActivity(), result);
                 mFilmRmRv.setAdapter(mMyFilmCinemaxAdapter);
             }
         } else if (data instanceof FilmComingSoonBean) {
+            //即将上映
             FilmComingSoonBean filmComingSoonBean = (FilmComingSoonBean) data;
             if (filmComingSoonBean.getStatus().equals("0000")) {
                 List<FilmComingSoonBean.ResultBean> result = filmComingSoonBean.getResult();
+                //创建即将上映适配器
                 mMyFilmComingSoonAdapter = new MyFilmComingSoonAdapter(getActivity(), result);
                 mFilmJijRv.setAdapter(mMyFilmComingSoonAdapter);
             }

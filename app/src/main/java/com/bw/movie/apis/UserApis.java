@@ -24,5 +24,9 @@ public class UserApis {
      */
     public static final String LOGIN_KEY_PHONE = "phone";
     public static final String LOGIN_KEY_PWD = "pwd";
+    /**
+     * 微信登录所需参数
+     */
+    public static final String WX_LOGIN_KEY_PWD = "code";
 
 }

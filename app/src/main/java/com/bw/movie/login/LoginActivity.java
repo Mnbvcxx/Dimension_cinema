@@ -30,6 +30,7 @@ import com.bw.movie.register.activity.RegisterActivity;
 import com.bw.movie.utils.EncryptUtil;
 import com.bw.movie.utils.IntentUtils;
 import com.bw.movie.utils.ToastUtil;
+import com.bw.movie.utils.WeiXinUtil;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -48,11 +49,10 @@ import butterknife.OnClick;
 
 /**
  * 登录页面
- *
+ * <p>
  * 1、记住密码状态
  * 2、自动登录状态
  * 3、快速注册跳转注册页面
- *
  */
 public class LoginActivity extends BaseActivity {
 
@@ -95,7 +95,7 @@ public class LoginActivity extends BaseActivity {
     protected void initView(Bundle savedInstanceState) {
         //绑定ButterKnife
         ButterKnife.bind(this);
-        registToWX();
+        //registToWX();
     }
 
     @Override
@@ -121,6 +121,7 @@ public class LoginActivity extends BaseActivity {
         //复选框内容改变方法
         initChecked();
     }
+
     //复选框内容改变方法
     private void initChecked() {
         mLoginCheckboxLogin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -162,6 +163,7 @@ public class LoginActivity extends BaseActivity {
                 mIntent.putExtra("headPic", loginBean.getResult().getUserInfo().getHeadPic());
                 mIntent.putExtra("phone", loginBean.getResult().getUserInfo().getPhone());
                 startActivity(mIntent);
+                finish();
                 mSP.edit()
                         .putString("userId", loginBean.getResult().getUserId() + "")
                         .putString("sessionId", loginBean.getResult().getSessionId())
@@ -169,17 +171,15 @@ public class LoginActivity extends BaseActivity {
                 infoBean.setInfoemail(mLoginPwd.getText().toString());
                 infoBean.setInfopwd(mLoginPwd.getText().toString());
                 EventBus.getDefault().postSticky(infoBean);
-
-                finish();
             } else {
-                ToastUtil.showToast(loginBean.getMessage());
+                ToastUtil.showToast("登录失败");
             }
         }
     }
 
     @Override
     protected void netFailed(String s) {
-//        ToastUtil.showToast(s);
+        //ToastUtil.showToast("获取请求失败");
     }
 
     @OnClick({R.id.login_reg, R.id.login_btn_go, R.id.login_wx, R.id.login_hint, R.id.login_checkbox, R.id.login_jz_pwd, R.id.login_checkbox_login, R.id.login_zd_login})
@@ -207,8 +207,18 @@ public class LoginActivity extends BaseActivity {
                 doPost(Apis.LOGIN_URL, map, LoginBean.class);
                 break;
             case R.id.login_wx:
-                initPermission();
-                initWxData();
+                //initPermission();
+                //initWxData();
+                //微信登录
+                if (!WeiXinUtil.success(this)) {
+                    Toast.makeText(this, "您还未安装微信客户端", Toast.LENGTH_SHORT).show();
+                } else {
+                    //  验证
+                    SendAuth.Req req = new SendAuth.Req();
+                    req.scope = "snsapi_userinfo";
+                    req.state = "wechat_sdk_demo_test";
+                    WeiXinUtil.reg(LoginActivity.this).sendReq(req);
+                }
                 break;
             case R.id.login_hint:
                 if (showPassword) {// 显示密码
@@ -226,7 +236,7 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    private void initWxData() {
+    /*private void initWxData() {
         if (!mWxapi.isWXAppInstalled()) {
             Toast.makeText(this, "您还未安装微信客户端", Toast.LENGTH_SHORT).show();
             return;
@@ -243,7 +253,7 @@ public class LoginActivity extends BaseActivity {
         mWxapi = WXAPIFactory.createWXAPI(this, APP_ID, false);
         // 将该app注册到微信
         mWxapi.registerApp(APP_ID);
-    }
+    }*/
 
     //动态权限
     private void initPermission() {

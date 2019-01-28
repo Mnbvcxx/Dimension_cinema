@@ -17,6 +17,17 @@ android {
         }
     }
 
+    //微信获取code值
+    signingConfigs {
+        debug {
+            storeFile file('movie.keystore')
+            keyAlias "bw_movie"
+            storePassword "123456"
+            keyPassword "123456"
+        }
+    }
+
+
     //自动更改版本
     configurations.all {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->

@@ -9,6 +9,8 @@ import android.view.WindowManager;
 import com.facebook.cache.disk.DiskCacheConfig;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 /**
  * @author : FangShiKang
@@ -20,6 +22,9 @@ public class MyApplication extends Application {
     public final static float DESIGN_WIDTH = 750;
 
     private static Context mContext;
+
+    public static String APP_ID="wxb3852e6a6b7d9516";
+    public static IWXAPI api;
 
     @Override
     public void onCreate() {
@@ -35,6 +40,8 @@ public class MyApplication extends Application {
         Fresco.initialize(this, config);
 
         mContext = getApplicationContext();
+        api = WXAPIFactory.createWXAPI(this, APP_ID, true);
+        api.registerApp(APP_ID);
 
     }
 
