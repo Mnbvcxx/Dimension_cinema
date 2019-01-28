@@ -7,14 +7,19 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+
+    <permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
+    <!-- 加入微信权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
         android:name=".MyApplication"
@@ -24,9 +29,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.activity.MainActivity"
-            android:launchMode="singleTask"/>
         <!-- 主界面 -->
+        <activity
+            android:name=".activity.activity.MainActivity"
+            android:launchMode="singleTask" />
         <!-- 引导页 -->
         <activity android:name=".guideView.activity.GuideViewActivity" />
         <activity android:name=".register.activity.RegisterActivity" />
@@ -38,11 +44,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.LoginActivity"
-            android:launchMode="singleTask"/>
+        <!-- 登录 -->
+        <activity
+            android:name=".login.LoginActivity"
+            android:launchMode="singleTask" />
+
+        <!-- 微信登录 -->
         <activity
             android:name=".wxapi.WXEntryActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode="singleTask" />
         <!-- 影片详情页 -->
         <activity android:name=".activity.activity.FilmDetailsActivity" />
         <!-- 电影详情页 -->
@@ -53,7 +64,8 @@
         <activity android:name=".activity.fragment.myactivity.InfoActivity" />
         <!-- 意见反馈 -->
         <activity android:name=".activity.fragment.myactivity.FeedBacksActivity" />
-        <activity android:name=".movie.fragment.cinemaActivity.CinemaDetailsActivity"></activity>
+        <!-- 影院旗下所排期电影 -->
+        <activity android:name=".movie.fragment.cinemaActivity.CinemaDetailsActivity" />
     </application>
 
 </manifest>

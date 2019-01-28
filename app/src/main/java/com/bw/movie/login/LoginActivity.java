@@ -30,6 +30,7 @@ import com.bw.movie.register.activity.RegisterActivity;
 import com.bw.movie.utils.EncryptUtil;
 import com.bw.movie.utils.IntentUtils;
 import com.bw.movie.utils.ToastUtil;
+import com.bw.movie.utils.WeiXinUtil;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -94,7 +95,7 @@ public class LoginActivity extends BaseActivity {
     protected void initView(Bundle savedInstanceState) {
         //绑定ButterKnife
         ButterKnife.bind(this);
-        registToWX();
+        //registToWX();
     }
 
     @Override
@@ -206,8 +207,20 @@ public class LoginActivity extends BaseActivity {
                 doPost(Apis.LOGIN_URL, map, LoginBean.class);
                 break;
             case R.id.login_wx:
-                initPermission();
-                initWxData();
+                //initPermission();
+                //initWxData();
+                //微信登录
+                if (!WeiXinUtil.success(this)) {
+                    Toast.makeText(this, "您还未安装微信客户端", Toast.LENGTH_SHORT).show();
+                } else {
+                    //动态权限
+                    initPermission();
+                    //  验证
+                    SendAuth.Req req = new SendAuth.Req();
+                    req.scope = "snsapi_userinfo";
+                    req.state = "wechat_sdk_demo_test";
+                    WeiXinUtil.reg(LoginActivity.this).sendReq(req);
+                }
                 break;
             case R.id.login_hint:
                 if (showPassword) {// 显示密码
@@ -225,7 +238,7 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    private void initWxData() {
+    /*private void initWxData() {
         if (!mWxapi.isWXAppInstalled()) {
             Toast.makeText(this, "您还未安装微信客户端", Toast.LENGTH_SHORT).show();
             return;
@@ -242,7 +255,7 @@ public class LoginActivity extends BaseActivity {
         mWxapi = WXAPIFactory.createWXAPI(this, APP_ID, false);
         // 将该app注册到微信
         mWxapi.registerApp(APP_ID);
-    }
+    }*/
 
     //动态权限
     private void initPermission() {
