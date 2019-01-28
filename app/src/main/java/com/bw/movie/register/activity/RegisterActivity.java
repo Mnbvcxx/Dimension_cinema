@@ -2,6 +2,7 @@ package com.bw.movie.register.activity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MotionEvent;
@@ -55,6 +56,7 @@ public class RegisterActivity extends BaseActivity {
     private String mPhone;
     private String mPwd;
     private String mEncrypt_pwd;
+    private SharedPreferences mSP;
 
 
     //布局
@@ -71,9 +73,11 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+
+        //创建SharedPreferences储存数据
+        mSP = getSharedPreferences("config", MODE_PRIVATE);
         //日期第三方
         mRegTxtDte.setOnTouchListener(new View.OnTouchListener() {
-
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -147,7 +151,7 @@ public class RegisterActivity extends BaseActivity {
             ToastUtil.showToast("请正确输入邮箱格式");
         }
 
-        if (TextUtils.isEmpty(mPwd)||mPwd.length()<6) {
+        if (TextUtils.isEmpty(mPwd) || mPwd.length() < 6) {
             ToastUtil.showToast("密码最低由六位数字组成！");
         }
         //改变男女为1/2
@@ -184,22 +188,27 @@ public class RegisterActivity extends BaseActivity {
                 ToastUtil.showToast(registerBean.getMessage());
                 //当用户注册成功时不要跳转到登录页面,应该直接访问登录接口进入首页
                 Map<String, String> map = new HashMap<>();
-                map.put(UserApis.REG_KEY_PHONE, mPhone);
-                map.put(UserApis.REG_KEY_PWD, mEncrypt_pwd);
+                map.put(UserApis.LOGIN_KEY_PHONE, mPhone);
+                map.put(UserApis.LOGIN_KEY_PWD, mEncrypt_pwd);
                 doPost(Apis.LOGIN_URL, map, LoginBean.class);
-            } else if (object instanceof LoginBean) {
-                LoginBean loginBean = (LoginBean) object;
-                if (loginBean.getStatus().equals("0000")) {
-                    ToastUtil.showToast(registerBean.getMessage());
-                    IntentUtils.getInstence().intent(this, MainActivity.class);
-                    //将邮编密码给我的信息
-                    String regemile = mRegTxtEml.getText().toString();
-                    String regpwd = mRegTxtPwd.getText().toString();
-                    EventBusInfoBean infoBean=new EventBusInfoBean();
-                    infoBean.setInfoemail(regemile);
-                    infoBean.setInfopwd(regpwd);
-                    EventBus.getDefault().postSticky(infoBean);
-                }
+            }
+        } else if (object instanceof LoginBean) {
+            LoginBean loginBean = (LoginBean) object;
+            if (loginBean.getStatus().equals("0000")) {
+                ToastUtil.showToast(loginBean.getMessage());
+                //将邮编密码给我的信息
+                String regemile = mRegTxtEml.getText().toString();
+                String regpwd = mRegTxtPwd.getText().toString();
+                EventBusInfoBean infoBean = new EventBusInfoBean();
+                infoBean.setInfoemail(regemile);
+                infoBean.setInfopwd(regpwd);
+                EventBus.getDefault().postSticky(infoBean);
+                mSP.edit()
+                        .putString("userId", loginBean.getResult().getUserId() + "")
+                        .putString("sessionId", loginBean.getResult().getSessionId())
+                        .commit();
+                IntentUtils.getInstence().intent(this, MainActivity.class);
+                finish();
             }
         }
     }
@@ -209,7 +218,7 @@ public class RegisterActivity extends BaseActivity {
      */
     @Override
     protected void netFailed(String s) {
-        ToastUtil.showToast(s);
+        ToastUtil.showToast("获取请求失败");
     }
 
 }

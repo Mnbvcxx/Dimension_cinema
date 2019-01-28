@@ -30,9 +30,9 @@
             fresco:roundBottomRight="true"
             fresco:roundTopLeft="true"
             fresco:roundTopRight="false"
-            fresco:roundedCornerRadius="1dp"
+            fresco:roundedCornerRadius="@dimen/dp_1"
             fresco:roundingBorderColor="@color/colorfff"
-            fresco:roundingBorderWidth="2dp" />
+            fresco:roundingBorderWidth="@dimen/dp_2" />
 
         <TextView
             android:id="@+id/my_name"

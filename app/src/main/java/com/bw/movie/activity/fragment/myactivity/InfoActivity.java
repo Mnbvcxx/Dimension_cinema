@@ -1,12 +1,15 @@
 package com.bw.movie.activity.fragment.myactivity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -60,6 +63,8 @@ public class InfoActivity extends BaseActivity {
     @BindView(R.id.info_request)
     SimpleDraweeView mInfoRequest;
     private MessageInfoBean.ResultBean mResult;
+    private String filepath = Environment.getExternalStorageDirectory()
+            + "/file.png";
 
     @Override
     protected int getLayoutId() {
@@ -235,6 +240,8 @@ public class InfoActivity extends BaseActivity {
             public void onClick(View v) {
                 openpick(v);
                 msdvWindow.dismiss();
+                //动态权限
+                initPermission();
             }
         });
     }
@@ -279,9 +286,6 @@ public class InfoActivity extends BaseActivity {
         intent.setType("image/*");
         startActivityForResult(intent, 100);
     }
-
-    private String filepath = Environment.getExternalStorageDirectory()
-            + "/file.png";
 
     /**
      * 剪切
@@ -387,6 +391,16 @@ public class InfoActivity extends BaseActivity {
         mUserEmail.setText(infoemail);
         Log.i("TAG","infoemail="+infoemail);
     }
+    //动态权限
+    private void initPermission() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS, Manifest.permission.WRITE_APN_SETTINGS};
+            ActivityCompat.requestPermissions(this, mPermissionList, 123);
+        }
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    }
 
 }

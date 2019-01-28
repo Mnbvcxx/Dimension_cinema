@@ -48,11 +48,10 @@ import butterknife.OnClick;
 
 /**
  * 登录页面
- *
+ * <p>
  * 1、记住密码状态
  * 2、自动登录状态
  * 3、快速注册跳转注册页面
- *
  */
 public class LoginActivity extends BaseActivity {
 
@@ -121,6 +120,7 @@ public class LoginActivity extends BaseActivity {
         //复选框内容改变方法
         initChecked();
     }
+
     //复选框内容改变方法
     private void initChecked() {
         mLoginCheckboxLogin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -162,6 +162,7 @@ public class LoginActivity extends BaseActivity {
                 mIntent.putExtra("headPic", loginBean.getResult().getUserInfo().getHeadPic());
                 mIntent.putExtra("phone", loginBean.getResult().getUserInfo().getPhone());
                 startActivity(mIntent);
+                finish();
                 mSP.edit()
                         .putString("userId", loginBean.getResult().getUserId() + "")
                         .putString("sessionId", loginBean.getResult().getSessionId())
@@ -169,17 +170,15 @@ public class LoginActivity extends BaseActivity {
                 infoBean.setInfoemail(mLoginPwd.getText().toString());
                 infoBean.setInfopwd(mLoginPwd.getText().toString());
                 EventBus.getDefault().postSticky(infoBean);
-
-                finish();
             } else {
-                ToastUtil.showToast(loginBean.getMessage());
+                ToastUtil.showToast("登录失败");
             }
         }
     }
 
     @Override
     protected void netFailed(String s) {
-//        ToastUtil.showToast(s);
+        //ToastUtil.showToast("获取请求失败");
     }
 
     @OnClick({R.id.login_reg, R.id.login_btn_go, R.id.login_wx, R.id.login_hint, R.id.login_checkbox, R.id.login_jz_pwd, R.id.login_checkbox_login, R.id.login_zd_login})
