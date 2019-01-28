@@ -213,8 +213,6 @@ public class LoginActivity extends BaseActivity {
                 if (!WeiXinUtil.success(this)) {
                     Toast.makeText(this, "您还未安装微信客户端", Toast.LENGTH_SHORT).show();
                 } else {
-                    //动态权限
-                    initPermission();
                     //  验证
                     SendAuth.Req req = new SendAuth.Req();
                     req.scope = "snsapi_userinfo";
