@@ -77,7 +77,7 @@ public class InfoActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         ButterKnife.bind(this);
-        if(!EventBus.getDefault().isRegistered(this)){
+        if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
 
@@ -88,7 +88,7 @@ public class InfoActivity extends BaseActivity {
     @Override
     protected void initData() {
         //根据用户ID查询用户信息
-        doGetData(Apis.MESSAGE_USERINFO,MessageInfoBean.class);
+        doGetData(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
         //头像popup
         initsdv();
         //从相册修改
@@ -105,22 +105,22 @@ public class InfoActivity extends BaseActivity {
         ToastUtil.showToast(s);
     }
 
-    @OnClick({R.id.info_sdv, R.id.info_reset_psw, R.id.info_request,R.id.info_nick})
+    @OnClick({R.id.info_sdv, R.id.info_reset_psw, R.id.info_request, R.id.info_nick})
     public void onClick(View v) {
         switch (v.getId()) {
             default:
                 break;
-                //点击头像
+            //点击头像
             case R.id.info_sdv:
                 msdvWindow.showAsDropDown(mInfoSdv);
                 break;
-                //修改用户信息
+            //修改用户信息
             case R.id.info_nick:
                 userWindow.showAsDropDown(mInfoNick);
                 break;
-                //重置密码
+            //重置密码
             case R.id.info_reset_psw:
-                pwdWindow.showAsDropDown(mInfoResetPsw,0,50);
+                pwdWindow.showAsDropDown(mInfoResetPsw, 0, 50);
                 break;
             case R.id.info_request:
                 finish();
@@ -131,18 +131,19 @@ public class InfoActivity extends BaseActivity {
     /**
      * 重置密码popupwind
      */
-    private EditText mPwdOld,mPwdNew,mPwdAgin;
+    private EditText mPwdOld, mPwdNew, mPwdAgin;
     private Button mPwdBut;
+
     private void initpsw() {
         //加载popupWindow的子布局
         View mView = View.inflate(this, R.layout.info_pwd_popupwindow, null);
         //获取popupWindow中的控件--通过子布局中的到ID
-        mPwdOld=(EditText) mView.findViewById(R.id.pwd_oldpwd);
-        mPwdNew=(EditText) mView.findViewById(R.id.pwd_newpwd);
-        mPwdAgin=(EditText) mView.findViewById(R.id.pwd_aginpwd);
-        mPwdBut=(Button)mView.findViewById(R.id.pwd_but);
+        mPwdOld = (EditText) mView.findViewById(R.id.pwd_oldpwd);
+        mPwdNew = (EditText) mView.findViewById(R.id.pwd_newpwd);
+        mPwdAgin = (EditText) mView.findViewById(R.id.pwd_aginpwd);
+        mPwdBut = (Button) mView.findViewById(R.id.pwd_but);
         //1.创建popupwindow   contentView 子布局  width,宽   height 高
-        pwdWindow= new PopupWindow(mView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        pwdWindow = new PopupWindow(mView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         //设置焦点
         pwdWindow.setFocusable(true);
         pwdWindow.setBackgroundDrawable(new ColorDrawable(Color.RED));
@@ -155,22 +156,22 @@ public class InfoActivity extends BaseActivity {
                 String oldpwd = mPwdOld.getText().toString();
                 String newpwd = mPwdNew.getText().toString();
                 String aginpwd = mPwdAgin.getText().toString();
-                if (oldpwd.length()<6||TextUtils.isEmpty(oldpwd)) {
+                if (oldpwd.length() < 6 || TextUtils.isEmpty(oldpwd)) {
                     ToastUtil.showToast("密码最低由六位数字组成！");
-                }else if (newpwd.length()<6||TextUtils.isEmpty(newpwd)){
+                } else if (newpwd.length() < 6 || TextUtils.isEmpty(newpwd)) {
                     ToastUtil.showToast("新密码最低由六位数字组成！");
-                }else if (aginpwd.length()<6||TextUtils.isEmpty(aginpwd)){
+                } else if (aginpwd.length() < 6 || TextUtils.isEmpty(aginpwd)) {
                     ToastUtil.showToast("重输新密码最低由六位数字组成！");
-                }else {
+                } else {
                     String encrypt_old = EncryptUtil.encrypt(oldpwd);
                     String encrypt_new = EncryptUtil.encrypt(newpwd);
                     String encrypt_agin = EncryptUtil.encrypt(aginpwd);
                     //请求网络
                     HashMap<String, String> map = new HashMap<>();
-                    map.put("oldPwd",encrypt_old);
-                    map.put("newPwd",encrypt_new);
-                    map.put("newPwd2",encrypt_agin);
-                    doPost(Apis.MESSAGE_INFO_PWD,map,RegisterBean.class);
+                    map.put("oldPwd", encrypt_old);
+                    map.put("newPwd", encrypt_new);
+                    map.put("newPwd2", encrypt_agin);
+                    doPost(Apis.MESSAGE_INFO_PWD, map, RegisterBean.class);
                 }
 
             }
@@ -188,30 +189,30 @@ public class InfoActivity extends BaseActivity {
         String EMAIL = "^[A-Za-z0-9][\\w\\._]*[a-zA-Z0-9]+@[A-Za-z0-9-_]+\\.([A-Za-z]{2,4})";
         if (TextUtils.isEmpty(newNick)) {
             ToastUtil.showToast("输入的昵称不能为空");
-        }else if (TextUtils.isEmpty(newSex)) {
+        } else if (TextUtils.isEmpty(newSex)) {
             ToastUtil.showToast("请正确输入性别为“男”或“女”");
-        }else if (TextUtils.isEmpty(newEmail) || !newEmail.matches(EMAIL)) {
+        } else if (TextUtils.isEmpty(newEmail) || !newEmail.matches(EMAIL)) {
             ToastUtil.showToast("请正确输入邮箱格式");
-        }else {
-        if (newSex.equals("男")){
-            newSex="1";
-        }else if (newSex.equals("女")){
-            newSex="2";
-        }
+        } else {
+            if (newSex.equals("男")) {
+                newSex = "1";
+            } else if (newSex.equals("女")) {
+                newSex = "2";
+            }
 
-        //进行网络请求
-        HashMap<String, String> map = new HashMap<>();
-        map.put("nickName",newNick);
-        map.put("sex",newSex);
-        map.put("email",newEmail);
-        doPost(Apis.MESSAGE_INFO_USER,map,RegisterBean.class);
+            //进行网络请求
+            HashMap<String, String> map = new HashMap<>();
+            map.put("nickName", newNick);
+            map.put("sex", newSex);
+            map.put("email", newEmail);
+            doPost(Apis.MESSAGE_INFO_USER, map, RegisterBean.class);
         }
     }
 
     /**
      * pupopwindow
      */
-    private PopupWindow msdvWindow,userWindow,pwdWindow;
+    private PopupWindow msdvWindow, userWindow, pwdWindow;
     private TextView mModify;
     private TextView mPhotograph;
 
@@ -252,15 +253,16 @@ public class InfoActivity extends BaseActivity {
     /**
      * 修改用户的弹窗
      */
-    private EditText mUserNick,mUserSex,mUserEmail;
+    private EditText mUserNick, mUserSex, mUserEmail;
     private Button mUserBut;
+
     private void inituser() {
         View mView = View.inflate(this, R.layout.info_user_popupwindow, null);
         //获取popupWindow中的控件--通过子布局中的到ID
         mUserNick = (EditText) mView.findViewById(R.id.user_nick);
         mUserSex = (EditText) mView.findViewById(R.id.user_sex);
         mUserEmail = (EditText) mView.findViewById(R.id.user_email);
-        mUserBut = (Button)mView.findViewById(R.id.user_but);
+        mUserBut = (Button) mView.findViewById(R.id.user_but);
         //1.创建popupwindow   contentView 子布局  width,宽   height 高
         userWindow = new PopupWindow(mView, WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
         //设置焦点
@@ -278,9 +280,9 @@ public class InfoActivity extends BaseActivity {
     }
 
 
-
     /**
      * 打开相册
+     *
      * @param v
      */
     private void openpick(View v) {
@@ -292,6 +294,7 @@ public class InfoActivity extends BaseActivity {
 
     /**
      * 剪切
+     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -327,19 +330,20 @@ public class InfoActivity extends BaseActivity {
             //TODO:网络请求
             HashMap<String, String> map = new HashMap<>();
             map.put("image", filepath);
-            doPostImageData(Apis.MESSAGE_INFO_HEAD,map,InfoHeadBean.class);
+            doPostImageData(Apis.MESSAGE_INFO_HEAD, map, InfoHeadBean.class);
         }
     }
 
     /**
      * 得到数据
+     *
      * @param object
      */
     @Override
     protected void netSuccess(Object object) {
-        if (object instanceof MessageInfoBean){
-            MessageInfoBean infoBean=(MessageInfoBean)object;
-            if (infoBean.getStatus().equals("0000")){
+        if (object instanceof MessageInfoBean) {
+            MessageInfoBean infoBean = (MessageInfoBean) object;
+            if (infoBean.getStatus().equals("0000")) {
                 mResult = infoBean.getResult();
                 //头像
                 mInfoSdv.setImageURI(Uri.parse(mResult.getHeadPic()));
@@ -347,10 +351,10 @@ public class InfoActivity extends BaseActivity {
                 mInfoNick.setText(mResult.getNickName());
                 mUserNick.setText(mResult.getNickName());
                 //性别
-                if (mResult.getSex()==1){
+                if (mResult.getSex() == 1) {
                     mInfoSex.setText("男");
                     mUserSex.setText("男");
-                }else if (mResult.getSex()==2){
+                } else if (mResult.getSex() == 2) {
                     mInfoSex.setText("女");
                     mUserSex.setText("女");
                 }
@@ -359,27 +363,27 @@ public class InfoActivity extends BaseActivity {
                 //手机号
                 mInfoPhone.setText(mResult.getPhone());
 
-            }else {
+            } else {
                 ToastUtil.showToast(infoBean.getMessage());
             }
         }
-        if (object instanceof InfoHeadBean){
-            InfoHeadBean headBean=(InfoHeadBean)object;
-            if (headBean.getStatus().equals("0000")){
+        if (object instanceof InfoHeadBean) {
+            InfoHeadBean headBean = (InfoHeadBean) object;
+            if (headBean.getStatus().equals("0000")) {
                 ToastUtil.showToast(headBean.getMessage());
                 //重新请求数据实现即时更新头像图片
-                doGetData(Apis.MESSAGE_USERINFO,MessageInfoBean.class);
+                doGetData(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
             }
         }
-        if (object instanceof RegisterBean){
-            RegisterBean registerBean=(RegisterBean)object;
-            if (registerBean.getStatus().equals("0000")){
+        if (object instanceof RegisterBean) {
+            RegisterBean registerBean = (RegisterBean) object;
+            if (registerBean.getStatus().equals("0000")) {
                 ToastUtil.showToast(registerBean.getMessage());
                 userWindow.dismiss();
                 pwdWindow.dismiss();
                 //重新请求数据实现即时更新头像图片
-                doGetData(Apis.MESSAGE_USERINFO,MessageInfoBean.class);
-            }else {
+                doGetData(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
+            } else {
                 ToastUtil.showToast(registerBean.getMessage());
             }
         }
@@ -387,13 +391,14 @@ public class InfoActivity extends BaseActivity {
 
 
     @Subscribe(sticky = true)
-    public void onLoginmail(EventBusInfoBean mlist){
+    public void onLoginmail(EventBusInfoBean mlist) {
         String infoemail = mlist.getInfoemail();
         //邮编--通过登录得到
         mInfoMail.setText(infoemail);
         mUserEmail.setText(infoemail);
-        Log.i("TAG","infoemail="+infoemail);
+        Log.i("TAG", "infoemail=" + infoemail);
     }
+
     //动态权限
     private void initPermission() {
         if (Build.VERSION.SDK_INT >= 23) {

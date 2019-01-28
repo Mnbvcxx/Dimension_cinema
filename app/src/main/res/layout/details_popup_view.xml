@@ -2,40 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@mipmap/hdpi">
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_24"
-        android:layout_marginLeft="@dimen/dp_24"
-        android:layout_marginTop="@dimen/dp_30">
-
-        <ImageView
-            android:id="@+id/dy_"
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="match_parent"
-            android:src="@mipmap/com_icon_movie_default" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_6"
-            android:layout_toRightOf="@id/dy_"
-            android:text="@string/dy"
-            android:textColor="@color/colorfff"
-            android:textSize="@dimen/sp_14" />
-
-        <ImageView
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/dp_24"
-            android:src="@mipmap/xin" />
-
-    </RelativeLayout>
-
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -44,7 +11,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dp_120"
+            android:layout_marginTop="@dimen/dp_90"
             android:background="@drawable/details_popup_bg">
 
             <ImageView
@@ -137,7 +104,7 @@
             android:layout_width="@dimen/dp_111"
             android:layout_height="@dimen/dp_149"
             android:layout_marginLeft="@dimen/dp_24"
-            android:layout_marginTop="@dimen/dp_90"
+            android:layout_marginTop="@dimen/dp_60"
             app:backgroundImage="@mipmap/ydy_2" />
 
         <TextView
@@ -147,7 +114,6 @@
             android:layout_marginLeft="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_90"
             android:layout_toRightOf="@id/details_pp_img"
-            android:text="XXXX"
             android:textColor="@color/colorfff"
             android:textSize="@dimen/sp_20" />
 
@@ -229,17 +195,20 @@
             android:textColor="@color/colorfff"
             android:textSize="@dimen/sp_12" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/details_pp_rv"
+        <TextView
+            android:id="@+id/details_pp_actor_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/sy_name"
+            android:layout_marginRight="@dimen/dp_24"
+            android:layout_marginLeft="@dimen/dp_24"
             android:layout_marginTop="@dimen/dp_12" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/details_pp_rv"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dp_20"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_20"
             android:text="下滑查看更多"

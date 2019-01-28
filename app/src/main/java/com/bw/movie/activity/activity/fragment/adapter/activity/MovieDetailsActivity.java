@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,17 +18,20 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.activity.fragment.adapter.adapter.VideoAdapter;
 import com.bw.movie.activity.activity.fragment.adapter.bean.DetailsMovieBean;
 import com.bw.movie.apis.Apis;
-import com.bw.movie.base.BaseActivity;
 import com.bw.movie.mvc.presenter.MyPresenter;
 import com.bw.movie.mvc.view.MyView;
 import com.bw.movie.utils.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jzvd.JZVideoPlayer;
 
 /**
  * 电影详情页面
@@ -52,6 +57,25 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
     @BindView(R.id.dy_details_ticket)
     TextView mDyDetailsTicket;
     private MyPresenter mMyPresenter;
+    private ImageView mDetailsPpXl;
+    private TextView mDetailsPpLx;
+    private TextView mDetailsPpDy;
+    private TextView mDetailsPpSc;
+    private TextView mDetailsPpCd;
+    private TextView mDetailsPpJJie;
+    private SimpleDraweeView mDetailsPpImg;
+    private Uri mUri;
+    private String mDirector;
+    private String mDuration;
+    private String mPlaceOrigin;
+    private String mSummary;
+    private String mMovieTypes;
+    private String mName;
+    private TextView mDetailsPpActorName;
+    private String mStarring;
+    private View mNoticePpXl;
+    private RecyclerView mNoticeRv;
+    private List<DetailsMovieBean.ResultBean.ShortFilmListBean> mShortFilmList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,42 +88,6 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
         int movieId = intent.getIntExtra("movieId", 0);
         mMyPresenter.onGetDatas(Apis.MOVIE_DETAILS_URL + movieId, DetailsMovieBean.class);
     }
-
-    /*@Override
-    protected int getLayoutId() {
-        return R.layout.activity_movie_details;
-    }*/
-
-    /*@Override
-    protected void initView(Bundle savedInstanceState) {
-        ButterKnife.bind(MovieDetailsActivity.this);
-        Intent intent = getIntent();
-        int movieId = intent.getIntExtra("movieId", 0);
-        doGetData(Apis.MOVIE_DETAILS_URL + movieId, DetailsMovieBean.class);
-    }
-
-    @Override
-    protected void initData() {
-    }
-
-    @Override
-    protected void netSuccess(Object object) {
-        if (object instanceof DetailsMovieBean) {
-            DetailsMovieBean detailsMovieBean = (DetailsMovieBean) object;
-            if (detailsMovieBean.getStatus().equals("0000")) {
-                DetailsMovieBean.ResultBean result = detailsMovieBean.getResult();
-                mDyDetailsName.setText(result.getName());
-                String imageUrl = result.getImageUrl();
-                Uri uri = Uri.parse(imageUrl);
-                mDyDetailsImg.setImageURI(uri);
-            }
-        }
-    }
-
-    @Override
-    protected void netFailed(String s) {
-
-    }*/
 
     @OnClick({R.id.dy_details_name, R.id.dy_details_img, R.id.dy_details_details,
             R.id.dy_details_prediction, R.id.dy_details_stills, R.id.dy_details_review,
@@ -115,11 +103,12 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
             case R.id.dy_details_details:
                 setPopupWindow();
                 break;
-            case R.id.dy_details_prediction:
+            case R.id.dy_details_prediction://预告
+                initNotice();
                 break;
-            case R.id.dy_details_stills:
+            case R.id.dy_details_stills://剧照
                 break;
-            case R.id.dy_details_review:
+            case R.id.dy_details_review://影评
                 break;
             case R.id.dy_details_back:
                 finish();
@@ -130,10 +119,45 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
         }
     }
 
-    //设置popupwindow
+    //点击预告弹出popupwindow
+    private void initNotice() {
+        View view = LayoutInflater.from(this).inflate(R.layout.notice_popup_view, null, false);
+        PopupWindow popupWindow = new PopupWindow(view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupWindow.setOutsideTouchable(true);
+        //设置显示位置,findViewById获取的是包含当前整个页面的view
+        popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+        //点击空白处时，隐藏掉pop窗口
+        popupWindow.setFocusable(true);
+        popupWindow.setTouchable(true);
+        popupWindow.showAsDropDown(mDyDetailsPrediction, 0, 0);
+        initNoticePopup(view, popupWindow);
+    }
+
+    private void initNoticePopup(View view, final PopupWindow popupWindow) {
+        mNoticePpXl = view.findViewById(R.id.notice_pp_xl);
+        mNoticeRv = view.findViewById(R.id.notice_rv);
+        mNoticePpXl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+                JZVideoPlayer.releaseAllVideos();
+            }
+        });
+        init();
+    }
+
+    private void init() {
+        mNoticeRv.setLayoutManager(new LinearLayoutManager(this));
+        mNoticeRv.setHasFixedSize(true);
+        VideoAdapter adapter = new VideoAdapter(this, mShortFilmList);
+        mNoticeRv.setAdapter(adapter);
+    }
+
+    //点击详情弹出popupwindow
     private void setPopupWindow() {
         View view = LayoutInflater.from(this).inflate(R.layout.details_popup_view, null, false);
-        PopupWindow popupWindow = new PopupWindow(view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT, true);
+        PopupWindow popupWindow = new PopupWindow(view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popupWindow.setOutsideTouchable(true);
         //设置显示位置,findViewById获取的是包含当前整个页面的view
@@ -142,6 +166,31 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
         popupWindow.setFocusable(true);
         popupWindow.setTouchable(true);
         popupWindow.showAsDropDown(mDyDetailsDetails, 0, 0);
+        initPopup(view, popupWindow);
+    }
+
+    private void initPopup(View view, final PopupWindow popupWindow) {
+        mDetailsPpXl = view.findViewById(R.id.details_pp_xl);
+        mDetailsPpActorName = view.findViewById(R.id.details_pp_actor_name);
+        mDetailsPpImg = view.findViewById(R.id.details_pp_img);
+        mDetailsPpLx = view.findViewById(R.id.details_pp_lx);
+        mDetailsPpDy = view.findViewById(R.id.details_pp_dy);
+        mDetailsPpSc = view.findViewById(R.id.details_pp_sc);
+        mDetailsPpCd = view.findViewById(R.id.details_pp_cd);
+        mDetailsPpJJie = view.findViewById(R.id.details_pp_jjie);
+        mDetailsPpXl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+            }
+        });
+        mDetailsPpImg.setImageURI(mUri);
+        mDetailsPpLx.setText(mMovieTypes);
+        mDetailsPpDy.setText(mDirector);
+        mDetailsPpSc.setText(mDuration);
+        mDetailsPpCd.setText(mPlaceOrigin);
+        mDetailsPpJJie.setText(mSummary);
+        mDetailsPpActorName.setText(mStarring);
     }
 
     @Override
@@ -152,8 +201,16 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
                 DetailsMovieBean.ResultBean result = detailsMovieBean.getResult();
                 mDyDetailsName.setText(result.getName());
                 String imageUrl = result.getImageUrl();
-                Uri uri = Uri.parse(imageUrl);
-                mDyDetailsImg.setImageURI(uri);
+                mUri = Uri.parse(imageUrl);
+                mDyDetailsImg.setImageURI(mUri);
+                mName = result.getName();
+                mDirector = result.getDirector();//导演
+                mDuration = result.getDuration();//时长
+                mPlaceOrigin = result.getPlaceOrigin();//产地
+                mSummary = result.getSummary();//简介
+                mMovieTypes = result.getMovieTypes();//类型
+                mStarring = result.getStarring();//演员名字
+                mShortFilmList = result.getShortFilmList();
             }
         }
     }
@@ -161,5 +218,11 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
     @Override
     public void onMyFailed(String error) {
         ToastUtil.showToast(error);
+    }
+
+    @Override
+    protected void onPause() {
+        JZVideoPlayer.releaseAllVideos();
+        super.onPause();
     }
 }
