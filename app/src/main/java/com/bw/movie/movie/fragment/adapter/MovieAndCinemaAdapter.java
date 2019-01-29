@@ -1,6 +1,7 @@
 package com.bw.movie.movie.fragment.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.bw.movie.R;
 import com.bw.movie.movie.bean.MovieAndCinemaBean;
+import com.bw.movie.movie.fragment.cinemaActivity.SeatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +21,7 @@ import java.util.List;
  * @author : FangShiKang
  * @date : 2019/01/27.
  * email : fangshikang@outlook.com
- * desc :
+ * desc :影院排期
  */
 public class MovieAndCinemaAdapter extends RecyclerView.Adapter<MovieAndCinemaAdapter.MovieAndCinemaViewHolder> {
     private Context mContext;
@@ -38,11 +40,24 @@ public class MovieAndCinemaAdapter extends RecyclerView.Adapter<MovieAndCinemaAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MovieAndCinemaViewHolder movieAndCinemaViewHolder, int i) {
+    public void onBindViewHolder(@NonNull final MovieAndCinemaViewHolder movieAndCinemaViewHolder, final int i) {
         movieAndCinemaViewHolder.mTextViewT.setText(mResultBeans.get(i).getScreeningHall());
         movieAndCinemaViewHolder.mTextViewBegin.setText(mResultBeans.get(i).getBeginTime());
         movieAndCinemaViewHolder.mTextViewEnd.setText(mResultBeans.get(i).getEndTime());
         movieAndCinemaViewHolder.mTextViewPrice.setText(mResultBeans.get(i).getPrice()+"");
+        //条目点击---跳转到选座页
+        movieAndCinemaViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, SeatActivity.class);
+                //传值：厅号，时间，价格
+                intent.putExtra("hall",mResultBeans.get(i).getScreeningHall());
+                intent.putExtra("begintime",mResultBeans.get(i).getBeginTime());
+                intent.putExtra("endtime",mResultBeans.get(i).getEndTime());
+                intent.putExtra("price",mResultBeans.get(i).getPrice()+"");
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override

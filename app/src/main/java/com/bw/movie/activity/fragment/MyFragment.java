@@ -18,6 +18,7 @@ import com.bw.movie.activity.fragment.myactivity.AttentionActivity;
 import com.bw.movie.activity.fragment.myactivity.FeedBacksActivity;
 import com.bw.movie.activity.fragment.myactivity.InfoActivity;
 import com.bw.movie.activity.fragment.myactivity.MessageActivity;
+import com.bw.movie.activity.fragment.myactivity.RecordActivity;
 import com.bw.movie.utils.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -97,6 +98,8 @@ public class MyFragment extends Fragment {
                 break;
             case R.id.my_rccord:
                 ToastUtil.showToast("点击了购票记录");
+                Intent record = new Intent(getActivity(), RecordActivity.class);
+                startActivity(record);
                 break;
             case R.id.my_feedbacks:
                 ToastUtil.showToast("点击了意见反馈");

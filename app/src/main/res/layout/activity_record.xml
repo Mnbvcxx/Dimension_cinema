@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/movie_shape_bg_selecter"
+    >
+    <RelativeLayout
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_50"
+        android:layout_centerHorizontal="true"
+        >
+        <Button
+            android:id="@+id/record_wait"
+            android:layout_width="@dimen/dp_83"
+            android:layout_height="@dimen/dp_25"
+            android:text="待付款"
+            android:textColor="@color/colorfff"
+            android:textSize="@dimen/sp_14"
+            android:background="@drawable/movie_shape_bg_failed"
+
+            />
+        <Button
+            android:id="@+id/record_ok"
+            android:layout_width="@dimen/dp_83"
+            android:layout_height="@dimen/dp_25"
+            android:text="已完成"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/color333"
+            android:background="@drawable/movie_selecter"
+            android:layout_toRightOf="@id/record_wait"
+            android:layout_marginLeft="@dimen/dp_32"
+
+            />
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/record_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_below="@id/button"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginRight="@dimen/dp_24" />
+    <ImageView
+        android:id="@+id/record_request"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_60"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginBottom="@dimen/sp_20"
+        android:src="@mipmap/com_icon_default" />
+</RelativeLayout>

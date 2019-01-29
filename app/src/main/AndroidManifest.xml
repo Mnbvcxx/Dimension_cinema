@@ -65,9 +65,13 @@
         <!-- 意见反馈 -->
         <activity android:name=".activity.fragment.myactivity.FeedBacksActivity" />
         <!-- 影院旗下所排期电影 -->
-         <activity android:name=".movie.fragment.cinemaActivity.CinemaDetailsActivity"></activity>
+         <activity android:name=".movie.fragment.cinemaActivity.CinemaDetailsActivity"/>
         <!--我的关注-->
         <activity android:name=".activity.fragment.myactivity.AttentionActivity"/>
+        <!--购票记录-->
+        <activity android:name=".activity.fragment.myactivity.RecordActivity"/>
+        <!--选座-->
+        <activity android:name=".movie.fragment.cinemaActivity.SeatActivity"/>
     </application>
 
 </manifest>

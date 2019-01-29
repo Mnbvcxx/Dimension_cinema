@@ -59,4 +59,13 @@ public class Apis {
     public static final String ATTEN_MOVE="movie/v1/verify/findMoviePageList";
     //我关注的影院列表
     public static final String ATTEN_CINEMA="cinema/v1/verify/findCinemaPageList";
+    //用户购票记录查询列表
+    public static final String RECORD_ACTIVITY="user/v1/verify/findUserBuyTicketRecordList";
+    //影院详情
+    public static final String CINEMA_INFO="cinema/v1/findCinemaInfo";
+    //影院评价
+    public static final String CIINEMA_EVALUATE="cinema/v1/findAllCinemaComment";
+    //影院评论点赞
+    public static final String CINEMA_EVALUATE_GREAT="cinema/v1/verify/cinemaCommentGreat";
+
 }
