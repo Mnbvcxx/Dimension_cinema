@@ -61,6 +61,7 @@ public class DetailsRmAdapter extends RecyclerView.Adapter<DetailsRmAdapter.Deta
             public void onClick(View view) {
                 if (mOnCheckedListener != null) {
                     mOnCheckedListener.onClicked(mResultBeans.get(i).getId(), detailsRmViewHolder.mImageView);
+                    notifyDataSetChanged();
                 }
             }
         });

@@ -89,6 +89,8 @@ public class DetailsRmFragment extends Fragment implements MyView {
         } else if (data instanceof RegisterBean) {
             RegisterBean registerBean = (RegisterBean) data;
             if (registerBean.getStatus().equals("0000")) {
+                mDetailsRmAdapter.notifyDataSetChanged();
+                mMyPresenter.onGetDatas(Apis.MOVIE_RM_URL, FilmCinemaxBean.class);
                 ToastUtil.showToast(registerBean.getMessage());
             }
         }

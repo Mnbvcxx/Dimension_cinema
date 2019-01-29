@@ -7,8 +7,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -96,33 +98,34 @@ public class CinemaDetailsActivity extends BaseActivity {
      * popupwindow
      */
     private PopupWindow mPopupWindow;
-                    //详情      评价        地区          电话           地铁
-    private TextView details,evaluate,details_name,details_phone,details_metro;
+    //详情      评价        地区          电话           地铁
+    private TextView details, evaluate, details_name, details_phone, details_metro;
     private ImageView request;
-    private View details_view,evaluate_view;
-                        //详情的数据内容
+    private View details_view, evaluate_view;
+    //详情的数据内容
     private RelativeLayout details_details;
     private RecyclerView evaluate_recycler;
+
     private void initpopup() {
         //加载popupWindow的子布局
         View view = View.inflate(this, R.layout.cinema_details_popupwindow, null);
         //获取popupWindow中的控件
         //通过子布局中的到ID
-        details = (TextView)view.findViewById(R.id.details);
-        evaluate = (TextView)view.findViewById(R.id.evaluate);
-        request=(ImageView)view.findViewById(R.id.request);
-        details_name = (TextView)view.findViewById(R.id.details_name);
-        details_phone = (TextView)view.findViewById(R.id.details_phone);
-        details_metro = (TextView)view.findViewById(R.id.details_metro);
+        details = (TextView) view.findViewById(R.id.details);
+        evaluate = (TextView) view.findViewById(R.id.evaluate);
+        request = (ImageView) view.findViewById(R.id.request);
+        details_name = (TextView) view.findViewById(R.id.details_name);
+        details_phone = (TextView) view.findViewById(R.id.details_phone);
+        details_metro = (TextView) view.findViewById(R.id.details_metro);
         details_view = (View) view.findViewById(R.id.details_view);
         evaluate_view = (View) view.findViewById(R.id.evaluate_view);
         details_details = (RelativeLayout) view.findViewById(R.id.details_details);
-        evaluate_recycler = (RecyclerView)view.findViewById(R.id.evaluate_recycler);
+        evaluate_recycler = (RecyclerView) view.findViewById(R.id.evaluate_recycler);
         //1.创建popupwindow   contentView 子布局  width,宽   height 高
-        mPopupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        mPopupWindow = new PopupWindow(view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         //设置焦点
         mPopupWindow.setFocusable(true);
-        mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.RED));
+        mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         //设置是否可以触摸
         mPopupWindow.setTouchable(true);
         //评价的点击事件
@@ -144,7 +147,7 @@ public class CinemaDetailsActivity extends BaseActivity {
                 details_view.setVisibility(View.VISIBLE);
                 details_details.setVisibility(View.VISIBLE);
                 evaluate_recycler.setVisibility(View.GONE);
-                doGetData(Apis.CINEMA_INFO+"?cinemaId="+mCinemaId,DetailsPopupBean.class);
+                doGetData(Apis.CINEMA_INFO + "?cinemaId=" + mCinemaId, DetailsPopupBean.class);
             }
         });
         //返回的点击事件
@@ -167,7 +170,7 @@ public class CinemaDetailsActivity extends BaseActivity {
         mEvaluateAdapter = new EvaluateAdapter(this);
         evaluate_recycler.setAdapter(mEvaluateAdapter);
         //网络请求
-        doGetData(Apis.CIINEMA_EVALUATE+"?cinemaId="+mCinemaId+"&page="+1+"&count="+5,EvaluateBean.class);
+        doGetData(Apis.CIINEMA_EVALUATE + "?cinemaId=" + mCinemaId + "&page=" + 1 + "&count=" + 10, EvaluateBean.class);
     }
 
     @OnClick({R.id.cin_back, R.id.cin_navigation})
@@ -179,10 +182,10 @@ public class CinemaDetailsActivity extends BaseActivity {
                 this.finish();
                 break;
             case R.id.cin_navigation:
-            //网络请求
-                doGetData(Apis.CINEMA_INFO+"?cinemaId="+mCinemaId,DetailsPopupBean.class);
-               //点击弹框
-                mPopupWindow.showAsDropDown(v,0,250);
+                //网络请求
+                doGetData(Apis.CINEMA_INFO + "?cinemaId=" + mCinemaId, DetailsPopupBean.class);
+                //点击弹框
+                mPopupWindow.showAsDropDown(v, 0, 250);
                 break;
         }
     }
@@ -221,9 +224,9 @@ public class CinemaDetailsActivity extends BaseActivity {
 
                 }
             }
-        }else if (object instanceof DetailsPopupBean){
-            DetailsPopupBean popupBean=(DetailsPopupBean)object;
-            if (popupBean.getStatus().equals("0000")){
+        } else if (object instanceof DetailsPopupBean) {
+            DetailsPopupBean popupBean = (DetailsPopupBean) object;
+            if (popupBean.getStatus().equals("0000")) {
                 //影院名称
                 details_name.setText(popupBean.getResult().getAddress());
                 //影院电话
@@ -233,13 +236,13 @@ public class CinemaDetailsActivity extends BaseActivity {
                 details_metro.setText(split);
 
             }
-        }else if (object instanceof EvaluateBean){
-            EvaluateBean evaluateBean=(EvaluateBean)object;
+        } else if (object instanceof EvaluateBean) {
+            EvaluateBean evaluateBean = (EvaluateBean) object;
             mEvaluateAdapter.setMjihe(evaluateBean.getResult());
             mEvaluateAdapter.setCallBack(new EvaluateAdapter.CallBack() {
                 @Override
                 public void callback(final ImageView thumbs, final int commentId) {
-                     thumb = thumbs;
+                    thumb = thumbs;
                     //点赞
                     thumb.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -247,21 +250,21 @@ public class CinemaDetailsActivity extends BaseActivity {
                             thumbs.setImageResource(R.mipmap.com_icon_praise_selected);
                             //网络请求
                             HashMap<String, String> map = new HashMap<>();
-                            map.put("commentId",commentId+"");
-                            doPost(Apis.CINEMA_EVALUATE_GREAT,map,RegisterBean.class);
+                            map.put("commentId", commentId + "");
+                            doPost(Apis.CINEMA_EVALUATE_GREAT, map, RegisterBean.class);
                         }
                     });
                 }
             });
 
         }
-        if (object instanceof RegisterBean){
-            mRegisterBean = (RegisterBean)object;
-            if (!mRegisterBean.getMessage().isEmpty()){
+        if (object instanceof RegisterBean) {
+            mRegisterBean = (RegisterBean) object;
+            if (!mRegisterBean.getMessage().isEmpty()) {
                 thumb.setImageResource(R.mipmap.com_icon_praise_selected);
-                doGetData(Apis.CIINEMA_EVALUATE+"?cinemaId="+mCinemaId+"&page="+1+"&count="+5,EvaluateBean.class);
+                doGetData(Apis.CIINEMA_EVALUATE + "?cinemaId=" + mCinemaId + "&page=" + 1 + "&count=" + 10, EvaluateBean.class);
                 ToastUtil.showToast(mRegisterBean.getMessage());
-            }else {
+            } else {
                 ToastUtil.showToast(mRegisterBean.getMessage());
             }
 
@@ -272,7 +275,7 @@ public class CinemaDetailsActivity extends BaseActivity {
 
     @Override
     protected void netFailed(String s) {
-    ToastUtil.showToast(s);
+        ToastUtil.showToast(s);
     }
 
 }

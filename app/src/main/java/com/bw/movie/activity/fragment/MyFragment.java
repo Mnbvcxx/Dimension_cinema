@@ -81,26 +81,21 @@ public class MyFragment extends Fragment implements MyView {
             default:
                 break;
             case R.id.my_message:
-                ToastUtil.showToast("点击了系统消息页");
                 Intent message = new Intent(getActivity(), MessageActivity.class);
                 startActivity(message);
                 break;
             case R.id.my_icon:
-                ToastUtil.showToast("点击了我的头像");
                 break;
             case R.id.my_name:
-                ToastUtil.showToast("点击了我的名字");
                 break;
             case R.id.my_sign_in:
                 ToastUtil.showToast("点击了签到");
                 break;
             case R.id.my_info:
-                ToastUtil.showToast("点击了我的信息");
                 Intent info = new Intent(getActivity(), InfoActivity.class);
                 startActivity(info);
                 break;
             case R.id.my_attentions:
-                ToastUtil.showToast("点击了我的关注");
                 Intent attent = new Intent(getActivity(), AttentionActivity.class);
                 startActivity(attent);
                 break;
@@ -110,7 +105,6 @@ public class MyFragment extends Fragment implements MyView {
                 startActivity(record);
                 break;
             case R.id.my_feedbacks:
-                ToastUtil.showToast("点击了意见反馈");
                 Intent feedbacks = new Intent(getActivity(), FeedBacksActivity.class);
                 startActivity(feedbacks);
                 break;

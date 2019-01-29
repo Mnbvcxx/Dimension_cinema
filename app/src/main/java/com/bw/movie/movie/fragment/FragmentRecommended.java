@@ -87,6 +87,7 @@ public class FragmentRecommended extends Fragment implements MyView {
         } else if (data instanceof RegisterBean) {
             RegisterBean registerBean = (RegisterBean) data;
             if (registerBean.getStatus().equals("0000")) {
+                mMyPresenter.onGetDatas(Apis.RECOMMEND_URL, RecommendedBean.class);
                 Toast.makeText(getActivity(), registerBean.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
