@@ -1,252 +1,260 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+<com.bw.movie.activity.fragment.customer.PersonalCustom
+
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
-        android:id="@+id/layout_my"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:fresco="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_220"
-        android:background="@mipmap/bg_my">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/my_message"
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
-            android:layout_marginLeft="@dimen/dp_24"
-            android:layout_marginTop="@dimen/dp_30"
-            android:src="@mipmap/my_icon_remind_default" />
+        <RelativeLayout
+            android:id="@+id/layout_my"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_220"
+            android:background="@mipmap/bg_my">
 
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/my_icon"
-            android:layout_width="@dimen/dp_72"
-            android:layout_height="@dimen/dp_72"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/dp_60"
-            fresco:backgroundImage="@mipmap/icon_hdpi"
-            fresco:roundAsCircle="true"
-            fresco:roundBottomLeft="false"
-            fresco:roundBottomRight="true"
-            fresco:roundTopLeft="true"
-            fresco:roundTopRight="false"
-            fresco:roundedCornerRadius="@dimen/dp_1"
-            fresco:roundingBorderColor="@color/colorfff"
-            fresco:roundingBorderWidth="@dimen/dp_2" />
+            <ImageView
+                android:id="@+id/my_message"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:layout_marginTop="@dimen/dp_30"
+                android:src="@mipmap/my_icon_remind_default" />
 
-        <TextView
-            android:id="@+id/my_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/my_icon"
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/my_icon"
+                android:layout_width="@dimen/dp_72"
+                android:layout_height="@dimen/dp_72"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_60"
+                fresco:backgroundImage="@mipmap/icon_hdpi"
+                fresco:roundAsCircle="true"
+                fresco:roundBottomLeft="false"
+                fresco:roundBottomRight="true"
+                fresco:roundTopLeft="true"
+                fresco:roundTopRight="false"
+                fresco:roundedCornerRadius="@dimen/dp_1"
+                fresco:roundingBorderColor="@color/colorfff"
+                fresco:roundingBorderWidth="@dimen/dp_2" />
+
+            <TextView
+                android:id="@+id/my_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/my_icon"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="冬天来了"
+                android:textColor="@color/colorfff" />
+
+            <Button
+                android:id="@+id/my_sign_in"
+                android:layout_width="@dimen/dp_66"
+                android:layout_height="@dimen/dp_28"
+                android:layout_below="@id/my_name"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_12"
+                android:background="@drawable/shape_bg_button"
+                android:text="@string/Sign_in"
+                android:textColor="@color/colorfff"
+                android:textSize="@dimen/sp_14" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_mysss"
+            android:layout_width="@dimen/dp_312"
+            android:layout_height="@dimen/dp_86"
+            android:layout_below="@id/layout_my"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_10"
-            android:text="冬天来了"
-            android:textColor="@color/colorfff" />
+            android:background="@drawable/recommended_shape_bg">
 
-        <Button
-            android:id="@+id/my_sign_in"
-            android:layout_width="@dimen/dp_66"
-            android:layout_height="@dimen/dp_28"
-            android:layout_below="@id/my_name"
+            <RelativeLayout
+                android:id="@+id/my_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_30">
+
+                <ImageView
+                    android:id="@+id/info"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/my_icon_messiage_default" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/info"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="@string/Info"
+                    android:textSize="@dimen/sp_12" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_mys"
+            android:layout_width="@dimen/dp_312"
+            android:layout_height="@dimen/dp_86"
+            android:layout_below="@id/layout_mysss"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/dp_12"
-            android:background="@drawable/shape_bg_button"
-            android:text="@string/Sign_in"
-            android:textColor="@color/colorfff"
-            android:textSize="@dimen/sp_14" />
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/recommended_shape_bg">
+
+            <RelativeLayout
+                android:id="@+id/my_attentions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_30">
+
+                <ImageView
+                    android:id="@+id/attention"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/my_icon_attention_default" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/attention"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="@string/Concern_about_me"
+                    android:textSize="@dimen/sp_12" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/my_rccord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_54"
+                android:layout_toRightOf="@id/my_attentions">
+
+                <ImageView
+                    android:id="@+id/rccord"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/my_icon_rccord_default" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rccord"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="@string/The_ticket_record"
+                    android:textSize="@dimen/sp_12" />
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_myss"
+            android:layout_width="@dimen/dp_312"
+            android:layout_height="@dimen/dp_86"
+            android:layout_below="@id/layout_mys"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/recommended_shape_bg">
+
+
+            <RelativeLayout
+                android:id="@+id/my_feedbacks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_30">
+
+                <ImageView
+                    android:id="@+id/feedback"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/my_icon_feedback_default" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/feedback"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="@string/Feedback"
+                    android:textSize="@dimen/sp_12" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/my_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_54"
+                android:layout_toRightOf="@id/my_feedbacks">
+
+                <ImageView
+                    android:id="@+id/version"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/my_icon_version_default" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/version"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="@string/latest_version"
+                    android:textSize="@dimen/sp_12" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/my_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_54"
+                android:layout_toRightOf="@id/my_version">
+
+                <ImageView
+                    android:id="@+id/logout"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/my_icon_logout_default" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/logout"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="@string/Logout"
+                    android:textSize="@dimen/sp_12" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_myss"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="@string/baway"
+            android:textColor="@color/color666" />
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/layout_mysss"
-        android:layout_width="@dimen/dp_312"
-        android:layout_height="@dimen/dp_86"
-        android:layout_below="@id/layout_my"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_10"
-        android:background="@drawable/recommended_shape_bg">
-
-        <RelativeLayout
-            android:id="@+id/my_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_30">
-
-            <ImageView
-                android:id="@+id/info"
-                android:layout_width="@dimen/dp_24"
-                android:layout_height="@dimen/dp_24"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/my_icon_messiage_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/info"
-                android:layout_marginTop="@dimen/dp_10"
-                android:text="@string/Info"
-                android:textSize="@dimen/sp_12" />
-
-        </RelativeLayout>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/layout_mys"
-        android:layout_width="@dimen/dp_312"
-        android:layout_height="@dimen/dp_86"
-        android:layout_below="@id/layout_mysss"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_10"
-        android:background="@drawable/recommended_shape_bg">
-
-        <RelativeLayout
-            android:id="@+id/my_attentions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_30">
-
-            <ImageView
-                android:id="@+id/attention"
-                android:layout_width="@dimen/dp_24"
-                android:layout_height="@dimen/dp_24"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/my_icon_attention_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/attention"
-                android:layout_marginTop="@dimen/dp_10"
-                android:text="@string/Concern_about_me"
-                android:textSize="@dimen/sp_12" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/my_rccord"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_54"
-            android:layout_toRightOf="@id/my_attentions">
-
-            <ImageView
-                android:id="@+id/rccord"
-                android:layout_width="@dimen/dp_24"
-                android:layout_height="@dimen/dp_24"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/my_icon_rccord_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/rccord"
-                android:layout_marginTop="@dimen/dp_10"
-                android:text="@string/The_ticket_record"
-                android:textSize="@dimen/sp_12" />
-
-        </RelativeLayout>
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/layout_myss"
-        android:layout_width="@dimen/dp_312"
-        android:layout_height="@dimen/dp_86"
-        android:layout_below="@id/layout_mys"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_10"
-        android:background="@drawable/recommended_shape_bg">
-
-
-        <RelativeLayout
-            android:id="@+id/my_feedbacks"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_30">
-
-            <ImageView
-                android:id="@+id/feedback"
-                android:layout_width="@dimen/dp_24"
-                android:layout_height="@dimen/dp_24"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/my_icon_feedback_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/feedback"
-                android:layout_marginTop="@dimen/dp_10"
-                android:text="@string/Feedback"
-                android:textSize="@dimen/sp_12" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/my_version"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_54"
-            android:layout_toRightOf="@id/my_feedbacks">
-
-            <ImageView
-                android:id="@+id/version"
-                android:layout_width="@dimen/dp_24"
-                android:layout_height="@dimen/dp_24"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/my_icon_version_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/version"
-                android:layout_marginTop="@dimen/dp_10"
-                android:text="@string/latest_version"
-                android:textSize="@dimen/sp_12" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/my_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_54"
-            android:layout_toRightOf="@id/my_version">
-
-            <ImageView
-                android:id="@+id/logout"
-                android:layout_width="@dimen/dp_24"
-                android:layout_height="@dimen/dp_24"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/my_icon_logout_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/logout"
-                android:layout_marginTop="@dimen/dp_10"
-                android:text="@string/Logout"
-                android:textSize="@dimen/sp_12" />
-
-        </RelativeLayout>
-
-    </RelativeLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/layout_myss"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_20"
-        android:text="@string/baway"
-        android:textColor="@color/color666" />
-
-</RelativeLayout>
+</com.bw.movie.activity.fragment.customer.PersonalCustom>
