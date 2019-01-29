@@ -1,38 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     >
+
     <RelativeLayout
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_50"
         android:layout_centerHorizontal="true"
-        >
-    <Button
-        android:id="@+id/attention_move"
-        android:layout_width="@dimen/dp_83"
-        android:layout_height="@dimen/dp_25"
-        android:text="电影"
-        android:textColor="@color/colorfff"
-        android:textSize="@dimen/sp_14"
-        android:background="@drawable/movie_shape_bg_failed"
+        android:layout_marginTop="@dimen/dp_50">
 
-        />
+        <Button
+            android:id="@+id/attention_move"
+            android:layout_width="@dimen/dp_83"
+            android:layout_height="@dimen/dp_25"
+            android:background="@drawable/movie_shape_bg_failed"
+            android:text="电影"
+            android:textColor="@color/colorfff"
+            android:textSize="@dimen/sp_14"
+            />
+
         <Button
             android:id="@+id/attention_cinema"
             android:layout_width="@dimen/dp_83"
             android:layout_height="@dimen/dp_25"
-            android:text="影院"
-            android:textSize="@dimen/sp_14"
-            android:textColor="#333333"
-            android:background="@drawable/movie_selecter"
-            android:layout_toRightOf="@id/attention_move"
             android:layout_marginLeft="@dimen/dp_32"
-
+            android:layout_toRightOf="@id/attention_move"
+            android:background="@drawable/movie_selecter"
+            android:text="影院"
+            android:textColor="#333333"
+            android:textSize="@dimen/sp_14"
             />
     </RelativeLayout>
     <!--电影的Recycler-->
@@ -40,20 +38,21 @@
         android:id="@+id/move_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_30"
         android:layout_below="@id/button"
         android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_24" />
     <!--影院的Recycler-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cinema_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_20"
         android:layout_below="@id/button"
         android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_20"
         android:layout_marginRight="@dimen/dp_24"
         android:visibility="gone" />
+
     <ImageView
         android:id="@+id/attention_request"
         android:layout_width="@dimen/dp_60"

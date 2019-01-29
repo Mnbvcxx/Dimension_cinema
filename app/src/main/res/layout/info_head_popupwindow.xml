@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@drawable/frag_myacty_infoacty"
-    >
-    <TextView
-        android:id="@+id/Modify_Head"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="从相册修改头像"
-        />
-    <View
-        android:layout_width="@dimen/dp_100"
-        android:layout_height="@dimen/dp_3"
-        android:background="#ccc"
-        />
+    android:orientation="vertical">
+
     <TextView
         android:id="@+id/Photograph"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dp_150"
         android:layout_height="wrap_content"
-        android:text="照相修改头像"
-        />
+        android:gravity="center"
+        android:text="拍照"
+        android:textColor="@color/colorfff"
+        android:background="@drawable/movie_shape_bg_failed"
+        android:textSize="@dimen/sp_14" />
 
+    <View
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="@dimen/dp_3"
+        android:background="#ccc" />
+
+    <TextView
+        android:id="@+id/Modify_Head"
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/colorfff"
+        android:background="@drawable/movie_shape_bg_failed"
+        android:text="从相册修改头像"
+        android:textSize="@dimen/sp_14" />
 
 </LinearLayout>

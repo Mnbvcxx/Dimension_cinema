@@ -64,11 +64,11 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initData() {
         Intent intent = getIntent();
-        String sessionId = intent.getStringExtra("sessionId");
+      /*  String sessionId = intent.getStringExtra("sessionId");
         String userId = intent.getStringExtra("userId");
         String nickName = intent.getStringExtra("nickName");
         String headPic = intent.getStringExtra("headPic");
-        String phone = intent.getStringExtra("phone");
+        String phone = intent.getStringExtra("phone");*/
         //创建一个集合,用来添加我们所需要的fragment
         mFragments = new ArrayList<>();
         mFragments.add(new FilmFragment());

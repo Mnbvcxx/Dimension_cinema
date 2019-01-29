@@ -57,7 +57,9 @@
         <!-- 影片详情页 -->
         <activity android:name=".activity.activity.FilmDetailsActivity" />
         <!-- 电影详情页 -->
-        <activity android:name=".activity.activity.fragment.adapter.activity.MovieDetailsActivity" />
+        <activity android:name=".activity.activity.fragment.adapter.activity.MovieDetailsActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
         <!-- 系统消息页面 -->
         <activity android:name=".activity.fragment.myactivity.MessageActivity" />
         <!-- 我的信息页面 -->

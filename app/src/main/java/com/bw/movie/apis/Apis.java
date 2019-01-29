@@ -68,4 +68,13 @@ public class Apis {
     //影院评论点赞
     public static final String CINEMA_EVALUATE_GREAT="cinema/v1/verify/cinemaCommentGreat";
 
+    //查询影片评论
+    public static final String REVIEW_CINEMA="movie/v1/findAllMovieComment?movieId=";
+    //评论点赞
+    public static final String COMMENT_DZ_URL="movie/v1/verify/movieCommentGreat";
+    //添加用户对影片的评论
+    public static final String USER_COMMENT_URL="movie/v1/verify/movieComment";
+    //添加用户对评论的回复
+    public static final String USER_COMMENT_REPLY_URL="movie/v1/verify/commentReply";
+
 }

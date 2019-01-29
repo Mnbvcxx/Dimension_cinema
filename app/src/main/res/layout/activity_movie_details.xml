@@ -63,9 +63,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_32"
-            android:layout_marginTop="@dimen/dp_40"
             android:layout_below="@id/dy_details_img"
             android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_40"
             android:layout_marginRight="@dimen/dp_24">
 
             <TextView
@@ -95,7 +95,7 @@
                 android:layout_width="@dimen/dp_58"
                 android:layout_height="match_parent"
                 android:layout_marginRight="@dimen/dp_24"
-                android:layout_toLeftOf="@id/dy_details_review"
+                android:layout_toLeftOf="@id/dy_reviews"
                 android:background="@drawable/details_dy_shape_bg"
                 android:gravity="center"
                 android:text="剧照"
@@ -103,7 +103,7 @@
                 android:textSize="@dimen/sp_14" />
 
             <TextView
-                android:id="@+id/dy_details_review"
+                android:id="@+id/dy_reviews"
                 android:layout_width="@dimen/dp_58"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
@@ -146,6 +146,69 @@
                 android:textSize="@dimen/sp_20" />
 
         </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/dy_details_layout_review"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_95"
+        android:background="@drawable/details_popup_bg"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="@string/yp"
+            android:textColor="@color/color333"
+            android:textSize="@dimen/sp_16" />
+
+        <View
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_3"
+            android:layout_below="@id/review"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_6"
+            android:background="@drawable/movie_shape_bg_failed" />
+
+        <ImageView
+            android:id="@+id/review_pp_xl"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_24"
+            android:src="@mipmap/com_icon_down_default" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/review_pp_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/review_pp_xl" />
+
+        <ImageView
+            android:id="@+id/review_back"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:src="@mipmap/com_icon_default" />
+
+        <ImageView
+            android:id="@+id/review_publish"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/dp_24"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:src="@mipmap/com_icon_publish_default" />
 
     </RelativeLayout>
 

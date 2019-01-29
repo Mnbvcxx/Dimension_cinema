@@ -66,11 +66,11 @@ public class AttentionActivity extends BaseActivity {
         switch (v.getId()) {
             default:
                 break;
-                //电影
+            //电影
             case R.id.attention_move:
                 initmove();
                 break;
-                //影院
+            //影院
             case R.id.attention_cinema:
                 initcinema();
                 break;
@@ -103,18 +103,18 @@ public class AttentionActivity extends BaseActivity {
         mCinemaAdapter = new AttenCinemaAdapter(this);
         mCinemaRecycler.setAdapter(mCinemaAdapter);
         //网络请求
-        doGetData(Apis.ATTEN_CINEMA+"?page="+1+"&count="+10,AttenCinemaBean.class);
+        doGetData(Apis.ATTEN_CINEMA + "?page=" + 1 + "&count=" + 10, AttenCinemaBean.class);
     }
 
     /**
      * 电影的点击事件
      */
     private void initmove() {
-        mAttentionMove.setTextColor(Color.parseColor("#ffffff"));
+        mAttentionMove.setTextColor(AttentionActivity.this.getResources().getColor(R.color.colorfff));
         mAttentionMove.setBackgroundResource(R.drawable.movie_shape_bg_failed);
         //影院背景
         mAttentionCinema.setBackgroundResource(R.drawable.movie_selecter);
-        mAttentionCinema.setTextColor(Color.parseColor("#333333"));
+        mAttentionCinema.setTextColor(AttentionActivity.this.getResources().getColor(R.color.color333));
         mMoveRecycler.setVisibility(View.VISIBLE);
         mCinemaRecycler.setVisibility(View.INVISIBLE);
         //recycler布局
@@ -125,22 +125,22 @@ public class AttentionActivity extends BaseActivity {
         mMoveAdapter = new AttenMoveAdapter(this);
         mMoveRecycler.setAdapter(mMoveAdapter);
         //网络请求
-        doGetData(Apis.ATTEN_MOVE+"?page="+1+"&count="+10,AttenMoveBean.class);
+        doGetData(Apis.ATTEN_MOVE + "?page=" + 1 + "&count=" + 10, AttenMoveBean.class);
     }
 
 
     @Override
     protected void netSuccess(Object object) {
-        if (object instanceof AttenMoveBean){
-            AttenMoveBean moveBean=(AttenMoveBean)object;
+        if (object instanceof AttenMoveBean) {
+            AttenMoveBean moveBean = (AttenMoveBean) object;
             //适配器
             mMoveAdapter = new AttenMoveAdapter(this);
             mMoveAdapter.setMjihe(moveBean.getResult());
             mMoveRecycler.setAdapter(mMoveAdapter);
 
         }
-        if (object instanceof AttenCinemaBean){
-            AttenCinemaBean cinemaBean=(AttenCinemaBean)object;
+        if (object instanceof AttenCinemaBean) {
+            AttenCinemaBean cinemaBean = (AttenCinemaBean) object;
             mCinemaAdapter.setMjihe(cinemaBean.getResult());
         }
     }

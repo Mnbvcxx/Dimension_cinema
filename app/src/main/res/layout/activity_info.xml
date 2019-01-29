@@ -1,154 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="@dimen/dp_312"
     android:layout_height="match_parent"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
     android:orientation="vertical">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_30"
         android:text="用户信息"
         android:textColor="#333333"
-        android:textSize="@dimen/sp_14"
-        android:layout_marginTop="@dimen/dp_30"
-        />
+        android:textSize="@dimen/sp_14" />
     <!--用户头像-->
     <LinearLayout
         android:layout_width="@dimen/dp_312"
         android:layout_height="@dimen/dp_178"
         android:layout_marginTop="@dimen/dp_30"
         android:background="@drawable/frag_myacty_infoacty"
-        android:orientation="vertical"
-        >
-        <LinearLayout
+        android:orientation="vertical">
+
+        <LinearLayout xmlns:fresco="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            xmlns:fresco="http://schemas.android.com/tools"
-            android:orientation="horizontal"
-            >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="用户头像"
-            android:textSize="@dimen/sp_14"
-            android:textColor="#333333"
-            android:layout_marginLeft="@dimen/dp_20"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            />
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/info_sdv"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_30"
-            fresco:backgroundImage="@mipmap/icon_hdpi"
-            android:layout_marginTop="@dimen/dp_20"
-            android:layout_marginBottom="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_20"
-            fresco:roundAsCircle="true"
-            fresco:roundedCornerRadius="@dimen/dp_1"
-            fresco:roundTopLeft="true"
-            fresco:roundTopRight="false"
-            fresco:roundBottomLeft="false"
-            fresco:roundBottomRight="true"
-            fresco:roundingBorderWidth="@dimen/dp_2"
-            fresco:roundingBorderColor="@color/colorA999"/>
-    </LinearLayout>
-    <View
-        android:layout_width="@dimen/dp_272"
-        android:layout_height="2dp"
-        android:background="#f2f2f2"
-        android:layout_gravity="center_horizontal"
-        />
-     <LinearLayout
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:orientation="horizontal"
-         android:layout_marginTop="@dimen/dp_10"
-         >
-         <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="用户昵称"
-             android:textSize="@dimen/sp_14"
-             android:textColor="#333333"
-             android:layout_marginLeft="@dimen/dp_20"
-             android:layout_weight="1"
-             android:layout_gravity="center_vertical"
-             />
-         <TextView
-             android:id="@+id/info_nick"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:textColor="#999999"
-             android:textSize="@dimen/sp_14"
-             android:layout_marginRight="@dimen/dp_20"
-             />
-     </LinearLayout>
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_weight="1"
+                android:text="用户头像"
+                android:textColor="#333333"
+                android:textSize="@dimen/sp_14" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/info_sdv"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_20"
+                android:layout_marginBottom="@dimen/dp_10"
+                fresco:backgroundImage="@mipmap/icon_hdpi"
+                fresco:roundAsCircle="true"
+                fresco:roundBottomLeft="false"
+                fresco:roundBottomRight="true"
+                fresco:roundTopLeft="true"
+                fresco:roundTopRight="false"
+                fresco:roundedCornerRadius="@dimen/dp_1"
+                fresco:roundingBorderColor="@color/colorA999"
+                fresco:roundingBorderWidth="@dimen/dp_2" />
+        </LinearLayout>
+
         <View
             android:layout_width="@dimen/dp_272"
             android:layout_height="2dp"
-            android:background="#f2f2f2"
-            android:layout_marginTop="@dimen/dp_10"
             android:layout_gravity="center_horizontal"
-            />
+            android:background="#f2f2f2" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="@dimen/dp_10"
-            >
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="用户性别"
-                android:textSize="@dimen/sp_14"
-                android:textColor="#333333"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_20"
                 android:layout_weight="1"
+                android:text="用户昵称"
+                android:textColor="#333333"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/info_nick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp_20"
+                android:textColor="#999999"
+                android:textSize="@dimen/sp_14" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="@dimen/dp_272"
+            android:layout_height="2dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="#f2f2f2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                />
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_weight="1"
+                android:text="用户性别"
+                android:textColor="#333333"
+                android:textSize="@dimen/sp_14" />
+
             <TextView
                 android:id="@+id/info_sex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#999999"
-                android:textSize="@dimen/sp_14"
                 android:layout_marginRight="@dimen/dp_20"
-                />
+                android:textColor="#999999"
+                android:textSize="@dimen/sp_14" />
         </LinearLayout>
+
         <View
             android:layout_width="@dimen/dp_272"
             android:layout_height="2dp"
-            android:background="#f2f2f2"
-            android:layout_marginTop="@dimen/dp_10"
             android:layout_gravity="center_horizontal"
-            />
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="#f2f2f2" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="@dimen/dp_10"
-            >
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="出生日期"
-                android:textSize="@dimen/sp_14"
-                android:textColor="#333333"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_20"
                 android:layout_weight="1"
-                android:layout_gravity="center_vertical"
-                />
+                android:text="出生日期"
+                android:textColor="#333333"
+                android:textSize="@dimen/sp_14" />
+
             <TextView
                 android:id="@+id/info_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#999999"
-                android:textSize="@dimen/sp_14"
                 android:layout_marginRight="@dimen/dp_20"
-                />
+                android:textColor="#999999"
+                android:textSize="@dimen/sp_14" />
         </LinearLayout>
 
     </LinearLayout>
@@ -157,68 +155,67 @@
     <LinearLayout
         android:layout_width="@dimen/dp_312"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginTop="@dimen/dp_20"
         android:background="@drawable/frag_myacty_infoacty"
-        >
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="手机号"
-                android:textSize="@dimen/sp_14"
-                android:textColor="#333333"
                 android:layout_marginLeft="@dimen/dp_20"
-                android:layout_weight="1"
                 android:layout_marginTop="@dimen/dp_20"
                 android:layout_marginBottom="@dimen/dp_10"
-                />
+                android:layout_weight="1"
+                android:text="手机号"
+                android:textColor="#333333"
+                android:textSize="@dimen/sp_14" />
+
             <TextView
                 android:id="@+id/info_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#999999"
-                android:textSize="@dimen/sp_14"
-                android:layout_marginRight="@dimen/dp_20"
                 android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_20"
                 android:layout_marginBottom="@dimen/dp_10"
-                />
+                android:textColor="#999999"
+                android:textSize="@dimen/sp_14" />
         </LinearLayout>
+
         <View
             android:layout_width="@dimen/dp_272"
             android:layout_height="2dp"
-            android:background="#f2f2f2"
             android:layout_gravity="center_horizontal"
-            />
+            android:background="#f2f2f2" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_marginBottom="@dimen/dp_20"
-            >
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="邮箱"
-                android:textSize="@dimen/sp_14"
-                android:textColor="#333333"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_20"
                 android:layout_weight="1"
-                android:layout_gravity="center_vertical"
-                />
+                android:text="邮箱"
+                android:textColor="#333333"
+                android:textSize="@dimen/sp_14" />
+
             <TextView
                 android:id="@+id/info_mail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#999999"
-                android:textSize="@dimen/sp_14"
                 android:layout_marginRight="@dimen/dp_20"
-                />
+                android:textColor="#999999"
+                android:textSize="@dimen/sp_14" />
         </LinearLayout>
     </LinearLayout>
 
@@ -226,41 +223,40 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/frag_myacty_infoacty"
         android:layout_marginTop="@dimen/dp_20"
-        >
+        android:background="@drawable/frag_myacty_infoacty"
+        android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="重置密码"
-            android:textSize="@dimen/sp_14"
-            android:textColor="#333333"
             android:layout_marginLeft="@dimen/dp_20"
-            android:layout_weight="1"
             android:layout_marginTop="@dimen/dp_20"
             android:layout_marginBottom="@dimen/dp_20"
-            />
+            android:layout_weight="1"
+            android:text="重置密码"
+            android:textColor="#333333"
+            android:textSize="@dimen/sp_14" />
+
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/info_reset_psw"
             android:layout_width="@dimen/dp_24"
             android:layout_height="@dimen/dp_24"
             android:layout_marginTop="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_20"
-            android:background="@mipmap/com_icon_next_default"
-            />
+            android:background="@mipmap/com_icon_next_default" />
     </LinearLayout>
-<RelativeLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/dp_20"
-    >
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/info_request"
-        android:layout_width="@dimen/dp_60"
-        android:layout_height="@dimen/dp_60"
-        android:background="@mipmap/com_icon_default"
-        android:layout_alignParentBottom="true"
-        />
-</RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_20">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/info_request"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:layout_alignParentBottom="true"
+            android:background="@mipmap/com_icon_default" />
+    </RelativeLayout>
 </LinearLayout>
