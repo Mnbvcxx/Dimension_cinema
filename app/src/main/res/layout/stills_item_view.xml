@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/stils_img"
+        android:layout_width="@dimen/dp_151"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_height="@dimen/dp_200"
+        fresco:roundedCornerRadius="@dimen/dp_3"
+        fresco:roundingBorderWidth="@dimen/dp_1"
+        fresco:roundingBorderColor="@color/colorA999"/>
+
+</RelativeLayout>
