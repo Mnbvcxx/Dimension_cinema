@@ -53,4 +53,7 @@
     <string name="jqjj">剧情简介</string>
     <string name="yg">预告片</string>
     <string name="jz">剧照</string>
+    <string name="yp">影评</string>
+    <string name="xpl">写评论</string>
+    <string name="fs">发送</string>
 </resources>

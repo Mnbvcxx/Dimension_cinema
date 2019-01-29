@@ -27,6 +27,12 @@ public class DateUtils {
         mSimpleDateFormat = new SimpleDateFormat("MM-dd", Locale.getDefault());
         return mSimpleDateFormat.format(d);
     }
+    /*时间戳转换成字符窜*/
+    public static String getDateToStrings(long time) {
+        Date d = new Date(time);
+        mSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        return mSimpleDateFormat.format(d);
+    }
 
     /*将字符串转为时间戳*/
     public static long getStringToDate(String time) {

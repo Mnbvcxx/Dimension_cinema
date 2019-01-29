@@ -14,23 +14,30 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.activity.fragment.adapter.adapter.MyDetaillsReviewAdapter;
 import com.bw.movie.activity.activity.fragment.adapter.adapter.StillsAdapter;
 import com.bw.movie.activity.activity.fragment.adapter.adapter.VideoAdapter;
 import com.bw.movie.activity.activity.fragment.adapter.bean.DetailsMovieBean;
-import com.bw.movie.activity.activity.fragment.adapter.bean.StillsBean;
+import com.bw.movie.activity.activity.fragment.adapter.bean.ReviewsBean;
 import com.bw.movie.apis.Apis;
+import com.bw.movie.apis.UserApis;
 import com.bw.movie.mvc.presenter.MyPresenter;
 import com.bw.movie.mvc.view.MyView;
+import com.bw.movie.register.bean.RegisterBean;
 import com.bw.movie.utils.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,7 +50,7 @@ import cn.jzvd.JZVideoPlayer;
  * 当用户点击电影列表中的条目时跳转到电影详情页面
  */
 public class MovieDetailsActivity extends AppCompatActivity implements MyView {
-
+    private static final String TAG = "MovieDetailsActivity";
     @BindView(R.id.dy_details_name)
     TextView mDyDetailsName;
     @BindView(R.id.dy_details_img)
@@ -54,12 +61,22 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
     TextView mDyDetailsPrediction;
     @BindView(R.id.dy_details_stills)
     TextView mDyDetailsStills;
-    @BindView(R.id.dy_details_review)
-    TextView mDyDetailsReview;
+    @BindView(R.id.dy_reviews)//影评
+            TextView mDyReviews;
+    @BindView(R.id.dy_details_layout_review)
+    RelativeLayout mDyDetailsLayoutReview;
     @BindView(R.id.dy_details_back)
     ImageView mDyDetailsBack;
     @BindView(R.id.dy_details_ticket)
     TextView mDyDetailsTicket;
+    @BindView(R.id.review_pp_xl)
+    ImageView mReviewPpXl;
+    @BindView(R.id.review_pp_rv)
+    RecyclerView mReviewPpRv;
+    @BindView(R.id.review_back)
+    ImageView mReviewBack;
+    @BindView(R.id.review_publish)
+    ImageView mReviewPublish;
     private MyPresenter mMyPresenter;
     private ImageView mDetailsPpXl;
     private TextView mDetailsPpLx;
@@ -77,30 +94,39 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
     private String mName;
     private TextView mDetailsPpActorName;
     private String mStarring;
-    private View mNoticePpXl;
-    private View mStillsPpXl;
+    private ImageView mNoticePpXl;
+    private ImageView mStillsPpXl;
     private RecyclerView mNoticeRv;
     private RecyclerView mStillsRv;
     private List<DetailsMovieBean.ResultBean.ShortFilmListBean> mShortFilmList;
     private List<String> mPosterList;
     private StillsAdapter mStillsAdapter;
     private List<String> mArrayList;
+    private MyDetaillsReviewAdapter mReviewAdapter;
+    private int mMovieId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
-
-        ButterKnife.bind(MovieDetailsActivity.this);
+        ButterKnife.bind(this);
         mMyPresenter = new MyPresenter(this);
+        mReviewPpRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         Intent intent = getIntent();
-        int movieId = intent.getIntExtra("movieId", 0);
-        mMyPresenter.onGetDatas(Apis.MOVIE_DETAILS_URL + movieId, DetailsMovieBean.class);
+        mMovieId = intent.getIntExtra("movieId", 0);
+        mMyPresenter.onGetDatas(Apis.MOVIE_DETAILS_URL + mMovieId, DetailsMovieBean.class);
+        mDyReviews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDyDetailsLayoutReview.setVisibility(View.VISIBLE);
+                mMyPresenter.onGetDatas(Apis.REVIEW_CINEMA + mMovieId + "&page=1&count=10", ReviewsBean.class);
+            }
+        });
     }
 
-    @OnClick({R.id.dy_details_name, R.id.dy_details_img, R.id.dy_details_details,
-            R.id.dy_details_prediction, R.id.dy_details_stills, R.id.dy_details_review,
-            R.id.dy_details_back, R.id.dy_details_ticket})
+    @OnClick({R.id.dy_details_name, R.id.dy_details_img, R.id.dy_details_details, R.id.review_pp_xl,
+            R.id.dy_details_prediction, R.id.dy_details_stills, R.id.dy_reviews,
+            R.id.dy_details_back, R.id.dy_details_ticket, R.id.review_back, R.id.review_publish})
     public void onClick(View v) {
         switch (v.getId()) {
             default:
@@ -110,24 +136,53 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
             case R.id.dy_details_img:
                 break;
             case R.id.dy_details_details:
+                mDyDetailsLayoutReview.setVisibility(View.GONE);
                 setPopupWindow();
                 break;
             case R.id.dy_details_prediction://预告
+                mDyDetailsLayoutReview.setVisibility(View.GONE);
                 initNotice();
                 break;
             case R.id.dy_details_stills://剧照
+                mDyDetailsLayoutReview.setVisibility(View.GONE);
                 initStills();
                 break;
-            case R.id.dy_details_review://影评
+            case R.id.dy_reviews://影评
                 break;
             case R.id.dy_details_back:
                 finish();
                 break;
-            case R.id.dy_details_ticket:
+            case R.id.dy_details_ticket://购票跳转
                 ToastUtil.showToast("敬请期待");
+                break;
+            case R.id.review_pp_xl:
+                mDyDetailsLayoutReview.setVisibility(View.GONE);
+                break;
+            case R.id.review_back:
+                mDyDetailsLayoutReview.setVisibility(View.GONE);
+                break;
+            case R.id.review_publish://发表评论
+                initPublish();
                 break;
         }
     }
+
+    private void initPublish() {
+        View view = LayoutInflater.from(this).inflate(R.layout.publish_popup_view, null, false);
+        PopupWindow popupWindow = new PopupWindow(view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popupWindow.setOutsideTouchable(true);
+        //设置显示位置,findViewById获取的是包含当前整个页面的view
+        popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+        //点击空白处时，隐藏掉pop窗口
+        popupWindow.setFocusable(true);
+        popupWindow.setTouchable(true);
+        EditText PubEdTxt = view.findViewById(R.id.pub_ed_txt);
+        TextView PubSend = view.findViewById(R.id.pub_send);
+
+    }
+
+
     //点击剧照弹出popupwindow
     private void initStills() {
         View view = LayoutInflater.from(this).inflate(R.layout.stills_popup_view, null, false);
@@ -153,11 +208,10 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
             }
         });
         initStillsData();
-
     }
 
     private void initStillsData() {
-        mStillsRv.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        mStillsRv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mStillsAdapter = new StillsAdapter(this, mArrayList);
         mStillsRv.setAdapter(mStillsAdapter);
     }
@@ -263,6 +317,31 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
                     }
                 }
             }
+        } else if (data instanceof ReviewsBean) {//影评
+            ReviewsBean reviewBean = (ReviewsBean) data;
+            if (reviewBean.getStatus().equals("0000")) {
+                final List<ReviewsBean.ResultBean> result = reviewBean.getResult();
+                mReviewAdapter = new MyDetaillsReviewAdapter(this, result);
+                mReviewPpRv.setAdapter(mReviewAdapter);
+                mReviewAdapter.setOnClickedListener(new MyDetaillsReviewAdapter.onClickedListener() {
+                    @Override
+                    public void onChecled(int position, ImageView imageView) {
+                        Map<String, String> map = new HashMap<>();
+                        map.put(UserApis.FILM_COMMENT_DZ, position + "");
+                        mMyPresenter.onPostDatas(Apis.COMMENT_DZ_URL, map, RegisterBean.class);
+                        imageView.setImageResource(R.mipmap.com_icon_praise_selected);
+
+                    }
+                });
+            }
+        } else if (data instanceof RegisterBean) {
+            RegisterBean registerBean = (RegisterBean) data;
+            if (registerBean.getStatus().equals("0000")) {
+                mMyPresenter.onGetDatas(Apis.REVIEW_CINEMA + mMovieId + "&page=1&count=10", ReviewsBean.class);
+                ToastUtil.showToast(registerBean.getMessage());
+            }else {
+                ToastUtil.showToast("不能重复点赞");
+            }
         }
     }
 
@@ -271,9 +350,9 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
         ToastUtil.showToast(error);
     }
 
-    @Override
+    /*@Override
     protected void onPause() {
         JZVideoPlayer.releaseAllVideos();
         super.onPause();
-    }
+    }*/
 }

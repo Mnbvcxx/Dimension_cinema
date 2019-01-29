@@ -30,8 +30,8 @@
 
         <ImageView
             android:id="@+id/stills_pp_xl"
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
             android:layout_alignParentRight="true"
             android:layout_marginTop="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_24"
@@ -39,13 +39,13 @@
 
 
         <android.support.v7.widget.RecyclerView
-            android:layout_marginLeft="@dimen/dp_14"
-            android:layout_marginRight="@dimen/dp_24"
-            android:layout_below="@id/stills_pp_xl"
-            android:layout_marginTop="@dimen/dp_20"
             android:id="@+id/stills_pp_rv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_below="@id/stills_pp_xl"
+            android:layout_marginLeft="@dimen/dp_14"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_24" />
 
     </RelativeLayout>
 

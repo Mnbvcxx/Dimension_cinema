@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#F2F2F2">
+
+    <RelativeLayout
+        android:id="@+id/layout_pub"
+        android:layout_width="@dimen/dp_284"
+        android:layout_height="@dimen/dp_60"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_15"
+        android:background="@drawable/movie_shape_bg_selecter">
+
+        <EditText
+            android:id="@+id/pub_ed_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@null"
+            android:hint="@string/xpl"
+            android:textSize="@dimen/sp_14" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/pub_send"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@id/layout_pub"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_24"
+        android:layout_toRightOf="@id/layout_pub"
+        android:text="@string/fs"
+        android:layout_marginLeft="@dimen/dp_6"
+        android:gravity="bottom"
+        android:textSize="@dimen/sp_16" />
+
+</RelativeLayout>

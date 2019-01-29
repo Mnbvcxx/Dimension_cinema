@@ -28,5 +28,9 @@ public class UserApis {
      * 微信登录所需参数
      */
     public static final String WX_LOGIN_KEY_PWD = "code";
+    /**
+     * 影片评论点赞
+     */
+    public static final String FILM_COMMENT_DZ = "commentId";
 
 }
