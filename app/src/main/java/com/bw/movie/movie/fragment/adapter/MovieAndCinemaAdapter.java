@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +55,9 @@ public class MovieAndCinemaAdapter extends RecyclerView.Adapter<MovieAndCinemaAd
                 intent.putExtra("hall",mResultBeans.get(i).getScreeningHall());
                 intent.putExtra("begintime",mResultBeans.get(i).getBeginTime());
                 intent.putExtra("endtime",mResultBeans.get(i).getEndTime());
-                intent.putExtra("price",mResultBeans.get(i).getPrice()+"");
+                //小数点后面的数字大小
+                SpannableString spannableString = SeatActivity.changTVsize(mResultBeans.get(i).getPrice() + "");
+                intent.putExtra("price",spannableString);
                 mContext.startActivity(intent);
             }
         });

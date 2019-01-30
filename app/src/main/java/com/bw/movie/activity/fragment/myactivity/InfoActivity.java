@@ -162,7 +162,9 @@ public class InfoActivity extends BaseActivity {
                     ToastUtil.showToast("新密码最低由六位数字组成！");
                 } else if (aginpwd.length() < 6 || TextUtils.isEmpty(aginpwd)) {
                     ToastUtil.showToast("重输新密码最低由六位数字组成！");
-                } else {
+                } else if (oldpwd==newpwd){
+                    ToastUtil.showToast("新旧密码不能一样");
+                }else {
                     String encrypt_old = EncryptUtil.encrypt(oldpwd);
                     String encrypt_new = EncryptUtil.encrypt(newpwd);
                     String encrypt_agin = EncryptUtil.encrypt(aginpwd);
