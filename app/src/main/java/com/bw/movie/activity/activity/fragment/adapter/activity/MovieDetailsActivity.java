@@ -31,6 +31,7 @@ import com.bw.movie.apis.UserApis;
 import com.bw.movie.mvc.presenter.MyPresenter;
 import com.bw.movie.mvc.view.MyView;
 import com.bw.movie.register.bean.RegisterBean;
+import com.bw.movie.utils.IntentUtils;
 import com.bw.movie.utils.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -153,7 +154,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
                 finish();
                 break;
             case R.id.dy_details_ticket://购票跳转
-                ToastUtil.showToast("敬请期待");
+                IntentUtils.getInstence().intent(MovieDetailsActivity.this,MovieTicketActivity.class);
                 break;
             case R.id.review_pp_xl:
                 mDyDetailsLayoutReview.setVisibility(View.GONE);
@@ -350,9 +351,9 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
         ToastUtil.showToast(error);
     }
 
-    /*@Override
+    @Override
     protected void onPause() {
         JZVideoPlayer.releaseAllVideos();
         super.onPause();
-    }*/
+    }
 }

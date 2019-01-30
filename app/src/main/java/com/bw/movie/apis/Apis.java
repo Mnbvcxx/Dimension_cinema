@@ -76,5 +76,9 @@ public class Apis {
     public static final String USER_COMMENT_URL="movie/v1/verify/movieComment";
     //添加用户对评论的回复
     public static final String USER_COMMENT_REPLY_URL="movie/v1/verify/commentReply";
+    //根据电影ID查询当前排片该电影的影院列表
+    public static final String MOVIE_ID_URL="movie/v1/findCinemasListByMovieId";
+
+
 
 }

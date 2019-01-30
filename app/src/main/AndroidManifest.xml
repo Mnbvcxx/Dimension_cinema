@@ -20,7 +20,6 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -29,6 +28,7 @@
         android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <!-- 主界面 -->
         <activity
             android:name=".activity.activity.MainActivity"
@@ -57,9 +57,10 @@
         <!-- 影片详情页 -->
         <activity android:name=".activity.activity.FilmDetailsActivity" />
         <!-- 电影详情页 -->
-        <activity android:name=".activity.activity.fragment.adapter.activity.MovieDetailsActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity
+            android:name=".activity.activity.fragment.adapter.activity.MovieDetailsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
         <!-- 系统消息页面 -->
         <activity android:name=".activity.fragment.myactivity.MessageActivity" />
         <!-- 我的信息页面 -->
@@ -67,13 +68,14 @@
         <!-- 意见反馈 -->
         <activity android:name=".activity.fragment.myactivity.FeedBacksActivity" />
         <!-- 影院旗下所排期电影 -->
-         <activity android:name=".movie.fragment.cinemaActivity.CinemaDetailsActivity"/>
-        <!--我的关注-->
-        <activity android:name=".activity.fragment.myactivity.AttentionActivity"/>
-        <!--购票记录-->
-        <activity android:name=".activity.fragment.myactivity.RecordActivity"/>
-        <!--选座-->
-        <activity android:name=".movie.fragment.cinemaActivity.SeatActivity"/>
+        <activity android:name=".movie.fragment.cinemaActivity.CinemaDetailsActivity" />
+        <!-- 我的关注 -->
+        <activity android:name=".activity.fragment.myactivity.AttentionActivity" />
+        <!-- 购票记录 -->
+        <activity android:name=".activity.fragment.myactivity.RecordActivity" />
+        <!-- 选座 -->
+        <activity android:name=".movie.fragment.cinemaActivity.SeatActivity" />
+        <activity android:name=".activity.activity.fragment.adapter.activity.MovieTicketActivity"></activity>
     </application>
 
 </manifest>
