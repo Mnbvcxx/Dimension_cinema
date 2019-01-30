@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginRight="@dimen/dp_20">
@@ -14,7 +14,11 @@
             android:id="@+id/soon_img"
             android:layout_width="@dimen/dp_126"
             android:layout_height="@dimen/dp_164"
-            app:roundedCornerRadius="@dimen/dp_8" />
+            fresco:roundedCornerRadius="@dimen/dp_8"
+            fresco:roundBottomLeft="true"
+            fresco:roundBottomRight="true"
+            fresco:roundTopLeft="true"
+            fresco:roundTopRight="true"/>
 
         <RelativeLayout
             android:layout_width="@dimen/dp_126"

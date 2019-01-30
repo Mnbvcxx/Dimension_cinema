@@ -44,17 +44,17 @@ public class MovieAndCinemaAdapter extends RecyclerView.Adapter<MovieAndCinemaAd
         movieAndCinemaViewHolder.mTextViewT.setText(mResultBeans.get(i).getScreeningHall());
         movieAndCinemaViewHolder.mTextViewBegin.setText(mResultBeans.get(i).getBeginTime());
         movieAndCinemaViewHolder.mTextViewEnd.setText(mResultBeans.get(i).getEndTime());
-        movieAndCinemaViewHolder.mTextViewPrice.setText(mResultBeans.get(i).getPrice()+"");
-        //条目点击---跳转到选座页
-        movieAndCinemaViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+        movieAndCinemaViewHolder.mTextViewPrice.setText(mResultBeans.get(i).getPrice() + "");
+        //点击箭头---跳转到选座页
+        movieAndCinemaViewHolder.mTextViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, SeatActivity.class);
                 //传值：厅号，时间，价格
-                intent.putExtra("hall",mResultBeans.get(i).getScreeningHall());
-                intent.putExtra("begintime",mResultBeans.get(i).getBeginTime());
-                intent.putExtra("endtime",mResultBeans.get(i).getEndTime());
-                intent.putExtra("price",mResultBeans.get(i).getPrice()+"");
+                intent.putExtra("hall", mResultBeans.get(i).getScreeningHall());
+                intent.putExtra("begintime", mResultBeans.get(i).getBeginTime());
+                intent.putExtra("endtime", mResultBeans.get(i).getEndTime());
+                intent.putExtra("price", mResultBeans.get(i).getPrice() + "");
                 mContext.startActivity(intent);
             }
         });
@@ -64,9 +64,11 @@ public class MovieAndCinemaAdapter extends RecyclerView.Adapter<MovieAndCinemaAd
     public int getItemCount() {
         return mResultBeans == null ? 0 : mResultBeans.size();
     }
-    class MovieAndCinemaViewHolder extends RecyclerView.ViewHolder{
-        TextView mTextViewT,mTextViewBegin,mTextViewEnd,mTextViewPrice;
+
+    class MovieAndCinemaViewHolder extends RecyclerView.ViewHolder {
+        TextView mTextViewT, mTextViewBegin, mTextViewEnd, mTextViewPrice;
         ImageView mTextViewBack;
+
         public MovieAndCinemaViewHolder(@NonNull View itemView) {
             super(itemView);
             mTextViewT = itemView.findViewById(R.id.salon_t);

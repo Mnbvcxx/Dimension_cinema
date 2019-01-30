@@ -105,6 +105,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
     private List<String> mArrayList;
     private MyDetaillsReviewAdapter mReviewAdapter;
     private int mMovieId;
+    private String mImageUrl;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -154,7 +155,15 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
                 finish();
                 break;
             case R.id.dy_details_ticket://购票跳转
-                IntentUtils.getInstence().intent(MovieDetailsActivity.this,MovieTicketActivity.class);
+                Intent intent = new Intent(MovieDetailsActivity.this, MovieTicketActivity.class);
+                intent.putExtra("movieId",mMovieId);
+                intent.putExtra("name",mName);
+                intent.putExtra("imageUrl",mImageUrl);
+                intent.putExtra("movieTypes",mMovieTypes);
+                intent.putExtra("director",mDirector);
+                intent.putExtra("duration",mDuration);
+                intent.putExtra("placeOrigin",mPlaceOrigin);
+                startActivity(intent);
                 break;
             case R.id.review_pp_xl:
                 mDyDetailsLayoutReview.setVisibility(View.GONE);
@@ -299,8 +308,8 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
             if (detailsMovieBean.getStatus().equals("0000")) {
                 DetailsMovieBean.ResultBean result = detailsMovieBean.getResult();
                 mDyDetailsName.setText(result.getName());
-                String imageUrl = result.getImageUrl();
-                mUri = Uri.parse(imageUrl);
+                mImageUrl = result.getImageUrl();
+                mUri = Uri.parse(mImageUrl);
                 mDyDetailsImg.setImageURI(mUri);
                 mName = result.getName();
                 mDirector = result.getDirector();//导演

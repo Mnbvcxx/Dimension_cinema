@@ -11,34 +11,43 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:flipInterval="30"
-        android:persistentDrawingCache="animation"/>
+        android:persistentDrawingCache="animation" />
 
-    <ImageView
-        android:id="@+id/main_film"
-        android:layout_width="@dimen/dp_60"
-        android:layout_height="@dimen/dp_60"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_80"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/dp_24"
-        android:layout_marginBottom="@dimen/dp_12"
-        android:src="@mipmap/com_icon_film_selected" />
+        android:background="@drawable/bg_shape">
 
-    <ImageView
-        android:id="@+id/main_cinema"
-        android:layout_width="@dimen/dp_60"
-        android:layout_height="@dimen/dp_60"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dp_12"
-        android:src="@mipmap/com_icon_cinema_default" />
+        <ImageView
+            android:id="@+id/main_film"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginBottom="@dimen/dp_12"
+            android:src="@mipmap/com_icon_film_selected" />
 
-    <ImageView
-        android:id="@+id/main_my"
-        android:layout_width="@dimen/dp_60"
-        android:layout_height="@dimen/dp_60"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="@dimen/dp_24"
-        android:layout_marginBottom="@dimen/dp_12"
-        android:src="@mipmap/my_default" />
+        <ImageView
+            android:id="@+id/main_cinema"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/dp_12"
+            android:src="@mipmap/com_icon_cinema_default" />
+
+        <ImageView
+            android:id="@+id/main_my"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/dp_24"
+            android:layout_marginBottom="@dimen/dp_12"
+            android:src="@mipmap/my_default" />
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

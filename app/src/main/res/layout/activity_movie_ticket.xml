@@ -27,11 +27,20 @@
         android:textSize="@dimen/sp_10" />
 
     <android.support.v7.widget.RecyclerView
-        android:layout_below="@id/xz"
-        android:layout_marginTop="@dimen/dp_10"
         android:id="@+id/tick_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/xz"
+        android:layout_marginTop="@dimen/dp_10" />
+
+    <ImageView
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_60"
+        android:id="@+id/tick_back"
+        android:src="@mipmap/com_icon_default"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginBottom="@dimen/dp_20"/>
 
 
 </RelativeLayout>

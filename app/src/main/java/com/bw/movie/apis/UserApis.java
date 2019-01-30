@@ -32,5 +32,10 @@ public class UserApis {
      * 影片评论点赞
      */
     public static final String FILM_COMMENT_DZ = "commentId";
+    /**
+     *根据电影ID和影院ID查询电影排期列表
+     */
+    public static final String CINEMASID_KEY = "cinemasId";
+    public static final String MOVIEID_KEY = "movieId";
 
 }

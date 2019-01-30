@@ -75,7 +75,8 @@
         <activity android:name=".activity.fragment.myactivity.RecordActivity" />
         <!-- 选座 -->
         <activity android:name=".movie.fragment.cinemaActivity.SeatActivity" />
-        <activity android:name=".activity.activity.fragment.adapter.activity.MovieTicketActivity"></activity>
+        <activity android:name=".activity.activity.fragment.adapter.activity.MovieTicketActivity" />
+        <activity android:name=".activity.activity.fragment.adapter.activity.MovieFilmActivity"></activity>
     </application>
 
 </manifest>
