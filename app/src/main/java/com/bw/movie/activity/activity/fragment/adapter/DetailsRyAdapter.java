@@ -60,6 +60,7 @@ public class DetailsRyAdapter extends RecyclerView.Adapter<DetailsRyAdapter.Deta
             public void onClick(View view) {
                 if (mOnCheckedListener != null) {
                     mOnCheckedListener.onClicked(mResultBeans.get(i).getId(),detailsRyViewHolder.mImageView);
+                    notifyDataSetChanged();
                 }
             }
         });

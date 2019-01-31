@@ -60,6 +60,7 @@ public class DetailsSoonAdapter extends RecyclerView.Adapter<DetailsSoonAdapter.
             public void onClick(View view) {
                 if (mOnCheckedListener != null) {
                     mOnCheckedListener.onClicked(mResultBeans.get(i).getId(),detailsSoonViewHolder.mImageView);
+                    notifyDataSetChanged();
                 }
             }
         });

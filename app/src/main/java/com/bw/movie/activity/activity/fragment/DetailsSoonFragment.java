@@ -106,6 +106,8 @@ public class DetailsSoonFragment extends Fragment implements MyView {
         } else if (data instanceof RegisterBean) {
             RegisterBean registerBean = (RegisterBean) data;
             if (registerBean.getStatus().equals("0000")) {
+                mDetailsSoonAdapter.notifyDataSetChanged();
+                mMyPresenter.onGetDatas(Apis.MOVIE_COMINGSOON_URL, FilmComingSoonBean.class);
                 ToastUtil.showToast(registerBean.getMessage());
             }
         }

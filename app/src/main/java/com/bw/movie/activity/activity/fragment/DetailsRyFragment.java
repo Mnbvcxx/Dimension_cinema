@@ -105,6 +105,8 @@ public class DetailsRyFragment extends Fragment implements MyView {
         } else if (data instanceof RegisterBean) {
             RegisterBean registerBean = (RegisterBean) data;
             if (registerBean.getStatus().equals("0000")) {
+                mDetailsRyAdapter.notifyDataSetChanged();
+                mMyPresenter.onGetDatas(Apis.MOVIE_BANNER_URL, FilmBean.class);
                 ToastUtil.showToast(registerBean.getMessage());
             }
         }

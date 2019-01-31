@@ -67,7 +67,6 @@ public class Apis {
     public static final String CIINEMA_EVALUATE="cinema/v1/findAllCinemaComment";
     //影院评论点赞
     public static final String CINEMA_EVALUATE_GREAT="cinema/v1/verify/cinemaCommentGreat";
-
     //查询影片评论
     public static final String REVIEW_CINEMA="movie/v1/findAllMovieComment?movieId=";
     //评论点赞
@@ -78,5 +77,12 @@ public class Apis {
     public static final String USER_COMMENT_REPLY_URL="movie/v1/verify/commentReply";
     //购票下单
     public static final String MOVE_TICKET="movie/v1/verify/buyMovieTicket";
+    //根据电影ID查询当前排片该电影的影院列表
+    public static final String MOVIE_ID_URL="movie/v1/findCinemasListByMovieId?movieId=";
+    //根据电影ID和影院ID查询电影排期列表
+    public static final String MOVIESCHEDULELIST_ID_URL="movie/v1/findMovieScheduleList?cinemasId=";
+    //用户签到
+    public static final String USER_SIGNIN_URL="user/v1/verify/userSignIn";
+
 
 }

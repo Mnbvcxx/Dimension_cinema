@@ -56,11 +56,11 @@ public class RecordActivity extends BaseActivity {
         switch (v.getId()) {
             default:
                 break;
-                //待付款
+            //待付款
             case R.id.record_wait:
                 initwait();
                 break;
-                //已完成
+            //已完成
             case R.id.record_ok:
                 break;
             case R.id.record_request:
@@ -81,20 +81,20 @@ public class RecordActivity extends BaseActivity {
         mRecordAdapter = new RecordAdapter(this);
         mRecordRecycler.setAdapter(mRecordAdapter);
         //网络请求
-        doGetData(Apis.RECORD_ACTIVITY+"?page="+1+"&count="+5+"&status="+1,RecordBean.class);
+        doGetData(Apis.RECORD_ACTIVITY + "?page=" + 1 + "&count=" + 10 + "&status=" + 1, RecordBean.class);
 
     }
 
     @Override
     protected void netSuccess(Object object) {
-            if (object instanceof RecordBean) {
-                RecordBean recordBean = (RecordBean) object;
-                if (recordBean.getResult().size() > 0) {
-                    mRecordAdapter.setMjihe(recordBean.getResult());
-                }else {
-                    ToastUtil.showToast("您还没有待付款项");
-                }
+        if (object instanceof RecordBean) {
+            RecordBean recordBean = (RecordBean) object;
+            if (recordBean.getResult().size() > 0) {
+                mRecordAdapter.setMjihe(recordBean.getResult());
+            } else {
+                ToastUtil.showToast("您还没有待付款项");
             }
+        }
     }
 
     @Override

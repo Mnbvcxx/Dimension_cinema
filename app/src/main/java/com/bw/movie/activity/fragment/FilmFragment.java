@@ -32,6 +32,7 @@ import com.bw.movie.apis.Apis;
 import com.bw.movie.mvc.presenter.MyPresenter;
 import com.bw.movie.mvc.view.MyView;
 import com.bw.movie.utils.IntentUtils;
+import com.bw.movie.utils.NetworkUtils;
 import com.bw.movie.utils.ToastUtil;
 import com.lwj.widget.viewpagerindicator.ViewPagerIndicator;
 
@@ -122,19 +123,23 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
         }
     };*/
     private List<String> mListImg;
-
-    @Nullable
+      @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_film, container, false);
         unbinder = ButterKnife.bind(this, view);
-        mMyPresenter = new MyPresenter(this);
-        mMyPresenter.onGetDatas(Apis.MOVIE_BANNER_URL, FilmBean.class);
-        mMyPresenter.onGetDatas(Apis.MOVIE_RM_URL, FilmCinemaxBean.class);
-        mMyPresenter.onGetDatas(Apis.MOVIE_COMINGSOON_URL, FilmComingSoonBean.class);
-        mFilmRmRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        mFilmZzRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        mFilmJijRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        if (!NetworkUtils.isConnected(getActivity())){
+            ToastUtil.showToast("网络未连接");
+        }else {
+            mMyPresenter = new MyPresenter(this);
+            mMyPresenter.onGetDatas(Apis.MOVIE_BANNER_URL, FilmBean.class);
+            mMyPresenter.onGetDatas(Apis.MOVIE_RM_URL, FilmCinemaxBean.class);
+            mMyPresenter.onGetDatas(Apis.MOVIE_COMINGSOON_URL, FilmComingSoonBean.class);
+            mFilmRmRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+            mFilmZzRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+            mFilmJijRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
+        }
         return view;
     }
 

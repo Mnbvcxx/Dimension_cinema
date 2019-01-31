@@ -33,6 +33,7 @@ import com.bw.movie.register.activity.RegisterActivity;
 import com.bw.movie.utils.CustomDialog;
 import com.bw.movie.utils.EncryptUtil;
 import com.bw.movie.utils.IntentUtils;
+import com.bw.movie.utils.JudgeNetWorkUtils;
 import com.bw.movie.utils.ToastUtil;
 import com.bw.movie.utils.WeiXinUtil;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
@@ -194,34 +195,43 @@ public class LoginActivity extends BaseActivity {
             case R.id.login_btn_go:
                 //动态权限
                 //initPermission();
-                CustomDialog customDialog = new CustomDialog(this );
-                customDialog.show();//显示,显示时页面不可点击,只能点击返回
-                //customDialog.dismiss();//消失
-                mPhone = mLoginPhone.getText().toString().trim();
-                mPwd = mLoginPwd.getText().toString().trim();
-                //手机号  正则表达式验证
-                String REGEX = "[1][3458]\\d{9}";
-                if (TextUtils.isEmpty(mPhone) || !mPhone.matches(REGEX)) {
-                    ToastUtil.showToast("请正确输入手机号格式");
+
+                if (!JudgeNetWorkUtils.hasNetwork(this)){
+                    ToastUtil.showToast("无可用网络，请检查网络是否连接");
+                }else {
+                    CustomDialog customDialog = new CustomDialog(this);
+                    customDialog.show();//显示,显示时页面不可点击,只能点击返回
+                    //customDialog.dismiss();//消失
+                    mPhone = mLoginPhone.getText().toString().trim();
+                    mPwd = mLoginPwd.getText().toString().trim();
+                    //手机号  正则表达式验证
+                    String REGEX = "[1][3458]\\d{9}";
+                    if (TextUtils.isEmpty(mPhone) || !mPhone.matches(REGEX)) {
+                        ToastUtil.showToast("请正确输入手机号格式");
+                    }
+                    String encrypt = EncryptUtil.encrypt(mPwd);
+                    Map<String, String> map = new HashMap<>();
+                    map.put(UserApis.LOGIN_KEY_PHONE, mPhone);
+                    map.put(UserApis.LOGIN_KEY_PWD, encrypt);
+                    doPost(Apis.LOGIN_URL, map, LoginBean.class);
                 }
-                String encrypt = EncryptUtil.encrypt(mPwd);
-                Map<String, String> map = new HashMap<>();
-                map.put(UserApis.LOGIN_KEY_PHONE, mPhone);
-                map.put(UserApis.LOGIN_KEY_PWD, encrypt);
-                doPost(Apis.LOGIN_URL, map, LoginBean.class);
                 break;
             case R.id.login_wx:
                 //initPermission();
                 //微信登录
-                if (!WeiXinUtil.success(this)) {
-                    Toast.makeText(this, "您还未安装微信客户端", Toast.LENGTH_SHORT).show();
-                } else {
-                    //  验证
-                    SendAuth.Req req = new SendAuth.Req();
-                    req.scope = "snsapi_userinfo";
-                    req.state = "wechat_sdk_demo_test";
-                    WeiXinUtil.reg(LoginActivity.this).sendReq(req);
-                    finish();
+                if (!JudgeNetWorkUtils.hasNetwork(this)){
+                    ToastUtil.showToast("无可用网络，请检查网络是否连接");
+                }else {
+                    if (!WeiXinUtil.success(this)) {
+                        Toast.makeText(this, "您还未安装微信客户端", Toast.LENGTH_SHORT).show();
+                    } else {
+                        //  验证
+                        SendAuth.Req req = new SendAuth.Req();
+                        req.scope = "snsapi_userinfo";
+                        req.state = "wechat_sdk_demo_test";
+                        WeiXinUtil.reg(LoginActivity.this).sendReq(req);
+                        finish();
+                    }
                 }
                 break;
             case R.id.login_hint:

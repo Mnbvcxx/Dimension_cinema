@@ -2,172 +2,173 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="467dp"
+    android:layout_alignParentBottom="true"
     android:background="@drawable/details_popup_bg">
+
     <RelativeLayout
         android:id="@+id/relat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dp_20"
-        >
-    <TextView
-        android:id="@+id/details"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/color333"
-        android:textSize="@dimen/sp_16"
-        android:text="详情"
-        />
+        android:layout_marginTop="@dimen/dp_20">
+
+        <TextView
+            android:id="@+id/details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="详情"
+            android:textColor="@color/color333"
+            android:textSize="@dimen/sp_16" />
+
         <View
             android:id="@+id/details_view"
             android:layout_width="@dimen/dp_30"
             android:layout_height="@dimen/dp_3"
             android:layout_below="@id/details"
             android:layout_marginTop="@dimen/dp_6"
-            android:background="@drawable/cinema_details_popup_view"
-            />
+            android:background="@drawable/cinema_details_popup_view" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
-    <TextView
-        android:id="@+id/evaluate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/color333"
-        android:textSize="@dimen/sp_16"
-        android:text="评价"
-        android:layout_marginLeft="@dimen/dp_115"
-        android:layout_toRightOf="@id/details"
-        />
-        <View
-            android:id="@+id/evaluate_view"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_3"
-            android:layout_below="@id/evaluate"
-            android:layout_marginTop="@dimen/dp_6"
-            android:layout_marginLeft="@dimen/dp_115"
-            android:layout_toRightOf="@id/details_view"
-            android:background="@drawable/cinema_details_popup_view"
-            android:visibility="gone"
-            />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/evaluate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_115"
+                android:layout_toRightOf="@id/details"
+                android:text="评价"
+                android:textColor="@color/color333"
+                android:textSize="@dimen/sp_16" />
+
+            <View
+                android:id="@+id/evaluate_view"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_3"
+                android:layout_below="@id/evaluate"
+                android:layout_marginLeft="@dimen/dp_115"
+                android:layout_marginTop="@dimen/dp_6"
+                android:layout_toRightOf="@id/details_view"
+                android:background="@drawable/cinema_details_popup_view"
+                android:visibility="gone" />
         </LinearLayout>
     </RelativeLayout>
+
     <ImageView
         android:id="@+id/request"
-        android:layout_width="@dimen/dp_24"
-        android:layout_height="@dimen/dp_24"
-        android:background="@mipmap/com_icon_down_default"
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="@dimen/dp_50"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/dp_24"
         android:layout_marginTop="@dimen/dp_20"
-        />
+        android:layout_marginRight="@dimen/dp_24"
+        android:background="@mipmap/com_icon_down_default" />
     <!--详情的内容-->
     <RelativeLayout
         android:id="@+id/details_details"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/dp_24"
-        android:layout_marginRight="@dimen/dp_24"
-        android:layout_marginTop="@dimen/dp_10"
         android:layout_below="@+id/relat"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_24"
 
         >
+
         <ImageView
             android:id="@+id/ima"
             android:layout_width="@dimen/dp_24"
             android:layout_height="@dimen/dp_24"
-            android:background="@mipmap/cinema_detail_icon_location_default"
-            />
+            android:background="@mipmap/cinema_detail_icon_location_default" />
+
         <TextView
             android:id="@+id/details_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@id/ima"
             android:layout_marginLeft="@dimen/dp_10"
-            android:text="海淀区"
-            android:textSize="@dimen/sp_14"
             android:layout_marginTop="@dimen/dp_2"
+            android:layout_toRightOf="@id/ima"
+            android:text="海淀区"
             android:textColor="@color/color333"
-            />
+            android:textSize="@dimen/sp_14" />
+
         <ImageView
             android:id="@+id/pho"
             android:layout_width="@dimen/dp_24"
             android:layout_height="@dimen/dp_24"
-            android:background="@mipmap/cinema_detail_icon_phone_default"
             android:layout_below="@id/ima"
             android:layout_marginTop="@dimen/dp_20"
-            />
+            android:background="@mipmap/cinema_detail_icon_phone_default" />
+
         <TextView
             android:id="@+id/details_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/ima"
-            android:layout_marginTop="@dimen/dp_22"
-            android:text="24888-15121"
             android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_22"
             android:layout_toRightOf="@id/pho"
-            />
+            android:text="24888-15121" />
+
         <ImageView
             android:id="@+id/add"
             android:layout_width="@dimen/dp_24"
             android:layout_height="@dimen/dp_24"
-            android:background="@mipmap/cinema_detail_icon_route_default"
             android:layout_below="@id/pho"
             android:layout_marginTop="@dimen/dp_20"
-            />
+            android:background="@mipmap/cinema_detail_icon_route_default" />
+
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
-            android:text="乘车路线"
+            android:layout_height="wrap_content"
             android:layout_below="@id/pho"
-            android:layout_marginTop="@dimen/dp_22"
             android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_22"
             android:layout_toRightOf="@id/add"
-            />
+            android:text="乘车路线" />
+
         <TextView
             android:id="@+id/ditie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/add"
-            android:layout_marginTop="@dimen/dp_20"
-            />
+            android:layout_marginTop="@dimen/dp_20" />
+
         <TextView
             android:id="@+id/details_metro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/ditie"
-            android:layout_marginTop="@dimen/dp_10"
-            />
+            android:layout_marginTop="@dimen/dp_10" />
+
         <TextView
             android:id="@+id/gongjiao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
             android:layout_below="@id/details_metro"
-            />
+            android:layout_marginTop="@dimen/dp_10" />
+
         <TextView
             android:id="@+id/details_trans"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/gongjiao"
-            android:layout_marginTop="@dimen/dp_10"
-            />
+            android:layout_marginTop="@dimen/dp_10" />
+
         <TextView
             android:id="@+id/zijia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
             android:layout_below="@id/details_trans"
-            />
+            android:layout_marginTop="@dimen/dp_10" />
+
         <TextView
             android:id="@+id/details_self"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/zijia"
-            android:layout_marginTop="@dimen/dp_10"
-            />
+            android:layout_marginTop="@dimen/dp_10" />
 
     </RelativeLayout>
 
@@ -178,12 +179,11 @@
         android:id="@+id/evaluate_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/dp_24"
-        android:layout_marginRight="@dimen/dp_24"
-        android:layout_marginTop="@dimen/dp_10"
         android:layout_below="@+id/relat"
-        android:visibility="gone"
-        >
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_24"
+        android:visibility="gone">
 
     </android.support.v7.widget.RecyclerView>
 

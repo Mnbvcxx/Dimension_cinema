@@ -53,12 +53,20 @@
         android:layout_marginRight="@dimen/dp_24"
         android:visibility="gone" />
 
-    <ImageView
-        android:id="@+id/attention_request"
-        android:layout_width="@dimen/dp_60"
-        android:layout_height="@dimen/dp_60"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/dp_24"
-        android:layout_marginBottom="@dimen/sp_20"
-        android:src="@mipmap/com_icon_default" />
+        android:background="@drawable/bg_shape">
+
+        <ImageView
+            android:id="@+id/attention_request"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:layout_marginBottom="@dimen/sp_20"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:src="@mipmap/com_icon_default" />
+
+    </RelativeLayout>
+
 </RelativeLayout>

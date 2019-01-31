@@ -27,7 +27,6 @@ android {
         }
     }
 
-
     //自动更改版本
     configurations.all {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->

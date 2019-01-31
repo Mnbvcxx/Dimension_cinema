@@ -82,14 +82,19 @@
         android:layout_height="match_parent"
         android:layout_below="@id/cin_vpi" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_shape">
     <ImageView
         android:id="@+id/cin_back"
         android:layout_width="@dimen/dp_60"
         android:layout_height="@dimen/dp_60"
-        android:layout_alignParentBottom="true"
         android:layout_marginLeft="@dimen/dp_24"
         android:layout_marginBottom="@dimen/dp_20"
         android:src="@mipmap/com_icon_default" />
 
+    </RelativeLayout>
 
 </RelativeLayout>

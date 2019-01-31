@@ -19,8 +19,10 @@ import com.bw.movie.base.BaseActivity;
 import com.bw.movie.login.bean.EventBusInfoBean;
 import com.bw.movie.login.bean.LoginBean;
 import com.bw.movie.register.bean.RegisterBean;
+import com.bw.movie.utils.CustomDialog;
 import com.bw.movie.utils.EncryptUtil;
 import com.bw.movie.utils.IntentUtils;
+import com.bw.movie.utils.JudgeNetWorkUtils;
 import com.bw.movie.utils.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -119,7 +121,13 @@ public class RegisterActivity extends BaseActivity {
             default:
                 break;
             case R.id.reg_button://注册按钮
-                initButton();
+                if (!JudgeNetWorkUtils.hasNetwork(this)) {
+                    ToastUtil.showToast("无可用网络，请检查网络是否连接");
+                } else {
+                    CustomDialog customDialog = new CustomDialog(this);
+                    customDialog.show();//显示,显示时页面不可点击,只能点击返回
+                    initButton();
+                }
                 break;
         }
     }

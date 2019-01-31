@@ -23,7 +23,7 @@ import java.util.List;
  * @author : FangShiKang
  * @date : 2019/01/25.
  * email : fangshikang@outlook.com
- * desc :
+ * desc :轮播图适配器
  */
 public class CinemaFlowAdapter extends RecyclerView.Adapter<CinemaFlowAdapter.MyCinemaFlowViewHolder> {
     private Context mContext;
