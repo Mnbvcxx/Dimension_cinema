@@ -6,6 +6,7 @@ import android.os.PersistableBundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,18 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.fragment.myactivity.RecordActivity;
+import com.bw.movie.apis.Apis;
 import com.bw.movie.base.BaseActivity;
+import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatBean;
+import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveTicketBean;
+import com.bw.movie.utils.EncryptUtil;
 import com.bw.movie.utils.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,6 +56,10 @@ public class SeatActivity extends BaseActivity {
     @BindView(R.id.seat_moveseat_view)
     MoveSeatView mMoveSeatView;
     private SpannableString mSpannableString;
+    private int mScheduleId;
+    private int mNum;
+    private int mUserId;
+
 
     @Override
     protected int getLayoutId() {
@@ -54,20 +69,26 @@ public class SeatActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         ButterKnife.bind(this);
+        if (!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().register(this);
+        }
     }
 
     @Override
     protected void initData() {
         //得到厅号、时间、价格
         Intent intent = getIntent();
+        //排期表
+        mScheduleId = intent.getIntExtra("scheduleId", 0);
         String hall = intent.getStringExtra("hall");
         String begintime = intent.getStringExtra("begintime");
         String endtime = intent.getStringExtra("endtime");
-        String price = intent.getStringExtra("price");
+        //String price = intent.getStringExtra("price");
+        CharSequence price = intent.getCharSequenceExtra("price");
         mSeatBegingtime.setText(begintime+"-");
         mSeatEndtime.setText("-"+endtime);
         mSeatHall.setText(hall);
-        mSpannableString = changTVsize(price);
+        mSpannableString = changTVsize(price+"");
         mSeatPrice.setText(mSpannableString);
         mMoveSeatView.setData(10,15);
 
@@ -82,6 +103,7 @@ public class SeatActivity extends BaseActivity {
                 initpopup();
                 break;
             case R.id.seat_no:
+                finish();
                 break;
 
         }
@@ -113,7 +135,6 @@ public class SeatActivity extends BaseActivity {
             }
         });
 
-
         popup_wei.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,15 +152,46 @@ public class SeatActivity extends BaseActivity {
         popup_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.showToast("点击事件");
+
+                //下单成功跳转到购票记录
+                //得到排期表，数量，sign
+                HashMap<String, String> map = new HashMap<>();
+                map.put("scheduleId",mScheduleId+"");
+                map.put("amount",mNum+"");
+                String sign = "" + UserId + mScheduleId + mNum+"movie";
+                String encrypt = EncryptUtil.encrypt(sign);
+                map.put("sign",encrypt);
+                doPost(Apis.MOVE_TICKET,map,MoveTicketBean.class);
             }
         });
     }
 
+    /**
+     * 获取选座的数量
+     * @param moveSeatBean
+     */
+    int UserId;
+        @Subscribe(sticky = true)
+        public void onMoveSeat(MoveSeatBean moveSeatBean){
+            mNum = moveSeatBean.getNum();
+            Log.i("TAG","mNum="+mNum);
+            mUserId = moveSeatBean.getUserId();
+            UserId=mUserId;
+            Log.i("TAG","UserId="+UserId);
+            Log.i("TAG","mUserId="+mUserId);
+        }
 
     @Override
     protected void netSuccess(Object object) {
-
+        if (object instanceof MoveTicketBean){
+            MoveTicketBean moveTicketBean=(MoveTicketBean)object;
+            if (moveTicketBean.getMessage().equals("下单成功")){
+                Intent intent = new Intent(this, RecordActivity.class);
+                startActivity(intent);
+            }else {
+                ToastUtil.showToast(moveTicketBean.getMessage());
+            }
+        }
     }
 
     @Override
@@ -160,6 +212,8 @@ public class SeatActivity extends BaseActivity {
         }
         return spannableString;
     }
+
+    //得到userID
 
 
 }

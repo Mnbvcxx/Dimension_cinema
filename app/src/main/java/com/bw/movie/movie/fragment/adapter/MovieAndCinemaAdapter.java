@@ -51,7 +51,8 @@ public class MovieAndCinemaAdapter extends RecyclerView.Adapter<MovieAndCinemaAd
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, SeatActivity.class);
-                //传值：厅号，时间，价格
+                //传值：排期id,厅号，时间，价格
+                intent.putExtra("scheduleId",i);
                 intent.putExtra("hall",mResultBeans.get(i).getScreeningHall());
                 intent.putExtra("begintime",mResultBeans.get(i).getBeginTime());
                 intent.putExtra("endtime",mResultBeans.get(i).getEndTime());

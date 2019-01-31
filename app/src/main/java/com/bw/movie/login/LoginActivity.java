@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -27,6 +28,7 @@ import com.bw.movie.apis.UserApis;
 import com.bw.movie.base.BaseActivity;
 import com.bw.movie.login.bean.EventBusInfoBean;
 import com.bw.movie.login.bean.LoginBean;
+import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatBean;
 import com.bw.movie.register.activity.RegisterActivity;
 import com.bw.movie.utils.CustomDialog;
 import com.bw.movie.utils.EncryptUtil;
@@ -151,7 +153,13 @@ public class LoginActivity extends BaseActivity {
                 ToastUtil.showToast(loginBean.getMessage());
                 mIntent = new Intent(LoginActivity.this, MainActivity.class);
                 //intent传值,后续会用到这些参数,尤其是我们的 RequestHeader  入参
-                mIntent.putExtra("userId", loginBean.getResult().getUserId());
+                mIntent.putExtra("userId", loginBean.getResult().getUserId()+"");
+                MoveSeatBean moveSeatBean=new MoveSeatBean();
+                moveSeatBean.setUserId(loginBean.getResult().getUserId());
+                EventBus.getDefault().postSticky(moveSeatBean);
+
+                Log.i("TAG","moveSeatBean="+moveSeatBean);
+
                 mIntent.putExtra("sessionId", loginBean.getResult().getSessionId());
                 mIntent.putExtra("nickName", loginBean.getResult().getUserInfo().getNickName());
                 mIntent.putExtra("headPic", loginBean.getResult().getUserInfo().getHeadPic());

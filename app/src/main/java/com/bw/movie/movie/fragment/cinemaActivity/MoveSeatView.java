@@ -22,6 +22,10 @@ import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 
 import com.bw.movie.R;
+import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatBean;
+import com.bw.movie.utils.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -401,13 +405,19 @@ public class MoveSeatView extends View {
      * @param y
      * @return
      */
+    MoveSeatBean mMoveSeatBean;
     private boolean isHave(int x, int y) {
         if (list == null || list.isEmpty()) {
             return false;
         }
         for (Point point : list) {
             if (point.x == x && point.y == y) {
+                //TODO：将list值传递！！！！
+                mMoveSeatBean=new MoveSeatBean();
+                mMoveSeatBean.setNum(list.size());
+                EventBus.getDefault().postSticky(mMoveSeatBean);
                 return true;
+
             }
         }
         return false;
@@ -423,4 +433,6 @@ public class MoveSeatView extends View {
     private float dip2px(float value) {
         return getResources().getDisplayMetrics().density * value;
     }
+
+
 }

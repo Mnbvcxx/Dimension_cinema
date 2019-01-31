@@ -76,5 +76,7 @@ public class Apis {
     public static final String USER_COMMENT_URL="movie/v1/verify/movieComment";
     //添加用户对评论的回复
     public static final String USER_COMMENT_REPLY_URL="movie/v1/verify/commentReply";
+    //购票下单
+    public static final String MOVE_TICKET="movie/v1/verify/buyMovieTicket";
 
 }
