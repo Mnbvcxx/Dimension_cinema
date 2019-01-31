@@ -123,8 +123,7 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
         }
     };*/
     private List<String> mListImg;
-
-    @Nullable
+      @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_film, container, false);

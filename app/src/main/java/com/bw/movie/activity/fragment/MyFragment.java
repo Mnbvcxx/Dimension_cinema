@@ -24,6 +24,7 @@ import com.bw.movie.activity.fragment.myactivity.bean.MessageInfoBean;
 import com.bw.movie.apis.Apis;
 import com.bw.movie.mvc.presenter.MyPresenter;
 import com.bw.movie.mvc.view.MyView;
+import com.bw.movie.register.bean.RegisterBean;
 import com.bw.movie.utils.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -89,7 +90,7 @@ public class MyFragment extends Fragment implements MyView {
             case R.id.my_name:
                 break;
             case R.id.my_sign_in:
-                ToastUtil.showToast("点击了签到");
+                mMyPresenter.onGetDatas(Apis.USER_SIGNIN_URL, RegisterBean.class);
                 break;
             case R.id.my_info:
                 Intent info = new Intent(getActivity(), InfoActivity.class);
@@ -136,6 +137,13 @@ public class MyFragment extends Fragment implements MyView {
                 mMyName.setText(nickName);
                 //根据用户ID查询用户信息
                 mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
+            }
+        } else if (data instanceof RegisterBean) {
+            RegisterBean registerBean = (RegisterBean) data;
+            if (registerBean.getStatus().equals("0000")) {
+                ToastUtil.showToast(registerBean.getMessage());
+            } else {
+                ToastUtil.showToast(registerBean.getMessage());
             }
         }
     }
