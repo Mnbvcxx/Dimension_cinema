@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +26,15 @@ import com.bw.movie.activity.adapter.CinemaFlowAdapter;
 import com.bw.movie.activity.adapter.MyFilmCinemaxAdapter;
 import com.bw.movie.activity.adapter.MyFilmComingSoonAdapter;
 import com.bw.movie.activity.adapter.MyFilmHosMoviesAdapter;
+import com.bw.movie.activity.adapter.MyMovieSeachAdapter;
 import com.bw.movie.activity.bean.FilmBean;
 import com.bw.movie.activity.bean.FilmCinemaxBean;
 import com.bw.movie.activity.bean.FilmComingSoonBean;
+import com.bw.movie.activity.bean.SeachBean;
 import com.bw.movie.apis.Apis;
 import com.bw.movie.mvc.presenter.MyPresenter;
 import com.bw.movie.mvc.view.MyView;
+import com.bw.movie.register.bean.RegisterBean;
 import com.bw.movie.utils.IntentUtils;
 import com.bw.movie.utils.NetworkUtils;
 import com.bw.movie.utils.ToastUtil;
@@ -108,6 +112,10 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
     TextView mFilmSeachText;
     @BindView(R.id.film_seach_relative)
     RelativeLayout mFilmSeachRelative;
+    @BindView(R.id.homepager_layout)
+    RelativeLayout mHomePagerLayout;
+    @BindView(R.id.homepager_rv)
+    RecyclerView mHomePagerRv;
     private MyFilmCinemaxAdapter mMyFilmCinemaxAdapter;
     private MyFilmComingSoonAdapter mMyFilmComingSoonAdapter;
     private MyFilmHosMoviesAdapter mMyFilmHosMoviesAdapter;
@@ -123,7 +131,10 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
         }
     };*/
     private List<String> mListImg;
-      @Nullable
+    private MyMovieSeachAdapter mMyMovieSeachAdapter;
+    private int num;
+
+    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_film, container, false);
@@ -168,8 +179,14 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
             case R.id.film_seach_ima:
                 initfsi();
                 break;
-            case R.id.film_seach_text:
+            case R.id.film_seach_text://根据关键字查询电影所在电影院
                 initfst();
+                String movieName = mFilmSeachEdit.getText().toString().trim();
+                if (TextUtils.isEmpty(movieName)) {
+                    ToastUtil.showToast("不能为空");
+                } else {
+                    mMyPresenter.onGetDatas(Apis.SEACH_NAME_URL, SeachBean.class);
+                }
                 break;
         }
     }
@@ -267,6 +284,32 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
                 //创建即将上映适配器
                 mMyFilmComingSoonAdapter = new MyFilmComingSoonAdapter(getActivity(), result);
                 mFilmJijRv.setAdapter(mMyFilmComingSoonAdapter);
+            }
+        }else if (data instanceof SeachBean) {
+            SeachBean seachBean = (SeachBean) data;
+            if (seachBean.getStatus().equals("0000")) {
+                List<SeachBean.ResultBean> result = seachBean.getResult();
+                ToastUtil.showToast(seachBean.getMessage());
+                mHomePagerLayout.setVisibility(View.GONE);
+                mHomePagerRv.setVisibility(VISIBLE);
+                mMyMovieSeachAdapter = new MyMovieSeachAdapter(getActivity(), result);
+                mHomePagerRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                mHomePagerRv.setAdapter(mMyMovieSeachAdapter);
+                mMyMovieSeachAdapter.setOnClickedListenrt(new MyMovieSeachAdapter.onClickedListenrt() {
+                    @Override
+                    public void onClicked(int position, ImageView imageView) {
+                        num++;
+                        if (num % 2 == 0) {
+                            //为偶数时取消关注
+                            mMyPresenter.onGetDatas(Apis.CANCELFOLLOW_CINEMA_ID_URL + position, RegisterBean.class);
+                            imageView.setImageResource(R.mipmap.com_icon_collection_default);
+                        } else {
+                            //为奇数时关注成功
+                            mMyPresenter.onGetDatas(Apis.FOLLOW_CINEMA_ID_URL + position, RegisterBean.class);
+                            imageView.setImageResource(R.mipmap.com_icon_collection_selected);
+                        }
+                    }
+                });
             }
         }
     }

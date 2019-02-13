@@ -86,169 +86,183 @@
                     android:textSize="@dimen/sp_12"
                     android:visibility="gone" />
             </RelativeLayout>
-            <!-- 轮播图 -->
-            <recycler.coverflow.RecyclerCoverFlow
-                android:id="@+id/film_rcf"
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/homepager_rv"
+                android:layout_marginTop="@dimen/dp_85"
+                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_223"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/dp_85" />
+                android:layout_height="match_parent"/>
 
-            <!-- 指示器 -->
-            <com.lwj.widget.viewpagerindicator.ViewPagerIndicator
-                android:id="@+id/film_vpi"
-                android:layout_width="@dimen/dp_312"
-                android:layout_height="@dimen/dp_3"
-                android:layout_below="@id/film_rcf"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/dp_20"
-                android:background="@drawable/film_shape_bg" />
-
-
-            <!-- 热门电影 -->
             <RelativeLayout
-                android:id="@+id/layout_remen"
+                android:id="@+id/homepager_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/film_vpi"
-                android:layout_marginTop="@dimen/dp_20">
+                android:layout_height="wrap_content">
+                <!-- 轮播图 -->
+                <recycler.coverflow.RecyclerCoverFlow
+                    android:id="@+id/film_rcf"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_223"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_85" />
 
-                <RelativeLayout
-                    android:id="@+id/layout_rm"
+                <!-- 指示器 -->
+                <com.lwj.widget.viewpagerindicator.ViewPagerIndicator
+                    android:id="@+id/film_vpi"
                     android:layout_width="@dimen/dp_312"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true">
+                    android:layout_height="@dimen/dp_3"
+                    android:layout_below="@id/film_rcf"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:background="@drawable/film_shape_bg" />
 
-                    <TextView
-                        android:id="@+id/rm"
-                        android:layout_width="wrap_content"
+
+                <!-- 热门电影 -->
+                <RelativeLayout
+                    android:id="@+id/layout_remen"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/film_vpi"
+                    android:layout_marginTop="@dimen/dp_20">
+
+                    <RelativeLayout
+                        android:id="@+id/layout_rm"
+                        android:layout_width="@dimen/dp_312"
                         android:layout_height="wrap_content"
-                        android:text="@string/remen"
-                        android:textColor="@color/color333"
-                        android:textSize="@dimen/sp_16" />
+                        android:layout_centerHorizontal="true">
 
-                    <View
-                        android:layout_width="@dimen/dp_30"
-                        android:layout_height="@dimen/dp_3"
-                        android:layout_below="@id/rm"
-                        android:layout_marginTop="@dimen/dp_4"
-                        android:background="@drawable/movie_shape_bg_failed" />
+                        <TextView
+                            android:id="@+id/rm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/remen"
+                            android:textColor="@color/color333"
+                            android:textSize="@dimen/sp_16" />
 
-                    <ImageView
-                        android:id="@+id/film_rmdy"
-                        android:layout_width="@dimen/dp_24"
-                        android:layout_height="@dimen/dp_24"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:src="@mipmap/com_icon_next_default" />
+                        <View
+                            android:layout_width="@dimen/dp_30"
+                            android:layout_height="@dimen/dp_3"
+                            android:layout_below="@id/rm"
+                            android:layout_marginTop="@dimen/dp_4"
+                            android:background="@drawable/movie_shape_bg_failed" />
+
+                        <ImageView
+                            android:id="@+id/film_rmdy"
+                            android:layout_width="@dimen/dp_24"
+                            android:layout_height="@dimen/dp_24"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/com_icon_next_default" />
+
+                    </RelativeLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/film_rm_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/layout_rm"
+                        android:layout_marginLeft="@dimen/dp_24"
+                        android:layout_marginTop="@dimen/dp_20" />
 
                 </RelativeLayout>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/film_rm_rv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_24"
-                    android:layout_below="@id/layout_rm"
-                    android:layout_marginTop="@dimen/dp_20" />
-
-            </RelativeLayout>
-
-            <!-- 正在热映 -->
-            <RelativeLayout
-                android:id="@+id/layout_zhenzai"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/layout_remen"
-                android:layout_marginTop="@dimen/dp_20">
-
+                <!-- 正在热映 -->
                 <RelativeLayout
-                    android:id="@+id/layout_zz"
-                    android:layout_width="@dimen/dp_312"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true">
+                    android:id="@+id/layout_zhenzai"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/layout_remen"
+                    android:layout_marginTop="@dimen/dp_20">
 
-                    <TextView
-                        android:id="@+id/zz"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:id="@+id/layout_zz"
+                        android:layout_width="@dimen/dp_312"
                         android:layout_height="wrap_content"
-                        android:text="@string/zhenzai"
-                        android:textColor="@color/color333"
-                        android:textSize="@dimen/sp_16" />
+                        android:layout_centerHorizontal="true">
 
-                    <View
-                        android:layout_width="@dimen/dp_30"
-                        android:layout_height="@dimen/dp_3"
-                        android:layout_below="@id/zz"
-                        android:layout_marginTop="@dimen/dp_4"
-                        android:background="@drawable/movie_shape_bg_failed" />
+                        <TextView
+                            android:id="@+id/zz"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/zhenzai"
+                            android:textColor="@color/color333"
+                            android:textSize="@dimen/sp_16" />
 
-                    <ImageView
-                        android:id="@+id/film_zzry"
-                        android:layout_width="@dimen/dp_24"
-                        android:layout_height="@dimen/dp_24"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:src="@mipmap/com_icon_next_default" />
+                        <View
+                            android:layout_width="@dimen/dp_30"
+                            android:layout_height="@dimen/dp_3"
+                            android:layout_below="@id/zz"
+                            android:layout_marginTop="@dimen/dp_4"
+                            android:background="@drawable/movie_shape_bg_failed" />
+
+                        <ImageView
+                            android:id="@+id/film_zzry"
+                            android:layout_width="@dimen/dp_24"
+                            android:layout_height="@dimen/dp_24"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/com_icon_next_default" />
+
+                    </RelativeLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/film_zz_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/layout_zz"
+                        android:layout_marginLeft="@dimen/dp_24"
+                        android:layout_marginTop="@dimen/dp_20" />
 
                 </RelativeLayout>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/film_zz_rv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/layout_zz"
-                    android:layout_marginLeft="@dimen/dp_24"
-                    android:layout_marginTop="@dimen/dp_20" />
-
-            </RelativeLayout>
-
-            <!-- 即将上映 -->
-            <RelativeLayout
-                android:id="@+id/layout_jijiang"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/layout_zhenzai"
-                android:layout_marginTop="@dimen/dp_20">
-
+                <!-- 即将上映 -->
                 <RelativeLayout
-                    android:id="@+id/layout_jij"
-                    android:layout_width="@dimen/dp_312"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true">
+                    android:id="@+id/layout_jijiang"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/layout_zhenzai"
+                    android:layout_marginTop="@dimen/dp_20">
 
-                    <TextView
-                        android:id="@+id/jij"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:id="@+id/layout_jij"
+                        android:layout_width="@dimen/dp_312"
                         android:layout_height="wrap_content"
-                        android:text="@string/jijiang"
-                        android:textColor="@color/color333"
-                        android:textSize="@dimen/sp_16" />
+                        android:layout_centerHorizontal="true">
 
-                    <View
-                        android:layout_width="@dimen/dp_30"
-                        android:layout_height="@dimen/dp_3"
-                        android:layout_below="@id/jij"
-                        android:layout_marginTop="@dimen/dp_4"
-                        android:background="@drawable/movie_shape_bg_failed" />
+                        <TextView
+                            android:id="@+id/jij"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/jijiang"
+                            android:textColor="@color/color333"
+                            android:textSize="@dimen/sp_16" />
 
-                    <ImageView
-                        android:id="@+id/film_jjsy"
-                        android:layout_width="@dimen/dp_24"
-                        android:layout_height="@dimen/dp_24"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:src="@mipmap/com_icon_next_default" />
+                        <View
+                            android:layout_width="@dimen/dp_30"
+                            android:layout_height="@dimen/dp_3"
+                            android:layout_below="@id/jij"
+                            android:layout_marginTop="@dimen/dp_4"
+                            android:background="@drawable/movie_shape_bg_failed" />
+
+                        <ImageView
+                            android:id="@+id/film_jjsy"
+                            android:layout_width="@dimen/dp_24"
+                            android:layout_height="@dimen/dp_24"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/com_icon_next_default" />
+
+                    </RelativeLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/film_jij_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/layout_jij"
+                        android:layout_marginLeft="@dimen/dp_24"
+                        android:layout_marginTop="@dimen/dp_20" />
 
                 </RelativeLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/film_jij_rv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/layout_jij"
-                    android:layout_marginLeft="@dimen/dp_24"
-                    android:layout_marginTop="@dimen/dp_20" />
 
             </RelativeLayout>
 

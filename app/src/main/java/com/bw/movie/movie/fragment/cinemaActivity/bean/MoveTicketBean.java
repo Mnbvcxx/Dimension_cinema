@@ -2,7 +2,8 @@ package com.bw.movie.movie.fragment.cinemaActivity.bean;
 
 /**
  * @author: pengbo
- * @date:2019/1/30 desc:
+ * @date:2019/1/30
+ * desc:
  */
 public class MoveTicketBean {
 
