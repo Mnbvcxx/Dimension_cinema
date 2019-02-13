@@ -20,14 +20,10 @@ import java.util.List;
  * @author: pengbo
  * @date:2019/1/28 desc:购票记录的适配器
  */
-public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder> {
+public class Record_Wait_Adapter extends RecyclerView.Adapter<Record_Wait_Adapter.ViewHolder> {
     private Context mContext;
     private List<RecordBean.ResultBean>mjihe;
-    private final int ITEM_COUNT=2;
-    private final int ITEM_WAIT=0;
-    private final int ITEM_OK=1;
-
-    public RecordAdapter(Context context) {
+    public Record_Wait_Adapter(Context context) {
         mContext = context;
         mjihe=new ArrayList<>();
     }
@@ -37,22 +33,10 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         notifyDataSetChanged();
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return (position%ITEM_COUNT)==0?ITEM_WAIT:ITEM_OK;
-    }
-
-    public int getViewTypeCount() {
-        return ITEM_COUNT;
-    }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view=null;
-        if (getItemViewType(i)==ITEM_WAIT){
-             view=LayoutInflater.from(mContext).inflate(R.layout.record_adapter_wait,viewGroup,false);
-        }
+           View  view=LayoutInflater.from(mContext).inflate(R.layout.record_adapter_wait,viewGroup,false);
         return new ViewHolder(view);
     }
 
@@ -68,6 +52,15 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
         viewHolder.wait_time.setText("时间："+createTime+"-"+endTime);
         viewHolder.record_amount.setText("数量："+mjihe.get(i).getAmount());
         viewHolder.record_price.setText("金额："+mjihe.get(i).getPrice());
+        //付款的点击事件
+        viewHolder.wait_butt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mWaitCallBack!=null){
+                    mWaitCallBack.waitcallback();
+                }
+            }
+        });
     }
 
     @Override
@@ -91,4 +84,14 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.ViewHolder
 
         }
     }
+
+    public interface WaitCallBack{
+        void waitcallback();
+    }
+    public WaitCallBack mWaitCallBack;
+
+    public void setWaitCallBack(WaitCallBack waitCallBack) {
+        mWaitCallBack = waitCallBack;
+    }
 }
+

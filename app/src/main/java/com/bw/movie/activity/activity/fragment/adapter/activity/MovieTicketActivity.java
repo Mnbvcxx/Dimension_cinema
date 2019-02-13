@@ -38,15 +38,6 @@ public class MovieTicketActivity extends BaseActivity {
     private String mDirector;
     private String mDuration;
     private String mPlaceOrigin;
-    /*
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_ticket);
-
-    }
-*/
 
     @Override
     protected int getLayoutId() {

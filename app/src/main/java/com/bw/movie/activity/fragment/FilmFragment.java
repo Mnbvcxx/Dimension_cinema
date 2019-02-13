@@ -259,13 +259,6 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
                 mFilmRcf.setFlatFlow(false);
                 mFilmRcf.setAdapter(mCinemaFlowAdapter);
                 mFilmRcf.scrollToPosition(2);
-                //mHandler.sendEmptyMessageDelayed(0, 3000);
-                /*mFilmRcf.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {
-                    @Override
-                    public void onItemSelected(int position) {
-                        ToastUtil.showToast(result.get(position).getName());
-                    }
-                });*/
             }
         } else if (data instanceof FilmCinemaxBean) {
             //热门电影

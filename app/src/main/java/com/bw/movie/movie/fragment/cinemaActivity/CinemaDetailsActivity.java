@@ -238,6 +238,7 @@ public class CinemaDetailsActivity extends BaseActivity {
             }
         } else if (object instanceof EvaluateBean) {
             EvaluateBean evaluateBean = (EvaluateBean) object;
+            if (evaluateBean.getResult().size()>0){
             mEvaluateAdapter.setMjihe(evaluateBean.getResult());
             mEvaluateAdapter.setCallBack(new EvaluateAdapter.CallBack() {
                 @Override
@@ -257,6 +258,9 @@ public class CinemaDetailsActivity extends BaseActivity {
                 }
             });
 
+        }else {
+                ToastUtil.showToast("暂无评价");
+            }
         }
         if (object instanceof RegisterBean) {
             mRegisterBean = (RegisterBean) object;
