@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -107,6 +108,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
     private MyDetaillsReviewAdapter mReviewAdapter;
     private int mMovieId;
     private String mImageUrl;
+    private EditText mPubEdTxt;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -157,13 +159,13 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
                 break;
             case R.id.dy_details_ticket://购票跳转
                 Intent intent = new Intent(MovieDetailsActivity.this, MovieTicketActivity.class);
-                intent.putExtra("movieId",mMovieId);
-                intent.putExtra("name",mName);
-                intent.putExtra("imageUrl",mImageUrl);
-                intent.putExtra("movieTypes",mMovieTypes);
-                intent.putExtra("director",mDirector);
-                intent.putExtra("duration",mDuration);
-                intent.putExtra("placeOrigin",mPlaceOrigin);
+                intent.putExtra("movieId", mMovieId);
+                intent.putExtra("name", mName);
+                intent.putExtra("imageUrl", mImageUrl);
+                intent.putExtra("movieTypes", mMovieTypes);
+                intent.putExtra("director", mDirector);
+                intent.putExtra("duration", mDuration);
+                intent.putExtra("placeOrigin", mPlaceOrigin);
                 startActivity(intent);
                 break;
             case R.id.review_pp_xl:
@@ -178,6 +180,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
         }
     }
 
+    //发表评论
     private void initPublish() {
         View view = LayoutInflater.from(this).inflate(R.layout.publish_popup_view, null, false);
         PopupWindow popupWindow = new PopupWindow(view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
@@ -188,8 +191,17 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
         //点击空白处时，隐藏掉pop窗口
         popupWindow.setFocusable(true);
         popupWindow.setTouchable(true);
-        EditText PubEdTxt = view.findViewById(R.id.pub_ed_txt);
+        mPubEdTxt = (EditText) view.findViewById(R.id.pub_ed_txt);
         TextView PubSend = view.findViewById(R.id.pub_send);
+        PubSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Map<String, String> map = new HashMap<>();
+                map.put(UserApis.COMMENT_KEY, mMovieId + "");
+                map.put(UserApis.COMMENT_COMMENTCONTENT_KEY, mPubEdTxt.getText().toString().trim());
+                mMyPresenter.onPostDatas(Apis.USER_COMMENT_URL, map, RegisterBean.class);
+            }
+        });
 
     }
 
@@ -350,7 +362,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
             if (registerBean.getStatus().equals("0000")) {
                 mMyPresenter.onGetDatas(Apis.REVIEW_CINEMA + mMovieId + "&page=1&count=10", ReviewsBean.class);
                 ToastUtil.showToast(registerBean.getMessage());
-            }else {
+            } else {
                 ToastUtil.showToast("不能重复点赞");
             }
         }

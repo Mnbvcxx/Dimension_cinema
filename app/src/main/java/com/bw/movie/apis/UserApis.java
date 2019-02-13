@@ -37,5 +37,10 @@ public class UserApis {
      */
     public static final String CINEMASID_KEY = "cinemasId";
     public static final String MOVIEID_KEY = "movieId";
+    /**
+     * 添加用户对电影的评论
+     */
+    public static final String COMMENT_KEY = "movieId";
+    public static final String COMMENT_COMMENTCONTENT_KEY = "commentContent";
 
 }
