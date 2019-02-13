@@ -28,6 +28,7 @@ import com.bw.movie.utils.ToastUtil;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -59,6 +60,7 @@ public class SeatActivity extends BaseActivity {
     private int mUserId;
 
     private int mIntPrice;
+    private double mMPrice;
 
 
     @Override
@@ -83,14 +85,13 @@ public class SeatActivity extends BaseActivity {
         String hall = intent.getStringExtra("hall");
         String begintime = intent.getStringExtra("begintime");
         String endtime = intent.getStringExtra("endtime");
-
-        String mPrice = intent.getCharSequenceExtra("price").toString();
-       // mIntPrice = Integer.parseInt(mPrice);
-
+        mMPrice = intent.getDoubleExtra("price",0);
         mSeatBegingtime.setText(begintime+"-");
         mSeatEndtime.setText("-"+endtime);
         mSeatHall.setText(hall);
-        mSpannableString = changTVsize(mPrice +"");
+        //TODO：初始价格-->未选座
+        double v = mMPrice * mNum;
+        mSpannableString = changTVsize(v+"");
         mSeatPrice.setText(mSpannableString);
         mMoveSeatView.setData(10,15);
 
@@ -176,7 +177,13 @@ public class SeatActivity extends BaseActivity {
         @Subscribe(sticky = true)
         public void onMoveSeatAmount(MoveSeatAmount moveSeatBean){
             mNum = moveSeatBean.getNum();
-            Log.i("TAG","mNum="+mNum);
+            double v = mMPrice * mNum;
+            //保证总价为double
+            BigDecimal bg = new BigDecimal(v);
+            double f1 = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+            mSpannableString = changTVsize(f1+"");
+            //TODO：初始价格-->未选座
+            mSeatPrice.setText(mSpannableString);
         }
 
     /**

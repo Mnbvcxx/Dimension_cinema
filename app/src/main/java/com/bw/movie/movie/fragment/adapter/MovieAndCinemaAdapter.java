@@ -45,25 +45,24 @@ public class MovieAndCinemaAdapter extends RecyclerView.Adapter<MovieAndCinemaAd
         movieAndCinemaViewHolder.mTextViewT.setText(mResultBeans.get(i).getScreeningHall());
         movieAndCinemaViewHolder.mTextViewBegin.setText(mResultBeans.get(i).getBeginTime());
         movieAndCinemaViewHolder.mTextViewEnd.setText(mResultBeans.get(i).getEndTime());
-        movieAndCinemaViewHolder.mTextViewPrice.setText(mResultBeans.get(i).getPrice() + "");
+        SpannableString spannableString = SeatActivity.changTVsize(mResultBeans.get(i).getPrice() + "");
+        movieAndCinemaViewHolder.mTextViewPrice.setText(spannableString);
         //点击箭头---跳转到选座页
         movieAndCinemaViewHolder.mTextViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, SeatActivity.class);
-                //传值：厅号，时间，价格
-                intent.putExtra("hall", mResultBeans.get(i).getScreeningHall());
-                intent.putExtra("begintime", mResultBeans.get(i).getBeginTime());
-                intent.putExtra("endtime", mResultBeans.get(i).getEndTime());
-                intent.putExtra("price", mResultBeans.get(i).getPrice() + "");
+//                //传值：厅号，时间，价格
+//                intent.putExtra("hall", mResultBeans.get(i).getScreeningHall());
+//                intent.putExtra("begintime", mResultBeans.get(i).getBeginTime());
+//                intent.putExtra("endtime", mResultBeans.get(i).getEndTime());
+//                intent.putExtra("price", mResultBeans.get(i).getPrice() + "");
                 //传值：排期id,厅号，时间，价格
                 intent.putExtra("scheduleId",i);
                 intent.putExtra("hall",mResultBeans.get(i).getScreeningHall());
                 intent.putExtra("begintime",mResultBeans.get(i).getBeginTime());
                 intent.putExtra("endtime",mResultBeans.get(i).getEndTime());
-                //小数点后面的数字大小
-                SpannableString spannableString = SeatActivity.changTVsize(mResultBeans.get(i).getPrice() + "");
-                intent.putExtra("price",spannableString);
+                intent.putExtra("price",mResultBeans.get(i).getPrice());
                 mContext.startActivity(intent);
             }
         });
