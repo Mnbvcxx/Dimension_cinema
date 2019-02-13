@@ -16,7 +16,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +27,8 @@ import com.bw.movie.apis.UserApis;
 import com.bw.movie.base.BaseActivity;
 import com.bw.movie.login.bean.EventBusInfoBean;
 import com.bw.movie.login.bean.LoginBean;
-import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatBean;
+import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatAmount;
+import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatUserID;
 import com.bw.movie.register.activity.RegisterActivity;
 import com.bw.movie.utils.CustomDialog;
 import com.bw.movie.utils.EncryptUtil;
@@ -155,11 +155,11 @@ public class LoginActivity extends BaseActivity {
                 mIntent = new Intent(LoginActivity.this, MainActivity.class);
                 //intent传值,后续会用到这些参数,尤其是我们的 RequestHeader  入参
                 mIntent.putExtra("userId", loginBean.getResult().getUserId()+"");
-                MoveSeatBean moveSeatBean=new MoveSeatBean();
-                moveSeatBean.setUserId(loginBean.getResult().getUserId());
-                EventBus.getDefault().postSticky(moveSeatBean);
+                MoveSeatUserID moveSeatUserID = new MoveSeatUserID();
+                moveSeatUserID.setUserId(loginBean.getResult().getUserId());
+                EventBus.getDefault().postSticky(moveSeatUserID);
 
-                Log.i("TAG","moveSeatBean="+moveSeatBean);
+                Log.i("TAG","moveSeatBean集合中的UserID="+moveSeatUserID);
 
                 mIntent.putExtra("sessionId", loginBean.getResult().getSessionId());
                 mIntent.putExtra("nickName", loginBean.getResult().getUserInfo().getNickName());

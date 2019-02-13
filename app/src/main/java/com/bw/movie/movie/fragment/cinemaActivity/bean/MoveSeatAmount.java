@@ -2,19 +2,10 @@ package com.bw.movie.movie.fragment.cinemaActivity.bean;
 
 /**
  * @author: pengbo
- * @date:2019/1/30 desc:
+ * @date:2019/1/30 desc:购票数量存储
  */
-public class MoveSeatBean {
+public class MoveSeatAmount {
     int num;
-    int userId;
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 
     public int getNum() {
         return num;

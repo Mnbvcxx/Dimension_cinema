@@ -2,29 +2,27 @@ package com.bw.movie.movie.fragment.cinemaActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.fragment.myactivity.RecordActivity;
 import com.bw.movie.apis.Apis;
 import com.bw.movie.base.BaseActivity;
-import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatBean;
+import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatAmount;
+import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatUserID;
 import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveTicketBean;
-import com.bw.movie.utils.EncryptUtil;
+import com.bw.movie.utils.MD5Utils;
 import com.bw.movie.utils.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -38,7 +36,7 @@ import butterknife.OnClick;
 
 /**
  * @author: pengbo
- * @date:2019/1/29 desc:选座
+ * @date:2019/1/29 desc:下单
  */
 public class SeatActivity extends BaseActivity {
     @BindView(R.id.seat_begingtime)
@@ -59,6 +57,8 @@ public class SeatActivity extends BaseActivity {
     private int mScheduleId;
     private int mNum;
     private int mUserId;
+
+    private int mIntPrice;
 
 
     @Override
@@ -83,12 +83,14 @@ public class SeatActivity extends BaseActivity {
         String hall = intent.getStringExtra("hall");
         String begintime = intent.getStringExtra("begintime");
         String endtime = intent.getStringExtra("endtime");
-        //String price = intent.getStringExtra("price");
-        CharSequence price = intent.getCharSequenceExtra("price");
+
+        String mPrice = intent.getCharSequenceExtra("price").toString();
+       // mIntPrice = Integer.parseInt(mPrice);
+
         mSeatBegingtime.setText(begintime+"-");
         mSeatEndtime.setText("-"+endtime);
         mSeatHall.setText(hall);
-        mSpannableString = changTVsize(price+"");
+        mSpannableString = changTVsize(mPrice +"");
         mSeatPrice.setText(mSpannableString);
         mMoveSeatView.setData(10,15);
 
@@ -149,18 +151,18 @@ public class SeatActivity extends BaseActivity {
                 popup_wei.setChecked(false);
             }
         });
+        //下单的点击事件
         popup_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //下单成功跳转到购票记录
                 //得到排期表，数量，sign
                 HashMap<String, String> map = new HashMap<>();
                 map.put("scheduleId",mScheduleId+"");
                 map.put("amount",mNum+"");
-                String sign = "" + UserId + mScheduleId + mNum+"movie";
-                String encrypt = EncryptUtil.encrypt(sign);
-                map.put("sign",encrypt);
+                String sign = ""+UserId + mScheduleId + mNum+"movie";
+                String convertMD5 = MD5Utils.string2MD5(sign);
+                map.put("sign",convertMD5);
                 doPost(Apis.MOVE_TICKET,map,MoveTicketBean.class);
             }
         });
@@ -170,23 +172,35 @@ public class SeatActivity extends BaseActivity {
      * 获取选座的数量
      * @param moveSeatBean
      */
-    int UserId;
+
         @Subscribe(sticky = true)
-        public void onMoveSeat(MoveSeatBean moveSeatBean){
+        public void onMoveSeatAmount(MoveSeatAmount moveSeatBean){
             mNum = moveSeatBean.getNum();
             Log.i("TAG","mNum="+mNum);
-            mUserId = moveSeatBean.getUserId();
-            UserId=mUserId;
-            Log.i("TAG","UserId="+UserId);
-            Log.i("TAG","mUserId="+mUserId);
         }
+
+    /**
+     * 获取UserId
+      */
+    int UserId;
+    @Subscribe(sticky = true)
+    public void onMoveSeatUserId(MoveSeatUserID moveSeatUserID){
+        mUserId = moveSeatUserID.getUserId();
+        UserId=mUserId;
+        Log.i("TAG","UserId="+UserId);
+        Log.i("TAG","mUserId="+mUserId);
+    }
+
 
     @Override
     protected void netSuccess(Object object) {
         if (object instanceof MoveTicketBean){
             MoveTicketBean moveTicketBean=(MoveTicketBean)object;
             if (moveTicketBean.getMessage().equals("下单成功")){
+                ToastUtil.showToast(moveTicketBean.getMessage());
                 Intent intent = new Intent(this, RecordActivity.class);
+                //获取订单号
+                intent.putExtra("orderId",moveTicketBean.getOrderId()+"");
                 startActivity(intent);
             }else {
                 ToastUtil.showToast(moveTicketBean.getMessage());
@@ -196,7 +210,7 @@ public class SeatActivity extends BaseActivity {
 
     @Override
     protected void netFailed(String s) {
-
+    ToastUtil.showToast(s);
     }
 
     /**

@@ -29,6 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity implements MyView {
     protected abstract void initView(Bundle savedInstanceState);
 
     //初始化
+
     protected abstract void initData();
 
     //成功
