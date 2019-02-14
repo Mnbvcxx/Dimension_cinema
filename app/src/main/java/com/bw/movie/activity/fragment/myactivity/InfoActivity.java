@@ -68,6 +68,8 @@ public class InfoActivity extends BaseActivity {
     private String filepath = Environment.getExternalStorageDirectory()
             + "/file.png";
     private WindowManager.LayoutParams mParams;
+    private String mInfoemail;
+    private String mNewEmail;
 
     @Override
     protected int getLayoutId() {
@@ -97,6 +99,8 @@ public class InfoActivity extends BaseActivity {
         inituser();
         //密码
         initpsw();
+        //邮箱
+        mInfoMail.setText(mInfoemail);
     }
 
 
@@ -187,13 +191,13 @@ public class InfoActivity extends BaseActivity {
         //得到新数据
         String newNick = mUserNick.getText().toString();
         String newSex = mUserSex.getText().toString();
-        String newEmail = mUserEmail.getText().toString();
+        mNewEmail = mUserEmail.getText().toString();
         String EMAIL = "^[A-Za-z0-9][\\w\\._]*[a-zA-Z0-9]+@[A-Za-z0-9-_]+\\.([A-Za-z]{2,4})";
         if (TextUtils.isEmpty(newNick)) {
             ToastUtil.showToast("输入的昵称不能为空");
         } else if (TextUtils.isEmpty(newSex)) {
             ToastUtil.showToast("请正确输入性别为“男”或“女”");
-        } else if (TextUtils.isEmpty(newEmail) || !newEmail.matches(EMAIL)) {
+        } else if (TextUtils.isEmpty(mNewEmail) || !mNewEmail.matches(EMAIL)) {
             ToastUtil.showToast("请正确输入邮箱格式");
         } else {
             if (newSex.equals("男")) {
@@ -206,7 +210,7 @@ public class InfoActivity extends BaseActivity {
             HashMap<String, String> map = new HashMap<>();
             map.put("nickName", newNick);
             map.put("sex", newSex);
-            map.put("email", newEmail);
+            map.put("email", mNewEmail);
             doPost(Apis.MESSAGE_INFO_USER, map, RegisterBean.class);
         }
     }
@@ -385,20 +389,25 @@ public class InfoActivity extends BaseActivity {
                 pwdWindow.dismiss();
                 //重新请求数据实现即时更新头像图片
                 doGetData(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
+                //邮箱
+                mInfoMail.setText(mNewEmail);
             } else {
                 ToastUtil.showToast(registerBean.getMessage());
             }
         }
     }
 
-
+    /**
+     * 得到邮箱
+     * @param mlist
+     */
     @Subscribe(sticky = true)
     public void onLoginmail(EventBusInfoBean mlist) {
-        String infoemail = mlist.getInfoemail();
+        mInfoemail = mlist.getInfoemail();
         //邮编--通过登录得到
-        mInfoMail.setText(infoemail);
-        mUserEmail.setText(infoemail);
-        Log.i("TAG", "infoemail=" + infoemail);
+        mInfoMail.setText(mInfoemail);
+        mUserEmail.setText(mInfoemail);
+        Log.i("TAG", "infoemail=" + mInfoemail);
     }
 
     //动态权限

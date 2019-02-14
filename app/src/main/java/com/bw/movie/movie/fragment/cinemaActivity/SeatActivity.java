@@ -90,7 +90,7 @@ public class SeatActivity extends BaseActivity {
         mSeatEndtime.setText("-"+endtime);
         mSeatHall.setText(hall);
         //TODO：初始价格-->未选座
-        double v = mMPrice * mNum;
+        double v = mMPrice * 0;
         mSpannableString = changTVsize(v+"");
         mSeatPrice.setText(mSpannableString);
         mMoveSeatView.setData(10,15);

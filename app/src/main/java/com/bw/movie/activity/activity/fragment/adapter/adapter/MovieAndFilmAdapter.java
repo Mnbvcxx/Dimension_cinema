@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,7 @@ import java.util.List;
  * @author : FangShiKang
  * @date : 2019/01/30.
  * email : fangshikang@outlook.com
- * desc :
+ * desc :电影排期
  */
 public class MovieAndFilmAdapter extends RecyclerView.Adapter<MovieAndFilmAdapter.MovieAndFilmViewHolder> {
     private Context mContext;
@@ -44,7 +45,8 @@ public class MovieAndFilmAdapter extends RecyclerView.Adapter<MovieAndFilmAdapte
         movieAndFilmViewHolder.mTextViewT.setText(mResultBeans.get(i).getScreeningHall());
         movieAndFilmViewHolder.mTextViewBegin.setText(mResultBeans.get(i).getBeginTime());
         movieAndFilmViewHolder.mTextViewEnd.setText(mResultBeans.get(i).getEndTime());
-        movieAndFilmViewHolder.mTextViewPrice.setText(mResultBeans.get(i).getPrice()+"");
+        SpannableString spannableString = SeatActivity.changTVsize(mResultBeans.get(i).getPrice() + "");
+        movieAndFilmViewHolder.mTextViewPrice.setText(spannableString);
         //点击箭头---跳转到选座页
         movieAndFilmViewHolder.mTextViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +56,7 @@ public class MovieAndFilmAdapter extends RecyclerView.Adapter<MovieAndFilmAdapte
                 intent.putExtra("hall",mResultBeans.get(i).getScreeningHall());
                 intent.putExtra("begintime",mResultBeans.get(i).getBeginTime());
                 intent.putExtra("endtime",mResultBeans.get(i).getEndTime());
-                intent.putExtra("price",mResultBeans.get(i).getPrice()+"");
+                intent.putExtra("price",mResultBeans.get(i).getPrice());
                 mContext.startActivity(intent);
             }
         });
