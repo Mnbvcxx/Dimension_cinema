@@ -80,4 +80,5 @@ dependencies {
     implementation 'cn.jzvd:jiaozivideoplayer:6.2.10'
 //EventBus 依赖
     implementation 'org.greenrobot:eventbus:3.0.0'
+
 }
