@@ -237,6 +237,9 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
             if (filmBean.getStatus().equals("0000")) {
                 mListImg = new ArrayList<>();
                 final List<FilmBean.ResultBean> result = filmBean.getResult();
+                if (result.size()==0){
+                    ToastUtil.showToast("无数据");
+                }
                 for (int i = 0; i < result.size(); i++) {
                     mListImg.add(result.get(i).getImageUrl());
                 }
@@ -256,6 +259,9 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
             FilmCinemaxBean filmCinemaxBean = (FilmCinemaxBean) data;
             if (filmCinemaxBean.getStatus().equals("0000")) {
                 List<FilmCinemaxBean.ResultBean> result = filmCinemaxBean.getResult();
+                if (result.size()==0){
+                    ToastUtil.showToast("无数据");
+                }
                 //创建热门电影适配器
                 mMyFilmCinemaxAdapter = new MyFilmCinemaxAdapter(getActivity(), result);
                 mFilmRmRv.setAdapter(mMyFilmCinemaxAdapter);
@@ -265,6 +271,9 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
             FilmComingSoonBean filmComingSoonBean = (FilmComingSoonBean) data;
             if (filmComingSoonBean.getStatus().equals("0000")) {
                 List<FilmComingSoonBean.ResultBean> result = filmComingSoonBean.getResult();
+                if (result.size()==0){
+                    ToastUtil.showToast("无数据");
+                }
                 //创建即将上映适配器
                 mMyFilmComingSoonAdapter = new MyFilmComingSoonAdapter(getActivity(), result);
                 mFilmJijRv.setAdapter(mMyFilmComingSoonAdapter);
@@ -273,6 +282,9 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
             SeachBean seachBean = (SeachBean) data;
             if (seachBean.getStatus().equals("0000")) {
                 List<SeachBean.ResultBean> result = seachBean.getResult();
+                if (result.size()==0){
+                    ToastUtil.showToast("无数据");
+                }
                 ToastUtil.showToast(seachBean.getMessage());
                 mHomePagerLayout.setVisibility(View.GONE);
                 mHomePagerRv.setVisibility(VISIBLE);

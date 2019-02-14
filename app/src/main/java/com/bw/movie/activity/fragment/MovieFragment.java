@@ -231,14 +231,16 @@ public class MovieFragment extends Fragment implements MyView {
         } else if (data instanceof RegisterBean) {
             RegisterBean registerBean = (RegisterBean) data;
             if (registerBean.getStatus().equals("0000")) {
-                Toast.makeText(getActivity(), registerBean.getMessage(), Toast.LENGTH_SHORT).show();
+                ToastUtil.showToast(registerBean.getMessage());
+            }else {
+                ToastUtil.showToast(registerBean.getMessage());
             }
         }
     }
 
     @Override
     public void onMyFailed(String error) {
-
+        ToastUtil.showToast(error);
     }
 
     /**

@@ -82,6 +82,7 @@ public class SeatActivity extends BaseActivity {
         Intent intent = getIntent();
         //排期表
         mScheduleId = intent.getIntExtra("scheduleId", 0);
+        Log.i("TAG","排期表id:"+mScheduleId);
         String hall = intent.getStringExtra("hall");
         String begintime = intent.getStringExtra("begintime");
         String endtime = intent.getStringExtra("endtime");
@@ -162,8 +163,10 @@ public class SeatActivity extends BaseActivity {
                 map.put("scheduleId",mScheduleId+"");
                 map.put("amount",mNum+"");
                 String sign = ""+UserId + mScheduleId + mNum+"movie";
+                Log.i("TAG","sign==="+sign);
                 String convertMD5 = MD5Utils.string2MD5(sign);
                 map.put("sign",convertMD5);
+                Log.i("TAG","接口入参："+map);
                 doPost(Apis.MOVE_TICKET,map,MoveTicketBean.class);
             }
         });
@@ -211,7 +214,7 @@ public class SeatActivity extends BaseActivity {
         if (object instanceof MoveTicketBean){
             MoveTicketBean moveTicketBean=(MoveTicketBean)object;
             if (moveTicketBean.getMessage().equals("下单成功")){
-                ToastUtil.showToast(moveTicketBean.getMessage());
+                ToastUtil.showToast(moveTicketBean.getMessage()+"点单号："+moveTicketBean.getOrderId());
                 Intent intent = new Intent(this, RecordActivity.class);
                 //获取订单号
                 intent.putExtra("orderId",moveTicketBean.getOrderId()+"");
