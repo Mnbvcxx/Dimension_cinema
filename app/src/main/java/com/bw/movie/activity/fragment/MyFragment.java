@@ -1,5 +1,7 @@
 package com.bw.movie.activity.fragment;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,7 +23,9 @@ import com.bw.movie.activity.fragment.myactivity.InfoActivity;
 import com.bw.movie.activity.fragment.myactivity.MessageActivity;
 import com.bw.movie.activity.fragment.myactivity.RecordActivity;
 import com.bw.movie.activity.fragment.myactivity.bean.MessageInfoBean;
+import com.bw.movie.activity.fragment.myactivity.bean.NewVersionBean;
 import com.bw.movie.apis.Apis;
+import com.bw.movie.login.LoginActivity;
 import com.bw.movie.mvc.presenter.MyPresenter;
 import com.bw.movie.mvc.view.MyView;
 import com.bw.movie.register.bean.RegisterBean;
@@ -112,9 +116,14 @@ public class MyFragment extends Fragment implements MyView {
                 break;
             case R.id.my_version:
                 ToastUtil.showToast("点击了最新版本");
+                //请求网络
+                mMyPresenter.onGetDatas(Apis.USER_NEW_VERSION, NewVersionBean.class);
                 break;
             case R.id.my_logout:
                 ToastUtil.showToast("点击了退出登录");
+                //跳转到登录页
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -146,11 +155,33 @@ public class MyFragment extends Fragment implements MyView {
             } else {
                 ToastUtil.showToast(registerBean.getMessage());
             }
+        }else if (data instanceof NewVersionBean){
+            NewVersionBean versionBean=(NewVersionBean)data;
+            if (versionBean.getStatus().equals("0000")){
+                if (versionBean.getFlag()==1){
+                    //弹框
+                    initversion();
+                }else if (versionBean.getFlag()==2){
+                    ToastUtil.showToast("当期版本已是最新版本，无需更新");
+                }
+            }
         }
+    }
+
+    /**
+     * 版本更新的弹框
+     */
+    private void initversion() {
+        Dialog dialog = new AlertDialog.Builder(getActivity()).create();
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.version_user_dialog, null);
+        dialog.setContentView(view);
     }
 
     @Override
     public void onMyFailed(String error) {
-
+    ToastUtil.showToast(error);
     }
 }

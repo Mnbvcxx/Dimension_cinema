@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * @author: pengbo
- * @date:2019/1/28 desc:购票记录的适配器
+ * @date:2019/1/28 desc:购票记录的待付款适配器
  */
 public class Record_Wait_Adapter extends RecyclerView.Adapter<Record_Wait_Adapter.ViewHolder> {
     private Context mContext;
@@ -43,15 +43,15 @@ public class Record_Wait_Adapter extends RecyclerView.Adapter<Record_Wait_Adapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
             //电影名
-            viewHolder.record_title.setText(mjihe.get(i).getMovieName());
-        viewHolder.record_code.setText("订单号："+mjihe.get(i).getOrderId());
-        viewHolder.record_cinema.setText("影院："+mjihe.get(i).getCinemaName());
-        viewHolder.record_hall.setText("影厅："+mjihe.get(i).getScreeningHall());
+            viewHolder.wait_title.setText(mjihe.get(i).getMovieName());
+        viewHolder.wait_code.setText("订单号："+mjihe.get(i).getOrderId());
+        viewHolder.wait_cinema.setText("影院："+mjihe.get(i).getCinemaName());
+        viewHolder.wait_hall.setText("影厅："+mjihe.get(i).getScreeningHall());
         String createTime = DateUtils.getDateToString(mjihe.get(i).getCreateTime());
         String endTime = DateUtils.getDateToString(mjihe.get(i).getEndTime());
         viewHolder.wait_time.setText("时间："+createTime+"-"+endTime);
-        viewHolder.record_amount.setText("数量："+mjihe.get(i).getAmount());
-        viewHolder.record_price.setText("金额："+mjihe.get(i).getPrice());
+        viewHolder.wait_amount.setText("数量："+mjihe.get(i).getAmount());
+        viewHolder.wait_price.setText("金额："+mjihe.get(i).getPrice());
         //付款的点击事件
         viewHolder.wait_butt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,17 +69,17 @@ public class Record_Wait_Adapter extends RecyclerView.Adapter<Record_Wait_Adapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView record_title,record_code,record_cinema,record_hall,wait_time,record_amount,record_price;
+        TextView wait_title,wait_code,wait_cinema,wait_hall,wait_time,wait_amount,wait_price;
         Button wait_butt;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            record_title=itemView.findViewById(R.id.wait_title);
-            record_code=itemView.findViewById(R.id.wait_code);
-            record_cinema=itemView.findViewById(R.id.wait_cinema);
-            record_hall=itemView.findViewById(R.id.wait_hall);
+            wait_title=itemView.findViewById(R.id.wait_title);
+            wait_code=itemView.findViewById(R.id.wait_code);
+            wait_cinema=itemView.findViewById(R.id.wait_cinema);
+            wait_hall=itemView.findViewById(R.id.wait_hall);
             wait_time=itemView.findViewById(R.id.wait_time);
-            record_amount=itemView.findViewById(R.id.wait_amount);
-            record_price=itemView.findViewById(R.id.wait_price);
+            wait_amount=itemView.findViewById(R.id.wait_amount);
+            wait_price=itemView.findViewById(R.id.wait_price);
             wait_butt=itemView.findViewById(R.id.wait_butt);
 
         }

@@ -85,6 +85,7 @@ public class Apis {
     public static final String MOVIESCHEDULELIST_ID_URL="movie/v1/findMovieScheduleList?cinemasId=";
     //用户签到
     public static final String USER_SIGNIN_URL="user/v1/verify/userSignIn";
-
+    //查询版本
+    public static final String USER_NEW_VERSION="tool/v1/findNewVersion";
 
 }

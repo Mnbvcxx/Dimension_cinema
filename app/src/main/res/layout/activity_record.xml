@@ -35,7 +35,7 @@
 
             />
     </RelativeLayout>
-
+    <!--待付款的Recycler-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/record_recycler"
         android:layout_width="match_parent"
@@ -44,8 +44,17 @@
         android:layout_marginLeft="@dimen/dp_24"
         android:layout_marginTop="@dimen/dp_30"
         android:layout_marginRight="@dimen/dp_24" />
-
-
+    <!--已完成的Recycler-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/record_finsh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_24"
+        android:visibility="gone"
+        />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

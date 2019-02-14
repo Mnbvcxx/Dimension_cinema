@@ -141,6 +141,12 @@ public class LoginActivity extends BaseActivity {
         if (object instanceof LoginBean) {
             LoginBean loginBean = (LoginBean) object;
             if (loginBean.getStatus().equals("0000")) {
+                //登录成功，将邮编密码给我的信息
+                String infoemail = infoBean.getInfoemail();
+                Log.i("TAG","登录邮箱"+infoemail);
+                EventBus.getDefault().postSticky(infoBean);
+                Log.i("TAG","登录得到邮箱"+infoBean.getInfoemail());
+
                 //记住密码
                 if (mLoginCheckbox.isChecked()) {
                     mEdit.putBoolean("isCheck", true);
@@ -169,11 +175,11 @@ public class LoginActivity extends BaseActivity {
                         .putString("userId", loginBean.getResult().getUserId() + "")
                         .putString("sessionId", loginBean.getResult().getSessionId())
                         .commit();
-                //登录成功，将邮编密码给我的信息
-                String infoemail = infoBean.getInfoemail();
-                Log.i("TAG","登录邮箱"+infoemail);
-                EventBus.getDefault().postSticky(infoBean);
-                Log.i("TAG","登录得到邮箱"+infoBean.getInfoemail());
+//                //登录成功，将邮编密码给我的信息
+//                String infoemail = infoBean.getInfoemail();
+//                Log.i("TAG","登录邮箱"+infoemail);
+//                EventBus.getDefault().postSticky(infoBean);
+//                Log.i("TAG","登录得到邮箱"+infoBean.getInfoemail());
                 finish();
             } else {
                 ToastUtil.showToast("登录失败");
@@ -226,7 +232,7 @@ public class LoginActivity extends BaseActivity {
                     if (!WeiXinUtil.success(this)) {
                         Toast.makeText(this, "您还未安装微信客户端", Toast.LENGTH_SHORT).show();
                     } else {
-                        //  验证
+                        //验证
                         SendAuth.Req req = new SendAuth.Req();
                         req.scope = "snsapi_userinfo";
                         req.state = "wechat_sdk_demo_test";

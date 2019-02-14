@@ -408,18 +408,22 @@ public class MoveSeatView extends View {
     MoveSeatAmount mMoveSeatBean;
     private boolean isHave(int x, int y) {
         if (list == null || list.isEmpty()) {
+            //TODO：将list值即选座的数量传递！！！！
+            mMoveSeatBean=new MoveSeatAmount();
+            mMoveSeatBean.setNum(list.size());
+            EventBus.getDefault().postSticky(mMoveSeatBean);
             return false;
         }
         for (Point point : list) {
             if (point.x == x && point.y == y) {
+                //TODO：将list值即选座的数量传递！！！！
+                mMoveSeatBean=new MoveSeatAmount();
+                mMoveSeatBean.setNum(list.size());
+                EventBus.getDefault().postSticky(mMoveSeatBean);
                 return true;
 
             }
         }
-        //TODO：将list值即选座的数量传递！！！！
-        mMoveSeatBean=new MoveSeatAmount();
-        mMoveSeatBean.setNum(list.size());
-        EventBus.getDefault().postSticky(mMoveSeatBean);
         return false;
 
     }

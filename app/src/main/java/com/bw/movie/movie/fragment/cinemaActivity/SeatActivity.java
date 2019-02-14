@@ -177,6 +177,12 @@ public class SeatActivity extends BaseActivity {
         @Subscribe(sticky = true)
         public void onMoveSeatAmount(MoveSeatAmount moveSeatBean){
             mNum = moveSeatBean.getNum();
+
+            if (moveSeatBean.getNum()==0){
+                double v = mMPrice * 0;
+                mSpannableString = changTVsize(v+"");
+                mSeatPrice.setText(mSpannableString);
+            }else {
             double v = mMPrice * mNum;
             //保证总价为double
             BigDecimal bg = new BigDecimal(v);
@@ -184,6 +190,7 @@ public class SeatActivity extends BaseActivity {
             mSpannableString = changTVsize(f1+"");
             //TODO：初始价格-->未选座
             mSeatPrice.setText(mSpannableString);
+            }
         }
 
     /**
