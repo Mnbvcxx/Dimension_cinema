@@ -1,11 +1,10 @@
 package com.bw.movie.activity.fragment;
 
 import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -27,6 +26,8 @@ import com.bw.movie.activity.adapter.MyFilmCinemaxAdapter;
 import com.bw.movie.activity.adapter.MyFilmComingSoonAdapter;
 import com.bw.movie.activity.adapter.MyFilmHosMoviesAdapter;
 import com.bw.movie.activity.adapter.MyMovieSeachAdapter;
+import com.bw.movie.activity.addressselector.CityPickerActivity;
+import com.bw.movie.activity.addressselector.addressview.RequestCodeInfo;
 import com.bw.movie.activity.bean.FilmBean;
 import com.bw.movie.activity.bean.FilmCinemaxBean;
 import com.bw.movie.activity.bean.FilmComingSoonBean;
@@ -47,7 +48,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import recycler.coverflow.CoverFlowLayoutManger;
 import recycler.coverflow.RecyclerCoverFlow;
 
 import static android.view.View.VISIBLE;
@@ -129,9 +129,9 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_film, container, false);
         unbinder = ButterKnife.bind(this, view);
-        if (!NetworkUtils.isConnected(getActivity())){
+        if (!NetworkUtils.isConnected(getActivity())) {
             ToastUtil.showToast("网络未连接");
-        }else {
+        } else {
             mMyPresenter = new MyPresenter(this);
             mMyPresenter.onGetDatas(Apis.MOVIE_BANNER_URL, FilmBean.class);
             mMyPresenter.onGetDatas(Apis.MOVIE_RM_URL, FilmCinemaxBean.class);
@@ -151,7 +151,8 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
         switch (v.getId()) {
             default:
                 break;
-            case R.id.film_ress:
+            case R.id.film_ress://点击定位图标跳到地址选择器
+                startActivityForResult(new Intent(getActivity(), CityPickerActivity.class), RequestCodeInfo.GETCITY);
                 break;
             case R.id.film_rmdy:
                 IntentUtils.getInstence().intent(getContext(), FilmDetailsActivity.class);
@@ -268,7 +269,7 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
                 mMyFilmComingSoonAdapter = new MyFilmComingSoonAdapter(getActivity(), result);
                 mFilmJijRv.setAdapter(mMyFilmComingSoonAdapter);
             }
-        }else if (data instanceof SeachBean) {
+        } else if (data instanceof SeachBean) {
             SeachBean seachBean = (SeachBean) data;
             if (seachBean.getStatus().equals("0000")) {
                 List<SeachBean.ResultBean> result = seachBean.getResult();
@@ -300,5 +301,22 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
     @Override
     public void onMyFailed(String error) {
 
+    }
+
+    //地址选择器
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case RequestCodeInfo.GETCITY:
+                    String city = data.getExtras().getString("city");
+                    if (city != null) {
+                        System.out.println("ccccccctttttt" + city);
+                        mFilmRessName.setText(city);
+                    }
+                    break;
+            }
+        }
     }
 }
