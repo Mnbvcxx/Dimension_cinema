@@ -24,6 +24,8 @@
         android:layout_toRightOf="@id/phone_login"
         android:background="@null"
         android:hint="手机号"
+        android:singleLine="true"
+        android:imeOptions="actionNext"
         android:textColor="@color/colorfff"
         android:textColorHint="@color/colorfff"
         android:textSize="@dimen/sp_18" />
@@ -53,6 +55,8 @@
         android:layout_marginTop="@dimen/dp_30"
         android:layout_toRightOf="@id/lock"
         android:background="@null"
+        android:singleLine="true"
+        android:imeOptions="actionNext"
         android:hint="登录密码"
         android:password="true"
         android:textColor="@color/colorfff"

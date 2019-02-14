@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.bw.movie.mvc.presenter.MyPresenter;
 import com.bw.movie.mvc.view.MyView;
+import com.bw.movie.utils.JudgeNetWorkUtils;
+import com.bw.movie.utils.ToastUtil;
 
 import java.util.Map;
 
@@ -40,7 +42,11 @@ public abstract class BaseActivity extends AppCompatActivity implements MyView {
     //成功回调方法
     @Override
     public void onMySuccess(Object data) {
-        netSuccess(data);
+        if (!JudgeNetWorkUtils.hasNetwork(this)){
+            ToastUtil.showToast("无可用网络，请检查网络是否连接");
+        }else {
+            netSuccess(data);
+        }
     }
 
     //失败回调方法
