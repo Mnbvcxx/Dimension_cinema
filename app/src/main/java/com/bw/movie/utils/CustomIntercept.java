@@ -27,6 +27,8 @@ public class CustomIntercept implements Interceptor {
 
         Request.Builder newBuilder = original.newBuilder();
         newBuilder.method(original.method(), original.body());
+        newBuilder.addHeader("ak","0110010010000");
+        newBuilder.addHeader("Content-Type","application/x-www-form-urlencoded");
         if (!TextUtils.isEmpty(userId) && !TextUtils.isEmpty(sessionId)) {
             newBuilder.addHeader("userId", userId);
             newBuilder.addHeader("sessionId", sessionId);
