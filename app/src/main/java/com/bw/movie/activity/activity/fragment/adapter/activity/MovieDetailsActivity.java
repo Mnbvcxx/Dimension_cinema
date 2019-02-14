@@ -183,7 +183,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
     //发表评论
     private void initPublish() {
         View view = LayoutInflater.from(this).inflate(R.layout.publish_popup_view, null, false);
-        PopupWindow popupWindow = new PopupWindow(view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
+        final PopupWindow popupWindow = new PopupWindow(view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popupWindow.setOutsideTouchable(true);
         //设置显示位置,findViewById获取的是包含当前整个页面的view
@@ -200,6 +200,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
                 map.put(UserApis.COMMENT_KEY, mMovieId + "");
                 map.put(UserApis.COMMENT_COMMENTCONTENT_KEY, mPubEdTxt.getText().toString().trim());
                 mMyPresenter.onPostDatas(Apis.USER_COMMENT_URL, map, RegisterBean.class);
+                popupWindow.dismiss();
             }
         });
 
