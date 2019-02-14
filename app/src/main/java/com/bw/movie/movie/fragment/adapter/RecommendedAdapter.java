@@ -51,7 +51,7 @@ public class RecommendedAdapter extends RecyclerView.Adapter<RecommendedAdapter.
         recommendedViewHolde.mSimpleDraweeView.setImageURI(uri);
         recommendedViewHolde.mTextViewName.setText(mResultBeans.get(i).getName());
         recommendedViewHolde.mTextViewDesc.setText(mResultBeans.get(i).getAddress());
-        recommendedViewHolde.mTextViewKm.setText(mResultBeans.get(i).getDistance() + "km");
+        recommendedViewHolde.mTextViewKm.setText(mResultBeans.get(i).getDistance()/1000 + " km");
         if (mResultBeans.get(i).getFollowCinema() == 1) {
             recommendedViewHolde.mImageView.setImageResource(R.mipmap.com_icon_collection_selected);
         } else if (mResultBeans.get(i).getFollowCinema() == 2) {

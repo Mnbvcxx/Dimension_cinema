@@ -36,7 +36,7 @@ public class Apis {
     //推荐影院
     public static final String RECOMMEND_URL = "cinema/v1/findRecommendCinemas?page=1&count=10";
     //附近影院
-    public static final String NEARBY_URL = "cinema/v1/findNearbyCinemas?page=1&count=10";
+    public static final String NEARBY_URL = "cinema/v1/findNearbyCinemas?page=1&count=10&longitude=112.55&latitude=37.87";
     //根据用户ID查询用户信息
     public static final String MESSAGE_USERINFO="user/v1/verify/getUserInfoByUserId";
     //上传头像
