@@ -120,16 +120,6 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
     private MyFilmComingSoonAdapter mMyFilmComingSoonAdapter;
     private MyFilmHosMoviesAdapter mMyFilmHosMoviesAdapter;
 
-    /*@SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            int pos = mFilmRcf.getSelectedPos();
-            mFilmRcf.scrollToPosition(pos + 1);
-            mHandler.sendEmptyMessageDelayed(0, 3000);
-        }
-    };*/
     private List<String> mListImg;
     private MyMovieSeachAdapter mMyMovieSeachAdapter;
     private int num;

@@ -199,6 +199,13 @@ public class RegisterActivity extends BaseActivity {
                 map.put(UserApis.LOGIN_KEY_PHONE, mPhone);
                 map.put(UserApis.LOGIN_KEY_PWD, mEncrypt_pwd);
                 doPost(Apis.LOGIN_URL, map, LoginBean.class);
+                //将邮编密码给我的信息
+                String regemile = mRegTxtEml.getText().toString();
+                String regpwd = mRegTxtPwd.getText().toString();
+                EventBusInfoBean infoBean = new EventBusInfoBean();
+                infoBean.setInfoemail(regemile);
+                infoBean.setInfopwd(regpwd);
+                EventBus.getDefault().postSticky(infoBean);
             }
         } else if (object instanceof LoginBean) {
             LoginBean loginBean = (LoginBean) object;

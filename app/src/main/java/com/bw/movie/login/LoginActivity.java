@@ -82,7 +82,7 @@ public class LoginActivity extends BaseActivity {
     private String mPhone;
     private String mPwd;
     private Intent mIntent;
-
+    EventBusInfoBean infoBean=new EventBusInfoBean();
     //布局
     @Override
     protected int getLayoutId() {
@@ -158,22 +158,23 @@ public class LoginActivity extends BaseActivity {
                 MoveSeatUserID moveSeatUserID = new MoveSeatUserID();
                 moveSeatUserID.setUserId(loginBean.getResult().getUserId());
                 EventBus.getDefault().postSticky(moveSeatUserID);
-
                 Log.i("TAG","moveSeatBean集合中的UserID="+moveSeatUserID);
-
                 mIntent.putExtra("sessionId", loginBean.getResult().getSessionId());
                 mIntent.putExtra("nickName", loginBean.getResult().getUserInfo().getNickName());
                 mIntent.putExtra("headPic", loginBean.getResult().getUserInfo().getHeadPic());
                 mIntent.putExtra("phone", loginBean.getResult().getUserInfo().getPhone());
                 startActivity(mIntent);
-                finish();
+
                 mSP.edit()
                         .putString("userId", loginBean.getResult().getUserId() + "")
                         .putString("sessionId", loginBean.getResult().getSessionId())
                         .commit();
-                infoBean.setInfoemail(mLoginPwd.getText().toString());
-                infoBean.setInfopwd(mLoginPwd.getText().toString());
+                //登录成功，将邮编密码给我的信息
+                String infoemail = infoBean.getInfoemail();
+                Log.i("TAG","登录邮箱"+infoemail);
                 EventBus.getDefault().postSticky(infoBean);
+                Log.i("TAG","登录得到邮箱"+infoBean.getInfoemail());
+                finish();
             } else {
                 ToastUtil.showToast("登录失败");
             }
@@ -262,6 +263,5 @@ public class LoginActivity extends BaseActivity {
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
     }
 
-    EventBusInfoBean infoBean;
 
 }

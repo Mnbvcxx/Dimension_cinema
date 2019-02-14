@@ -93,6 +93,7 @@ public class MyFragment extends Fragment implements MyView {
                 mMyPresenter.onGetDatas(Apis.USER_SIGNIN_URL, RegisterBean.class);
                 break;
             case R.id.my_info:
+                ToastUtil.showToast("点击了我的信息");
                 Intent info = new Intent(getActivity(), InfoActivity.class);
                 startActivity(info);
                 break;
