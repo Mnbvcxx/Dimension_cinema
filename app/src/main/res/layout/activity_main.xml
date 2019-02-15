@@ -6,48 +6,74 @@
     android:layout_height="match_parent"
     tools:context=".activity.activity.MainActivity">
 
-    <com.bw.movie.activity.customer.CustomerViewPager
-        android:id="@+id/main_vp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:flipInterval="30"
-        android:persistentDrawingCache="animation" />
+        android:layout_height="match_parent">
 
-    <RelativeLayout
+        <FrameLayout
+            android:id="@+id/frame_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </FrameLayout>
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/main_group"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_80"
+        android:layout_height="@dimen/dp_90"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/bg_shape">
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_10">
 
-        <ImageView
-            android:id="@+id/main_film"
+        <!--影片-->
+        <RadioButton
+            android:id="@+id/home_film_first"
             android:layout_width="@dimen/dp_60"
             android:layout_height="@dimen/dp_60"
-            android:layout_alignParentBottom="true"
+            android:background="@mipmap/com_icon_film_selected"
+            android:layout_marginTop="@dimen/dp_10"
             android:layout_marginLeft="@dimen/dp_24"
-            android:layout_marginBottom="@dimen/dp_12"
-            android:src="@mipmap/com_icon_film_selected" />
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center" />
 
-        <ImageView
-            android:id="@+id/main_cinema"
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <!--影院-->
+        <RadioButton
+            android:id="@+id/home_film_second"
             android:layout_width="@dimen/dp_60"
             android:layout_height="@dimen/dp_60"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/dp_12"
-            android:src="@mipmap/com_icon_cinema_default" />
+            android:background="@mipmap/com_icon_cinema_default"
+            android:layout_marginTop="@dimen/dp_10"
+            android:button="@null"
+            android:gravity="center" />
 
-        <ImageView
-            android:id="@+id/main_my"
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_1"
+            android:layout_weight="1" />
+        <!--我的-->
+        <RadioButton
+            android:id="@+id/home_film_third"
             android:layout_width="@dimen/dp_60"
             android:layout_height="@dimen/dp_60"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
+            android:background="@mipmap/my_default"
+            android:layout_marginTop="@dimen/dp_10"
+            android:button="@null"
             android:layout_marginRight="@dimen/dp_24"
-            android:layout_marginBottom="@dimen/dp_12"
-            android:src="@mipmap/my_default" />
+            android:gravity="center" />
 
-    </RelativeLayout>
+    </RadioGroup>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_70"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/back_alpha">
+
+    </LinearLayout>
 
 
 </RelativeLayout>

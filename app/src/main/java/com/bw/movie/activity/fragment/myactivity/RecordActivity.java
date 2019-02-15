@@ -230,7 +230,9 @@ public class RecordActivity extends BaseActivity {
             public void onClick(View v) {
                 Intent intent = getIntent();
                 //得到订单号
-                String orderId = intent.getStringExtra("orderId");
+                for (int i = 0; i < mResult.size(); i++) {
+                    mOrderId = mResult.get(i).getOrderId();
+                }
                 HashMap<String, String> map = new HashMap<>();
                 //如果微信选中，payType==1；
                 if (popup_wei.isChecked()) {
@@ -241,7 +243,7 @@ public class RecordActivity extends BaseActivity {
                 }
                 //网络请求
                 map.put("payType", payType + "");
-                map.put("orderId", orderId);
+                map.put("orderId", mOrderId);
                 doPost(Apis.MOVE_RECORD_PAY, map, RecordPayBean.class);
             }
         });
