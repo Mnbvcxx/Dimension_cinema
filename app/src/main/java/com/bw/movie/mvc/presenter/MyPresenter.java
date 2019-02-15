@@ -36,7 +36,8 @@ public class MyPresenter {
 
             @Override
             public void onFailed(String error) {
-                mMyView.onMyFailed(error);
+                return;
+                //mMyView.onMyFailed(error);
             }
         });
     }
