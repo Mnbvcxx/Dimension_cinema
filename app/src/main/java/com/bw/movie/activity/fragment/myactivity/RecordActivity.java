@@ -79,7 +79,7 @@ public class RecordActivity extends BaseActivity {
             //待付款
             case R.id.record_wait:
                 mRecordOk.setBackgroundResource(R.drawable.movie_selecter);
-                mRecordOk.setTextColor(R.color.color333);
+                mRecordOk.setTextColor(R.color.colorfff);
                 mRecordWait.setBackgroundResource(R.drawable.movie_shape_bg_failed);
                 mRecordWait.setTextColor(R.color.colorfff);
                 initwait();
@@ -104,6 +104,7 @@ public class RecordActivity extends BaseActivity {
     private void initfinsh() {
         //将待支付隐藏
         mRecordRecyclerWait.setVisibility(View.GONE);
+        mRecordRecyclerFinsh.setVisibility(View.INVISIBLE);
         //布局
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(OrientationHelper.VERTICAL);
@@ -121,6 +122,7 @@ public class RecordActivity extends BaseActivity {
     private void initwait() {
         //将已完成隐藏
         mRecordRecyclerFinsh.setVisibility(View.GONE);
+        mRecordRecyclerWait.setVisibility(View.INVISIBLE);
         //布局
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(OrientationHelper.VERTICAL);
