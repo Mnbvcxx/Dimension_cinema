@@ -80,7 +80,7 @@ public class SeatActivity extends BaseActivity {
     protected void initData() {
         //得到厅号、时间、价格
         Intent intent = getIntent();
-        //排期表
+        //排期表id
         mScheduleId = intent.getIntExtra("scheduleId", 0);
         Log.i("TAG","排期表id:"+mScheduleId);
         String hall = intent.getStringExtra("hall");
@@ -222,7 +222,6 @@ public class SeatActivity extends BaseActivity {
         if (object instanceof MoveTicketBean){
             MoveTicketBean moveTicketBean=(MoveTicketBean)object;
             if (moveTicketBean.getMessage().equals("下单成功")){
-                ToastUtil.showToast(moveTicketBean.getMessage()+"点单号："+moveTicketBean.getOrderId());
                 Intent intent = new Intent(this, RecordActivity.class);
                 //获取订单号
                 intent.putExtra("orderId", moveTicketBean.getOrderId() + "");
@@ -253,6 +252,4 @@ public class SeatActivity extends BaseActivity {
     }
 
     //得到userID
-
-
 }

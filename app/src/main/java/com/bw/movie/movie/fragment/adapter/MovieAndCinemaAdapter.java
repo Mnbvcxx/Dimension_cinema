@@ -52,11 +52,11 @@ public class MovieAndCinemaAdapter extends RecyclerView.Adapter<MovieAndCinemaAd
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, SeatActivity.class);
-                intent.putExtra("scheduleId",i);
-                intent.putExtra("hall",mResultBeans.get(i).getScreeningHall());
-                intent.putExtra("begintime",mResultBeans.get(i).getBeginTime());
-                intent.putExtra("endtime",mResultBeans.get(i).getEndTime());
-                intent.putExtra("price",mResultBeans.get(i).getPrice());
+                intent.putExtra("scheduleId", mResultBeans.get(i).getId());
+                intent.putExtra("hall", mResultBeans.get(i).getScreeningHall());
+                intent.putExtra("begintime", mResultBeans.get(i).getBeginTime());
+                intent.putExtra("endtime", mResultBeans.get(i).getEndTime());
+                intent.putExtra("price", mResultBeans.get(i).getPrice());
                 mContext.startActivity(intent);
             }
         });
