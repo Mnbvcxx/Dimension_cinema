@@ -1,14 +1,19 @@
 package com.bw.movie.activity.activity;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.adapter.TabFragmentPagerAdapter;
@@ -23,22 +28,29 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * 主界面
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
+    @BindView(R.id.frame_layout)
+    FrameLayout frameLayout;
+    @BindView(R.id.home_film_first)
+    RadioButton homeFilmFirst;
+    @BindView(R.id.home_film_second)
+    RadioButton homeFilmSecond;
+    @BindView(R.id.home_film_third)
+    RadioButton homeFilmThird;
+    @BindView(R.id.main_group)
+    RadioGroup mainGroup;
 
-    @BindView(R.id.main_vp)
-    ViewPager mMainVp;
-    @BindView(R.id.main_film)
-    ImageView mMainFilm;
-    @BindView(R.id.main_cinema)
-    ImageView mMainCinema;
-    @BindView(R.id.main_my)
-    ImageView mMainMy;
-    private List<Fragment> mFragments;
-    private TabFragmentPagerAdapter mTabFragmentPagerAdapter;
+    private ArrayList<Fragment> mList;
+    private FragmentManager mManager;
+    private FilmFragment mFilmFragment;
+    private MovieFragment mMovieFragment;
+    private MyFragment mMyFragment;
+    private Unbinder unbinder;
 
     @Override
     protected int getLayoutId() {
@@ -51,27 +63,35 @@ public class MainActivity extends BaseActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
-        ButterKnife.bind(this);
-        //默认选中第一个,按钮变大
-        mMainVp.setCurrentItem(0);
-        ViewGroup.LayoutParams mMainFilmparams = mMainFilm.getLayoutParams();
-        mMainFilmparams.height = 200;
-        mMainFilmparams.width = 200;
-        mMainFilm.setLayoutParams(mMainFilmparams);
+        unbinder = ButterKnife.bind(this);
+        //获取Fragment管理权getSupportFragmentManager
+        mManager = getSupportFragmentManager();
+        mList = new ArrayList<>();
+        mFilmFragment = new FilmFragment();
+        mMovieFragment = new MovieFragment();
+        mMyFragment = new MyFragment();
+        //添加集合三个
+        mList.add(mFilmFragment);
+        mList.add(mMovieFragment);
+        mList.add(mMyFragment);
+        //选择器
+        mainGroup.setOnCheckedChangeListener(this);
+        mManager.beginTransaction()
+                .add(R.id.frame_layout, mFilmFragment)
+                .add(R.id.frame_layout, mMovieFragment)
+                .add(R.id.frame_layout, mMyFragment)
+                .hide(mMovieFragment)
+                .hide(mMyFragment)
+                .commit();
+        firstToviewanimatorx = ObjectAnimator.ofFloat(homeFilmFirst, "scaleX", 1f, 1.12f);
+        firstToviewanimatory = ObjectAnimator.ofFloat(homeFilmFirst, "scaleY", 1f, 1.12f);
+        firstToviewanimatorx.start();
+        firstToviewanimatory.start();
     }
 
-    //初始化数据
     @Override
     protected void initData() {
-        Intent intent = getIntent();
-        //创建一个集合,用来添加我们所需要的fragment
-        mFragments = new ArrayList<>();
-        mFragments.add(new FilmFragment());
-        mFragments.add(new MovieFragment());
-        mFragments.add(new MyFragment());
-        //创建适配器实例
-        mTabFragmentPagerAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), mFragments);
-        mMainVp.setAdapter(mTabFragmentPagerAdapter);
+
     }
 
     @Override
@@ -83,67 +103,101 @@ public class MainActivity extends BaseActivity {
     protected void netFailed(String s) {
 
     }
-
-    //点击监听切换事件
-    @OnClick({R.id.main_film, R.id.main_cinema, R.id.main_my})
-    public void onClick(View v) {
-        switch (v.getId()) {
+    /*
+     * 目前完成了放大至70cm
+     * 当点击其他的图片时不能回放到原来的大小
+     */
+    ObjectAnimator firstToviewanimatorx;
+    ObjectAnimator firstToviewanimatory;
+    ObjectAnimator toViewAnimator1X;
+    ObjectAnimator toViewAnimator1Y;
+    ObjectAnimator thirdToviewanimatorx;
+    ObjectAnimator thirdToviewanimatory;
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+        switch (i) {
+            case R.id.home_film_first:
+                mManager.beginTransaction()
+                        .show(mFilmFragment)
+                        .hide(mMovieFragment)
+                        .hide(mMyFragment)
+                        .commit();
+                homeFilmFirst.setBackgroundResource(R.mipmap.com_icon_film_selected);
+                homeFilmSecond.setBackgroundResource(R.mipmap.com_icon_cinema_default);
+                homeFilmThird.setBackgroundResource(R.mipmap.my_default);
+                firstToviewanimatorx = ObjectAnimator.ofFloat(homeFilmFirst, "scaleX", 1f, 1.12f);
+                firstToviewanimatory = ObjectAnimator.ofFloat(homeFilmFirst, "scaleY", 1f, 1.12f);
+                firstToviewanimatorx.start();
+                firstToviewanimatory.start();
+                //第二个缩放到原来的大小
+                toViewAnimator1X = ObjectAnimator.ofFloat(homeFilmSecond, "scaleX", 1f, 1f);
+                toViewAnimator1Y = ObjectAnimator.ofFloat(homeFilmSecond, "scaleY", 1f, 1f);
+                toViewAnimator1X.start();
+                toViewAnimator1Y.start();
+                //第三个缩放到原来的大小
+                thirdToviewanimatorx = ObjectAnimator.ofFloat(homeFilmThird, "scaleX", 1f, 1f);
+                thirdToviewanimatory = ObjectAnimator.ofFloat(homeFilmThird, "scaleY", 1f, 1f);
+                thirdToviewanimatorx.start();
+                thirdToviewanimatory.start();
+                break;
+            case R.id.home_film_second:
+                mManager.beginTransaction()
+                        .show(mMovieFragment)
+                        .hide(mFilmFragment)
+                        .hide(mMyFragment)
+                        .commit();
+                toViewAnimator1X = ObjectAnimator.ofFloat(homeFilmSecond, "scaleX", 1f, 1.12f);
+                toViewAnimator1Y = ObjectAnimator.ofFloat(homeFilmSecond, "scaleY", 1f, 1.12f);
+                toViewAnimator1X.start();
+                toViewAnimator1Y.start();
+                homeFilmFirst.setBackgroundResource(R.mipmap.com_icon_film_fault);
+                homeFilmSecond.setBackgroundResource(R.mipmap.com_icon_cinema_selected);
+                homeFilmThird.setBackgroundResource(R.mipmap.my_default);
+                //第一个缩放到原来的大小
+                firstToviewanimatorx = ObjectAnimator.ofFloat(homeFilmFirst, "scaleX", 1f, 1);
+                firstToviewanimatory = ObjectAnimator.ofFloat(homeFilmFirst, "scaleY", 1f, 1);
+                firstToviewanimatorx.start();
+                firstToviewanimatory.start();
+                //第三个缩放到原来的大小
+                thirdToviewanimatorx = ObjectAnimator.ofFloat(homeFilmThird, "scaleX", 1f, 1f);
+                thirdToviewanimatory = ObjectAnimator.ofFloat(homeFilmThird, "scaleY", 1f, 1f);
+                thirdToviewanimatorx.start();
+                thirdToviewanimatory.start();
+                break;
+            case R.id.home_film_third:
+                mManager.beginTransaction()
+                        .show(mMyFragment)
+                        .hide(mFilmFragment)
+                        .hide(mMovieFragment)
+                        .commit();
+                homeFilmFirst.setBackgroundResource(R.mipmap.com_icon_film_fault);
+                homeFilmSecond.setBackgroundResource(R.mipmap.com_icon_cinema_default);
+                homeFilmThird.setBackgroundResource(R.mipmap.com_icon_my_selected);
+                //第一个缩放到原来的大小
+                firstToviewanimatorx = ObjectAnimator.ofFloat(homeFilmFirst, "scaleX", 1f, 1);
+                firstToviewanimatory = ObjectAnimator.ofFloat(homeFilmFirst, "scaleY", 1f, 1);
+                firstToviewanimatorx.start();
+                firstToviewanimatory.start();
+                //第三个放大
+                thirdToviewanimatorx = ObjectAnimator.ofFloat(homeFilmThird, "scaleX", 1f, 1.12f);
+                thirdToviewanimatory = ObjectAnimator.ofFloat(homeFilmThird, "scaleY", 1f, 1.12f);
+                thirdToviewanimatorx.start();
+                thirdToviewanimatory.start();
+                //第二个缩放到原来的大小
+                toViewAnimator1X = ObjectAnimator.ofFloat(homeFilmSecond, "scaleX", 1f, 1f);
+                toViewAnimator1Y = ObjectAnimator.ofFloat(homeFilmSecond, "scaleY", 1f, 1f);
+                toViewAnimator1X.start();
+                toViewAnimator1Y.start();
+                break;
             default:
-                break;
-            case R.id.main_film:
-                mMainVp.setCurrentItem(0);
-                mMainFilm.setImageResource(R.mipmap.com_icon_film_selected);
-                ViewGroup.LayoutParams mMainFilmparams = mMainFilm.getLayoutParams();
-                mMainFilmparams.height = 200;
-                mMainFilmparams.width = 200;
-                mMainFilm.setLayoutParams(mMainFilmparams);
-                mMainCinema.setImageResource(R.mipmap.com_icon_cinema_default);
-                ViewGroup.LayoutParams mMainCinemapara = mMainCinema.getLayoutParams();
-                mMainCinemapara.height = 180;
-                mMainCinemapara.width = 180;
-                mMainCinema.setLayoutParams(mMainCinemapara);
-                mMainMy.setImageResource(R.mipmap.my_default);
-                ViewGroup.LayoutParams mMainMypara = mMainMy.getLayoutParams();
-                mMainMypara.height = 180;
-                mMainMypara.width = 180;
-                mMainMy.setLayoutParams(mMainMypara);
-                break;
-            case R.id.main_cinema:
-                mMainVp.setCurrentItem(1);
-                mMainFilm.setImageResource(R.mipmap.com_icon_film_fault);
-                ViewGroup.LayoutParams param = mMainFilm.getLayoutParams();
-                param.height = 180;
-                param.width = 180;
-                mMainFilm.setLayoutParams(param);
-                mMainCinema.setImageResource(R.mipmap.com_icon_cinema_selected);
-                ViewGroup.LayoutParams mMainCinemaparams = mMainCinema.getLayoutParams();
-                mMainCinemaparams.height = 200;
-                mMainCinemaparams.width = 200;
-                mMainCinema.setLayoutParams(mMainCinemaparams);
-                mMainMy.setImageResource(R.mipmap.my_default);
-                ViewGroup.LayoutParams mMainMyparam = mMainMy.getLayoutParams();
-                mMainMyparam.height = 180;
-                mMainMyparam.width = 180;
-                mMainMy.setLayoutParams(mMainMyparam);
-                break;
-            case R.id.main_my:
-                mMainVp.setCurrentItem(2);
-                mMainFilm.setImageResource(R.mipmap.com_icon_film_fault);
-                ViewGroup.LayoutParams mMainFilmparam = mMainFilm.getLayoutParams();
-                mMainFilmparam.height = 180;
-                mMainFilmparam.width = 180;
-                mMainFilm.setLayoutParams(mMainFilmparam);
-                mMainCinema.setImageResource(R.mipmap.com_icon_cinema_default);
-                ViewGroup.LayoutParams mMainCinemaparam = mMainCinema.getLayoutParams();
-                mMainCinemaparam.height = 180;
-                mMainCinemaparam.width = 180;
-                mMainCinema.setLayoutParams(mMainCinemaparam);
-                mMainMy.setImageResource(R.mipmap.com_icon_my_selected);
-                ViewGroup.LayoutParams mMainMyparams = mMainMy.getLayoutParams();
-                mMainMyparams.height = 200;
-                mMainMyparams.width = 200;
-                mMainMy.setLayoutParams(mMainMyparams);
                 break;
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
+    }
+
 }

@@ -1,7 +1,9 @@
 package com.bw.movie.activity.fragment;
 
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,6 +29,8 @@ import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.adapter.MyMovieSeachAdapter;
+import com.bw.movie.activity.addressselector.CityPickerActivity;
+import com.bw.movie.activity.addressselector.addressview.RequestCodeInfo;
 import com.bw.movie.activity.bean.SeachBean;
 import com.bw.movie.apis.Apis;
 import com.bw.movie.movie.adapter.MyMovieFragmentAdapter;
@@ -148,21 +152,10 @@ public class MovieFragment extends Fragment implements MyView {
             default:
                 break;
             case R.id.movie_ress://地址图标
-                break;
-            case R.id.layout_movie_ress://地址图标点击事件
+                startActivityForResult(new Intent(getActivity(), CityPickerActivity.class), RequestCodeInfo.GETCITY);
                 break;
             case R.id.movie_ress_name://地址名称
                 break;
-            /*case R.id.movie_recommended:
-                mMovieVp.setCurrentItem(0);
-                mFilmSeachRv.setVisibility(View.GONE);
-                mMovieVp.setVisibility(View.VISIBLE);
-                break;
-            case R.id.movie_nearby:
-                mMovieVp.setCurrentItem(1);
-                mFilmSeachRv.setVisibility(View.GONE);
-                mMovieVp.setVisibility(View.VISIBLE);
-                break;*/
             case R.id.movie_rg:
                 break;
             case R.id.movie_seach_ima:
@@ -274,38 +267,20 @@ public class MovieFragment extends Fragment implements MyView {
         ToastUtil.showToast(error);
     }
 
-    /**
-     * 设置一个ViewPager的侦听事件，当左右滑动ViewPager时菜单栏被选中状态跟着改变
-     */
-   /* private class MyPagerChangeListener implements ViewPager.OnPageChangeListener {
-        @Override
-        public void onPageScrolled(int i, float v, int i1) {
-
-        }
-
-        @Override
-        public void onPageSelected(int i) {
-            switch (i) {
-                case 0:
-                    mMovieRecommended.setChecked(true);
-                    mMovieNearby.setChecked(false);
-                    mMovieRecommended.setTextColor(getActivity().getResources().getColor(R.color.colorfff));
-                    mMovieNearby.setTextColor(getActivity().getResources().getColor(R.color.color333));
-                    break;
-                case 1:
-                    mMovieRecommended.setChecked(false);
-                    mMovieNearby.setChecked(true);
-                    mMovieRecommended.setTextColor(getActivity().getResources().getColor(R.color.color333));
-                    mMovieNearby.setTextColor(getActivity().getResources().getColor(R.color.colorfff));
-                    break;
-                default:
+    //地址选择器
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case RequestCodeInfo.GETCITY:
+                    String city = data.getExtras().getString("city");
+                    if (city != null) {
+                        System.out.println("ccccccctttttt" + city);
+                        mMovieRessName.setText(city);
+                    }
                     break;
             }
         }
-
-        @Override
-        public void onPageScrollStateChanged(int i) {
-
-        }
-    }*/
+    }
 }

@@ -152,7 +152,7 @@ public class RecordActivity extends BaseActivity {
         if (object instanceof RecordBean) {
             RecordBean recordBean = (RecordBean) object;
             if (recordBean.getResult().size() == 0) {
-                ToastUtil.showToast("待付款的错误：："+recordBean.getMessage());
+                ToastUtil.showToast(recordBean.getMessage());
 
             } else {
                 mResult = recordBean.getResult();
