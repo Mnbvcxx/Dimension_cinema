@@ -152,7 +152,7 @@ public class RecordActivity extends BaseActivity {
         if (object instanceof RecordBean) {
             RecordBean recordBean = (RecordBean) object;
             if (recordBean.getResult().size() == 0) {
-                ToastUtil.showToast(recordBean.getMessage());
+                ToastUtil.showToast("待付款的错误：："+recordBean.getMessage());
 
             } else {
                 mResult = recordBean.getResult();
@@ -230,7 +230,10 @@ public class RecordActivity extends BaseActivity {
             public void onClick(View v) {
                 Intent intent = getIntent();
                 //得到订单号
-                String orderId = intent.getStringExtra("orderId");
+                for (int i = 0; i < mResult.size(); i++) {
+                    mOrderId = mResult.get(i).getOrderId();
+                }
+
                 HashMap<String, String> map = new HashMap<>();
                 //如果微信选中，payType==1；
                 if (popup_wei.isChecked()) {
@@ -241,7 +244,7 @@ public class RecordActivity extends BaseActivity {
                 }
                 //网络请求
                 map.put("payType", payType + "");
-                map.put("orderId", orderId);
+                map.put("orderId", mOrderId);
                 doPost(Apis.MOVE_RECORD_PAY, map, RecordPayBean.class);
             }
         });
@@ -263,6 +266,6 @@ public class RecordActivity extends BaseActivity {
 
     @Override
     protected void netFailed(String s) {
-        ToastUtil.showToast(s);
+
     }
 }
