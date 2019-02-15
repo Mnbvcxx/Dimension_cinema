@@ -2,6 +2,7 @@ package com.bw.movie.activity.fragment.myactivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,6 +26,8 @@ import com.bw.movie.activity.fragment.myactivity.bean.RecordBean;
 import com.bw.movie.activity.fragment.myactivity.bean.RecordPayBean;
 import com.bw.movie.apis.Apis;
 import com.bw.movie.base.BaseActivity;
+import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveTicketBean;
+import com.bw.movie.utils.EncryptUtil;
 import com.bw.movie.utils.ToastUtil;
 
 import java.util.HashMap;
@@ -75,17 +79,17 @@ public class RecordActivity extends BaseActivity {
             //待付款
             case R.id.record_wait:
                 mRecordOk.setBackgroundResource(R.drawable.movie_selecter);
-                mRecordOk.setTextColor(R.color.colorfff);
+                mRecordOk.setTextColor(this.getResources().getColor(R.color.color333));
                 mRecordWait.setBackgroundResource(R.drawable.movie_shape_bg_failed);
-                mRecordWait.setTextColor(R.color.colorfff);
+                mRecordWait.setTextColor(this.getResources().getColor(R.color.colorfff));
                 initwait();
                 break;
             //已完成
             case R.id.record_ok:
                 mRecordOk.setBackgroundResource(R.drawable.movie_shape_bg_failed);
-                mRecordOk.setTextColor(R.color.colorfff);
+                mRecordOk.setTextColor(this.getResources().getColor(R.color.colorfff));
                 mRecordWait.setBackgroundResource(R.drawable.movie_selecter);
-                mRecordWait.setTextColor(R.color.color333);
+                mRecordWait.setTextColor(this.getResources().getColor(R.color.color333));
                 initfinsh();
                 break;
             case R.id.record_request:
@@ -100,7 +104,7 @@ public class RecordActivity extends BaseActivity {
     private void initfinsh() {
         //将待支付隐藏
         mRecordRecyclerWait.setVisibility(View.GONE);
-        mRecordRecyclerFinsh.setVisibility(View.INVISIBLE);
+        mRecordRecyclerFinsh.setVisibility(View.VISIBLE);
         //布局
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(OrientationHelper.VERTICAL);
@@ -118,7 +122,7 @@ public class RecordActivity extends BaseActivity {
     private void initwait() {
         //将已完成隐藏
         mRecordRecyclerFinsh.setVisibility(View.GONE);
-        mRecordRecyclerWait.setVisibility(View.INVISIBLE);
+        mRecordRecyclerWait.setVisibility(View.VISIBLE);
         //布局
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(OrientationHelper.VERTICAL);
@@ -126,6 +130,13 @@ public class RecordActivity extends BaseActivity {
         //适配器
         mRecordWaitAdapter = new Record_Wait_Adapter(this);
         mRecordRecyclerWait.setAdapter(mRecordWaitAdapter);
+        //弹出popupwindow
+        mRecordWaitAdapter.setWaitCallBack(new Record_Wait_Adapter.WaitCallBack() {
+            @Override
+            public void waitcallback(int position) {
+                initpopup();
+            }
+        });
         //网络请求
         doGetData(Apis.RECORD_ACTIVITY + "?page=" + 1 + "&count=" + 10 + "&status=" + 1, RecordBean.class);
 
@@ -136,24 +147,16 @@ public class RecordActivity extends BaseActivity {
         //待付款
         if (object instanceof RecordBean) {
             RecordBean recordBean = (RecordBean) object;
-            if (recordBean.getResult().size() > 0) {
+            if (recordBean.getResult().size() == 0) {
+                ToastUtil.showToast(recordBean.getMessage());
+
+            } else {
                 mRecordWaitAdapter.setMjihe(recordBean.getResult());
                 mRecordFinshAdapter.setMjihe(recordBean.getResult());
-                //弹出popupwindow
-                mRecordWaitAdapter.setWaitCallBack(new Record_Wait_Adapter.WaitCallBack() {
-                    @Override
-                    public void waitcallback() {
-                        initpopup();
-                    }
-                });
-            } else {
-                ToastUtil.showToast(recordBean.getMessage());
             }
-        }
-        //支付
-       else if (object instanceof RecordPayBean){
-            RecordPayBean recordPayBean=(RecordPayBean)object;
-            ToastUtil.showToast("支付情况"+recordPayBean.getMessage());
+        } else if (object instanceof RecordPayBean) {//支付
+            RecordPayBean recordPayBean = (RecordPayBean) object;
+            ToastUtil.showToast("支付情况" + recordPayBean.getMessage());
         }
     }
 

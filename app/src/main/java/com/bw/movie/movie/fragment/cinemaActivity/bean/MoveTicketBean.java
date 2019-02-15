@@ -3,7 +3,7 @@ package com.bw.movie.movie.fragment.cinemaActivity.bean;
 /**
  * @author: pengbo
  * @date:2019/1/30
- * desc:
+ * desc:    购票下单    实体类
  */
 public class MoveTicketBean {
 
