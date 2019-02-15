@@ -71,7 +71,7 @@ public class SeatActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         ButterKnife.bind(this);
-        if (!EventBus.getDefault().isRegistered(this)){
+        if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
     }
@@ -86,15 +86,15 @@ public class SeatActivity extends BaseActivity {
         String hall = intent.getStringExtra("hall");
         String begintime = intent.getStringExtra("begintime");
         String endtime = intent.getStringExtra("endtime");
-        mMPrice = intent.getDoubleExtra("price",0);
-        mSeatBegingtime.setText(begintime+"-");
-        mSeatEndtime.setText("-"+endtime);
+        mMPrice = intent.getDoubleExtra("price", 0);
+        mSeatBegingtime.setText(begintime + "-");
+        mSeatEndtime.setText("-" + endtime);
         mSeatHall.setText(hall);
         //TODO：初始价格-->未选座
         double v = mMPrice * 0;
-        mSpannableString = changTVsize(v+"");
+        mSpannableString = changTVsize(v + "");
         mSeatPrice.setText(mSpannableString);
-        mMoveSeatView.setData(10,15);
+        mMoveSeatView.setData(10, 15);
 
     }
 
@@ -118,17 +118,18 @@ public class SeatActivity extends BaseActivity {
      */
     private PopupWindow mPopupWindow;
     private ImageView popup_request;
-    private CheckBox popup_wei,popup_zhi;
+    private CheckBox popup_wei, popup_zhi;
     private Button popup_button;
+
     private void initpopup() {
         View view = View.inflate(this, R.layout.seat_ok_popup, null);
-         popup_request =(ImageView) view.findViewById(R.id.popup_request);
-         popup_wei =(CheckBox) view.findViewById(R.id.popup_wei);
-         popup_zhi =(CheckBox) view.findViewById(R.id.popup_zhi);
-         popup_button =(Button) view.findViewById(R.id.popup_button);
-        popup_button.setText("微信支付"+mSpannableString+"元");
-        mPopupWindow=new PopupWindow(view,WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT,true);
-        mPopupWindow.showAtLocation(view,Gravity.BOTTOM,0,0);
+        popup_request = (ImageView) view.findViewById(R.id.popup_request);
+        popup_wei = (CheckBox) view.findViewById(R.id.popup_wei);
+        popup_zhi = (CheckBox) view.findViewById(R.id.popup_zhi);
+        popup_button = (Button) view.findViewById(R.id.popup_button);
+        popup_button.setText("微信支付" + mSpannableString + "元");
+        mPopupWindow = new PopupWindow(view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
+        mPopupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
         mPopupWindow.setFocusable(true);
         mPopupWindow.setTouchable(true);
         //点击事件
@@ -142,14 +143,14 @@ public class SeatActivity extends BaseActivity {
         popup_wei.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popup_button.setText("微信支付"+mSpannableString+"元");
+                popup_button.setText("微信支付" + mSpannableString + "元");
                 popup_zhi.setChecked(false);
             }
         });
         popup_zhi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popup_button.setText("支付宝支付"+mSpannableString+"元");
+                popup_button.setText("支付宝支付" + mSpannableString + "元");
                 popup_wei.setChecked(false);
             }
         });
@@ -164,48 +165,55 @@ public class SeatActivity extends BaseActivity {
                 map.put("amount",mNum+"");
                 String sign = ""+UserId + mScheduleId + mNum+"movie";
                 Log.i("TAG","sign==="+sign);
+                map.put("scheduleId", mScheduleId + "");
+                map.put("amount", mNum + "");
+                //String sign = "" + UserId + mScheduleId + mNum + "movie";
                 String convertMD5 = MD5Utils.string2MD5(sign);
                 map.put("sign",convertMD5);
                 Log.i("TAG","接口入参："+map);
                 doPost(Apis.MOVE_TICKET,map,MoveTicketBean.class);
+                map.put("sign", convertMD5);
+                doPost(Apis.MOVE_TICKET, map, MoveTicketBean.class);
             }
         });
     }
 
     /**
      * 获取选座的数量
+     *
      * @param moveSeatBean
      */
 
-        @Subscribe(sticky = true)
-        public void onMoveSeatAmount(MoveSeatAmount moveSeatBean){
-            mNum = moveSeatBean.getNum();
+    @Subscribe(sticky = true)
+    public void onMoveSeatAmount(MoveSeatAmount moveSeatBean) {
+        mNum = moveSeatBean.getNum();
 
-            if (moveSeatBean.getNum()==0){
-                double v = mMPrice * 0;
-                mSpannableString = changTVsize(v+"");
-                mSeatPrice.setText(mSpannableString);
-            }else {
+        if (moveSeatBean.getNum() == 0) {
+            double v = mMPrice * 0;
+            mSpannableString = changTVsize(v + "");
+            mSeatPrice.setText(mSpannableString);
+        } else {
             double v = mMPrice * mNum;
             //保证总价为double
             BigDecimal bg = new BigDecimal(v);
             double f1 = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-            mSpannableString = changTVsize(f1+"");
+            mSpannableString = changTVsize(f1 + "");
             //TODO：初始价格-->未选座
             mSeatPrice.setText(mSpannableString);
-            }
         }
+    }
 
     /**
      * 获取UserId
-      */
+     */
     int UserId;
+
     @Subscribe(sticky = true)
-    public void onMoveSeatUserId(MoveSeatUserID moveSeatUserID){
+    public void onMoveSeatUserId(MoveSeatUserID moveSeatUserID) {
         mUserId = moveSeatUserID.getUserId();
-        UserId=mUserId;
-        Log.i("TAG","UserId="+UserId);
-        Log.i("TAG","mUserId="+mUserId);
+        UserId = mUserId;
+        Log.i("TAG", "UserId=" + UserId);
+        Log.i("TAG", "mUserId=" + mUserId);
     }
 
 
@@ -217,9 +225,9 @@ public class SeatActivity extends BaseActivity {
                 ToastUtil.showToast(moveTicketBean.getMessage()+"点单号："+moveTicketBean.getOrderId());
                 Intent intent = new Intent(this, RecordActivity.class);
                 //获取订单号
-                intent.putExtra("orderId",moveTicketBean.getOrderId()+"");
+                intent.putExtra("orderId", moveTicketBean.getOrderId() + "");
                 startActivity(intent);
-            }else {
+            } else {
                 ToastUtil.showToast(moveTicketBean.getMessage());
             }
         }
@@ -227,7 +235,7 @@ public class SeatActivity extends BaseActivity {
 
     @Override
     protected void netFailed(String s) {
-    ToastUtil.showToast(s);
+        ToastUtil.showToast(s);
     }
 
     /**

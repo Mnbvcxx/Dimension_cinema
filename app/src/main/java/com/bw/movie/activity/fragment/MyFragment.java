@@ -117,7 +117,6 @@ public class MyFragment extends Fragment implements MyView {
                 startActivity(attent);
                 break;
             case R.id.my_rccord:
-                ToastUtil.showToast("点击了购票记录");
                 Intent record = new Intent(getActivity(), RecordActivity.class);
                 startActivity(record);
                 break;
@@ -126,12 +125,10 @@ public class MyFragment extends Fragment implements MyView {
                 startActivity(feedbacks);
                 break;
             case R.id.my_version:
-                ToastUtil.showToast("点击了最新版本");
                 //请求网络
-                mMyPresenter.onGetDatas(Apis.USER_NEW_VERSION, NewVersionBean.class);
+                //mMyPresenter.onGetDatas(Apis.USER_NEW_VERSION, NewVersionBean.class);
                 break;
             case R.id.my_logout:
-                ToastUtil.showToast("点击了退出登录");
                 //跳转到登录页
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
@@ -166,13 +163,13 @@ public class MyFragment extends Fragment implements MyView {
             } else {
                 ToastUtil.showToast(registerBean.getMessage());
             }
-        }else if (data instanceof NewVersionBean){
-            mVersionBean = (NewVersionBean)data;
-            if (mVersionBean.getStatus().equals("0000")){
-                if (mVersionBean.getFlag()==1){
+        } else if (data instanceof NewVersionBean) {
+            mVersionBean = (NewVersionBean) data;
+            if (mVersionBean.getStatus().equals("0000")) {
+                if (mVersionBean.getFlag() == 1) {
                     //弹框
                     initversion();
-                }else if (mVersionBean.getFlag()==2){
+                } else if (mVersionBean.getFlag() == 2) {
                     ToastUtil.showToast("当期版本已是最新版本，无需更新");
                 }
             }
@@ -213,20 +210,21 @@ public class MyFragment extends Fragment implements MyView {
 
     @Override
     public void onMyFailed(String error) {
-    ToastUtil.showToast(error);
+        ToastUtil.showToast(error);
     }
+
     /**
      * 下载新版本程序，需要子线程
      */
     private void loadNewVersionProgress(final String uri) {
         //final   String uri="http://www.apk.anzhi.com/data3/apk/201703/14/4636d7fce23c9460587d602b9dc20714_88002100.apk";
         final ProgressDialog pd;    //进度条对话框
-        pd = new  ProgressDialog(getActivity());
+        pd = new ProgressDialog(getActivity());
         pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         pd.setMessage("正在下载更新");
         pd.show();
         //启动子线程下载任务
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 try {
@@ -236,35 +234,37 @@ public class MyFragment extends Fragment implements MyView {
                     pd.dismiss(); //结束掉进度条对话框
                 } catch (Exception e) {
                     //下载apk失败
-                    Toast.makeText(getActivity(), "下载新版本失败", Toast.LENGTH_LONG).show();
+                    ToastUtil.showToast("下载新版本失败");
                     e.printStackTrace();
                 }
-            }}.start();
+            }
+        }.start();
     }
+
     /**
      * 从服务器获取apk文件的代码
      * 传入网址uri，进度条对象即可获得一个File文件
      * （要在子线程中执行哦）
      */
-    public static File getFileFromServer(String uri, ProgressDialog pd) throws Exception{
+    public static File getFileFromServer(String uri, ProgressDialog pd) throws Exception {
         //如果相等的话表示当前的sdcard挂载在手机上并且是可用的
-        if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             URL url = new URL(uri);
-            HttpURLConnection conn =  (HttpURLConnection) url.openConnection();
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setConnectTimeout(5000);
             //获取到文件的大小
             pd.setMax(conn.getContentLength());
             InputStream is = conn.getInputStream();
-            long time= System.currentTimeMillis();//当前时间的毫秒数
-            File file = new File(Environment.getExternalStorageDirectory(), time+"updata.apk");
+            long time = System.currentTimeMillis();//当前时间的毫秒数
+            File file = new File(Environment.getExternalStorageDirectory(), time + "updata.apk");
             FileOutputStream fos = new FileOutputStream(file);
             BufferedInputStream bis = new BufferedInputStream(is);
             byte[] buffer = new byte[1024];
-            int len ;
-            int total=0;
-            while((len =bis.read(buffer))!=-1){
+            int len;
+            int total = 0;
+            while ((len = bis.read(buffer)) != -1) {
                 fos.write(buffer, 0, len);
-                total+= len;
+                total += len;
                 //获取当前下载量
                 pd.setProgress(total);
             }
@@ -272,11 +272,11 @@ public class MyFragment extends Fragment implements MyView {
             bis.close();
             is.close();
             return file;
-        }
-        else{
+        } else {
             return null;
         }
     }
+
     /**
      * 安装apk
      */

@@ -30,7 +30,7 @@
                 android:layout_height="@dimen/dp_72"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp_60"
-                fresco:backgroundImage="@mipmap/icon_hdpi"
+                fresco:placeholderImage="@mipmap/icon"
                 fresco:roundAsCircle="true"
                 fresco:roundBottomLeft="false"
                 fresco:roundBottomRight="true"

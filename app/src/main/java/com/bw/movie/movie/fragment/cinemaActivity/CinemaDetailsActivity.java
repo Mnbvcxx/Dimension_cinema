@@ -238,31 +238,30 @@ public class CinemaDetailsActivity extends BaseActivity {
             }
         } else if (object instanceof EvaluateBean) {
             EvaluateBean evaluateBean = (EvaluateBean) object;
-            if (evaluateBean.getResult().size()>0){
-            mEvaluateAdapter.setMjihe(evaluateBean.getResult());
-            mEvaluateAdapter.setCallBack(new EvaluateAdapter.CallBack() {
-                @Override
-                public void callback(final ImageView thumbs, final int commentId) {
-                    thumb = thumbs;
-                    //点赞
-                    thumb.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            thumbs.setImageResource(R.mipmap.com_icon_praise_selected);
-                            //网络请求
-                            HashMap<String, String> map = new HashMap<>();
-                            map.put("commentId", commentId + "");
-                            doPost(Apis.CINEMA_EVALUATE_GREAT, map, RegisterBean.class);
-                        }
-                    });
-                }
-            });
+            if (evaluateBean.getResult().size() > 0) {
+                mEvaluateAdapter.setMjihe(evaluateBean.getResult());
+                mEvaluateAdapter.setCallBack(new EvaluateAdapter.CallBack() {
+                    @Override
+                    public void callback(final ImageView thumbs, final int commentId) {
+                        thumb = thumbs;
+                        //点赞
+                        thumb.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                thumbs.setImageResource(R.mipmap.com_icon_praise_selected);
+                                //网络请求
+                                HashMap<String, String> map = new HashMap<>();
+                                map.put("commentId", commentId + "");
+                                doPost(Apis.CINEMA_EVALUATE_GREAT, map, RegisterBean.class);
+                            }
+                        });
+                    }
+                });
 
-        }else {
+            } else {
                 ToastUtil.showToast("暂无评价");
             }
-        }
-        if (object instanceof RegisterBean) {
+        } else if (object instanceof RegisterBean) {
             mRegisterBean = (RegisterBean) object;
             if (!mRegisterBean.getMessage().isEmpty()) {
                 thumb.setImageResource(R.mipmap.com_icon_praise_selected);

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -65,7 +68,7 @@ public class MovieFragment extends Fragment implements MyView {
     @BindView(R.id.movie_rg)
     RadioGroup mMovieRg;
     @BindView(R.id.movie_vp)
-    ViewPager mMovieVp;
+    FrameLayout mMovieVp;
     @BindView(R.id.movie_seach_ima)
     ImageView mFilmmovieIma;
     @BindView(R.id.movie_seach_edit)
@@ -78,10 +81,10 @@ public class MovieFragment extends Fragment implements MyView {
     RecyclerView mFilmSeachRv;
     private Unbinder unbinder;
     private List<Fragment> mFragments;
-    private MyMovieFragmentAdapter mMyMovieFragmentAdapter;
     private MyPresenter mMyPresenter;
     private MyMovieSeachAdapter mMyMovieSeachAdapter;
     private int num;
+    private FragmentManager manager;
 
     @Nullable
     @Override
@@ -100,11 +103,39 @@ public class MovieFragment extends Fragment implements MyView {
         mFragments = new ArrayList<>();
         mFragments.add(new FragmentRecommended());
         mFragments.add(new FragmentNearby());
-        mMovieVp.addOnPageChangeListener(new MyPagerChangeListener());
-        mMyMovieFragmentAdapter = new MyMovieFragmentAdapter(getChildFragmentManager(), getActivity(), mFragments);
-        mMovieVp.setAdapter(mMyMovieFragmentAdapter);
+        manager = getFragmentManager();
         //第一次点击进入,默认选择推荐影院
-        mMovieVp.setCurrentItem(0);
+        manager.beginTransaction()
+                .add(R.id.movie_vp,new FragmentRecommended()).commit();
+        mMovieRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                FragmentTransaction beginTransaction = manager.beginTransaction();
+                switch (i){
+                    default:
+                        break;
+                    case R.id.movie_recommended:
+                        mFilmSeachRv.setVisibility(View.GONE);
+                        mMovieVp.setVisibility(View.VISIBLE);
+                        mMovieRecommended.setChecked(true);
+                        mMovieNearby.setChecked(false);
+                        mMovieRecommended.setTextColor(getActivity().getResources().getColor(R.color.colorfff));
+                        mMovieNearby.setTextColor(getActivity().getResources().getColor(R.color.color333));
+                        beginTransaction.replace(R.id.movie_vp,new FragmentRecommended());
+                        break;
+                    case R.id.movie_nearby:
+                        mFilmSeachRv.setVisibility(View.GONE);
+                        mMovieVp.setVisibility(View.VISIBLE);
+                        mMovieRecommended.setChecked(false);
+                        mMovieNearby.setChecked(true);
+                        mMovieRecommended.setTextColor(getActivity().getResources().getColor(R.color.color333));
+                        mMovieNearby.setTextColor(getActivity().getResources().getColor(R.color.colorfff));
+                        beginTransaction.replace(R.id.movie_vp,new FragmentNearby());
+                        break;
+                }
+                beginTransaction.commit();
+            }
+        });
     }
 
 
@@ -122,7 +153,7 @@ public class MovieFragment extends Fragment implements MyView {
                 break;
             case R.id.movie_ress_name://地址名称
                 break;
-            case R.id.movie_recommended:
+            /*case R.id.movie_recommended:
                 mMovieVp.setCurrentItem(0);
                 mFilmSeachRv.setVisibility(View.GONE);
                 mMovieVp.setVisibility(View.VISIBLE);
@@ -131,7 +162,7 @@ public class MovieFragment extends Fragment implements MyView {
                 mMovieVp.setCurrentItem(1);
                 mFilmSeachRv.setVisibility(View.GONE);
                 mMovieVp.setVisibility(View.VISIBLE);
-                break;
+                break;*/
             case R.id.movie_rg:
                 break;
             case R.id.movie_seach_ima:
@@ -246,7 +277,7 @@ public class MovieFragment extends Fragment implements MyView {
     /**
      * 设置一个ViewPager的侦听事件，当左右滑动ViewPager时菜单栏被选中状态跟着改变
      */
-    private class MyPagerChangeListener implements ViewPager.OnPageChangeListener {
+   /* private class MyPagerChangeListener implements ViewPager.OnPageChangeListener {
         @Override
         public void onPageScrolled(int i, float v, int i1) {
 
@@ -276,5 +307,5 @@ public class MovieFragment extends Fragment implements MyView {
         public void onPageScrollStateChanged(int i) {
 
         }
-    }
+    }*/
 }

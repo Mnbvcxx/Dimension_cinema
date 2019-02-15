@@ -51,7 +51,7 @@ public class NearbyAdapter extends RecyclerView.Adapter<NearbyAdapter.NearbyView
         nearbyViewHolde.mSimpleDraweeView.setImageURI(uri);
         nearbyViewHolde.mTextViewName.setText(mResultBeans.get(i).getName());
         nearbyViewHolde.mTextViewDesc.setText(mResultBeans.get(i).getAddress());
-        nearbyViewHolde.mTextViewKm.setText(mResultBeans.get(i).getDistance() + "km");
+        nearbyViewHolde.mTextViewKm.setText(mResultBeans.get(i).getDistance()/1000 + " km");
         if (mResultBeans.get(i).getFollowCinema() == 1) {
             nearbyViewHolde.mImageView.setImageResource(R.mipmap.com_icon_collection_selected);
         } else if (mResultBeans.get(i).getFollowCinema() == 2) {
