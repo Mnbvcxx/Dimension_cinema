@@ -126,7 +126,7 @@ public class MyFragment extends Fragment implements MyView {
                 break;
             case R.id.my_version:
                 //请求网络
-                //mMyPresenter.onGetDatas(Apis.USER_NEW_VERSION, NewVersionBean.class);
+                mMyPresenter.onGetDatas(Apis.USER_NEW_VERSION, NewVersionBean.class);
                 break;
             case R.id.my_logout:
                 //跳转到登录页
