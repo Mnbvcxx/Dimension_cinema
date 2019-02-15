@@ -172,8 +172,6 @@ public class SeatActivity extends BaseActivity {
                 map.put("sign", convertMD5);
                 Log.i("TAG", "接口入参：" + map);
                 doPost(Apis.MOVE_TICKET, map, MoveTicketBean.class);
-                map.put("sign", convertMD5);
-                doPost(Apis.MOVE_TICKET, map, MoveTicketBean.class);
             }
         });
     }

@@ -51,13 +51,10 @@ public class MovieAndCinemaAdapter extends RecyclerView.Adapter<MovieAndCinemaAd
         movieAndCinemaViewHolder.mTextViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, SeatActivity.class);
-                intent.putExtra("scheduleId", mResultBeans.get(i).getId());
-                intent.putExtra("hall", mResultBeans.get(i).getScreeningHall());
-                intent.putExtra("begintime", mResultBeans.get(i).getBeginTime());
-                intent.putExtra("endtime", mResultBeans.get(i).getEndTime());
-                intent.putExtra("price", mResultBeans.get(i).getPrice());
-                mContext.startActivity(intent);
+                if (mOnChecked != null){
+                    mOnChecked.onClicked(i,mResultBeans);
+                }
+
             }
         });
     }
@@ -80,4 +77,15 @@ public class MovieAndCinemaAdapter extends RecyclerView.Adapter<MovieAndCinemaAd
             mTextViewBack = itemView.findViewById(R.id.salon_back);
         }
     }
+
+    private onChecked mOnChecked;
+
+    public void setOnChecked(onChecked onChecked) {
+        mOnChecked = onChecked;
+    }
+
+    public interface onChecked{
+        void onClicked(int position,List<MovieAndCinemaBean.ResultBean> resultBeans);
+    }
+
 }

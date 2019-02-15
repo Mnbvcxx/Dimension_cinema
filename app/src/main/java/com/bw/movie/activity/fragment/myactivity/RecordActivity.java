@@ -133,8 +133,8 @@ public class RecordActivity extends BaseActivity {
         //弹出popupwindow
         mRecordWaitAdapter.setWaitCallBack(new Record_Wait_Adapter.WaitCallBack() {
             @Override
-            public void waitcallback(int position) {
-                initpopup();
+            public void waitcallback(String position) {
+                initpopup(position);
             }
         });
         //网络请求
@@ -171,15 +171,14 @@ public class RecordActivity extends BaseActivity {
     private Button popup_button;
     int payType;
 
-    private void initpopup() {
+    private void initpopup(String position) {
         View view = View.inflate(this, R.layout.seat_ok_popup, null);
         popup_request = (ImageView) view.findViewById(R.id.popup_request);
         popup_wei = (CheckBox) view.findViewById(R.id.popup_wei);
         popup_zhi = (CheckBox) view.findViewById(R.id.popup_zhi);
         popup_button = (Button) view.findViewById(R.id.popup_button);
         //得到价钱
-        String mPrice = intent.getCharSequenceExtra("price").toString();
-        mSpannableString = changTVsize(mPrice + "");
+        mSpannableString = changTVsize(position + "");
         popup_button.setText("微信支付" + mSpannableString + "元");
         mPopupWindow = new PopupWindow(view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
         mPopupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
