@@ -221,6 +221,19 @@ public class CinemaDetailsActivity extends BaseActivity {
                     mMovieAndCinemaAdapter = new MovieAndCinemaAdapter(this, result);
                     mCinRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
                     mCinRv.setAdapter(mMovieAndCinemaAdapter);
+                    mMovieAndCinemaAdapter.setOnChecked(new MovieAndCinemaAdapter.onChecked() {
+                        @Override
+                        public void onClicked(int position, List<MovieAndCinemaBean.ResultBean> resultBeans) {
+                            Intent intent = new Intent(CinemaDetailsActivity.this, SeatActivity.class);
+                            intent.putExtra("scheduleId", resultBeans.get(position).getId());
+                            intent.putExtra("hall", resultBeans.get(position).getScreeningHall());
+                            intent.putExtra("begintime", resultBeans.get(position).getBeginTime());
+                            intent.putExtra("endtime", resultBeans.get(position).getEndTime());
+                            intent.putExtra("price", resultBeans.get(position).getPrice());
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
 
                 }
             }

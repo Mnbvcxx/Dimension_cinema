@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.activity.FilmDetailsActivity;
+import com.bw.movie.activity.activity.fragment.adapter.activity.MovieDetailsActivity;
 import com.bw.movie.activity.bean.FilmBean;
 import com.bw.movie.activity.bean.FilmComingSoonBean;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -42,7 +43,7 @@ public class MyFilmComingSoonAdapter extends RecyclerView.Adapter<MyFilmComingSo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyFilmComingSoonViewHolder myFilmComingSoonViewHolder, int i) {
+    public void onBindViewHolder(@NonNull MyFilmComingSoonViewHolder myFilmComingSoonViewHolder, final int i) {
         String imageUrl = mResultBeans.get(i).getImageUrl();
         Uri uri = Uri.parse(imageUrl);
         myFilmComingSoonViewHolder.mSimpleDraweeView.setImageURI(uri);
@@ -50,7 +51,10 @@ public class MyFilmComingSoonAdapter extends RecyclerView.Adapter<MyFilmComingSo
         myFilmComingSoonViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mContext.startActivity(new Intent(mContext,FilmDetailsActivity.class));
+                Intent intent = new Intent(mContext, MovieDetailsActivity.class);
+                int id = mResultBeans.get(i).getId();
+                intent.putExtra("movieId", id);
+                mContext.startActivity(intent);
             }
         });
     }

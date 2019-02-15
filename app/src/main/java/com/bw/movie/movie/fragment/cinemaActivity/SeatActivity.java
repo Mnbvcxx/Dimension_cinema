@@ -171,8 +171,6 @@ public class SeatActivity extends BaseActivity {
                 String convertMD5 = MD5Utils.string2MD5(sign);
                 map.put("sign", convertMD5);
                 Log.i("TAG", "接口入参：" + map);
-              //  doPost(Apis.MOVE_TICKET, map, MoveTicketBean.class);
-                map.put("sign", convertMD5);
                 doPost(Apis.MOVE_TICKET, map, MoveTicketBean.class);
             }
         });
@@ -223,6 +221,8 @@ public class SeatActivity extends BaseActivity {
             MoveTicketBean moveTicketBean = (MoveTicketBean) object;
             if (moveTicketBean.getStatus().equals("0000")) {
                 Intent intent = new Intent(this, RecordActivity.class);
+                //获取订单号
+                intent.putExtra("orderId", moveTicketBean.getOrderId() + "");
                 startActivity(intent);
                 finish();
             } else {

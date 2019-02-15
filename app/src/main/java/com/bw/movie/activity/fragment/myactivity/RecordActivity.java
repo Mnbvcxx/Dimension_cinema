@@ -181,11 +181,11 @@ public class RecordActivity extends BaseActivity {
     /**
      * 选中支付金额
      */
-
+    Intent intent = getIntent();
     private SpannableString mSpannableString;
     private PopupWindow mPopupWindow;
     private ImageView popup_request;
-    private CheckBox popup_wei,popup_zhi;
+    private CheckBox popup_wei, popup_zhi;
     private Button popup_button;
     int payType;
     private void initpopup(String price) {
@@ -230,25 +230,23 @@ public class RecordActivity extends BaseActivity {
             public void onClick(View v) {
                 Intent intent = getIntent();
                 //得到订单号
-                int size = mResult.size();
-                for (int i = 0; i <size ; i++) {
-                    mOrderId = mResult.get(i).getOrderId();
-                }
+                String orderId = intent.getStringExtra("orderId");
                 HashMap<String, String> map = new HashMap<>();
                 //如果微信选中，payType==1；
-                if (popup_wei.isChecked()){
-                    payType=1;
+                if (popup_wei.isChecked()) {
+                    payType = 1;
                     //支付宝选中，payType=2;
-                }else if (popup_zhi.isChecked()){
-                    payType=2;
+                } else if (popup_zhi.isChecked()) {
+                    payType = 2;
                 }
                 //网络请求
-                map.put("payType",payType+"");
-                map.put("orderId", mOrderId);
-                doPost(Apis.MOVE_RECORD_PAY,map,RecordPayBean.class);
+                map.put("payType", payType + "");
+                map.put("orderId", orderId);
+                doPost(Apis.MOVE_RECORD_PAY, map, RecordPayBean.class);
             }
         });
     }
+
     /**
      * 小数点前后大小不一致
      *
@@ -262,6 +260,7 @@ public class RecordActivity extends BaseActivity {
         }
         return spannableString;
     }
+
     @Override
     protected void netFailed(String s) {
         ToastUtil.showToast(s);
