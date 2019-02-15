@@ -7,25 +7,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.bw.movie.R;
 import com.bw.movie.activity.fragment.myactivity.bean.RecordBean;
 import com.bw.movie.utils.DateUtils;
-
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author: pengbo
  * @date:2019/2/14 desc:购票记录已完成的适配器
  */
-public class Record_Finsh_Adapter extends RecyclerView.Adapter<Record_Finsh_Adapter.ViewHolder> {
-    private Context mContext;
-    private List<RecordBean.ResultBean> mjihe;
+public class Record_Finsh_Adapter extends RecyclerView.Adapter<Record_Finsh_Adapter.ViewHolder>{
+        private Context mContext;
+        private List<RecordBean.ResultBean> mjihe;
 
     public Record_Finsh_Adapter(Context context) {
         mContext = context;
+        mjihe=new ArrayList<>();
     }
-
     public void setMjihe(List<RecordBean.ResultBean> mjihe) {
         this.mjihe = mjihe;
     }
@@ -33,7 +32,7 @@ public class Record_Finsh_Adapter extends RecyclerView.Adapter<Record_Finsh_Adap
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            View view=LayoutInflater.from(mContext).inflate(R.layout.record_finsh_adapter,viewGroup,false);
+        View view=LayoutInflater.from(mContext).inflate(R.layout.record_finsh_adapter,viewGroup,false);
         return new ViewHolder(view);
     }
 
@@ -43,7 +42,7 @@ public class Record_Finsh_Adapter extends RecyclerView.Adapter<Record_Finsh_Adap
         viewHolder.finsh_title.setText(mjihe.get(i).getMovieName());
         //播放时间
         String createTime = DateUtils.getDateToString(mjihe.get(i).getCreateTime());
-       // String endTime = DateUtils.getDateToString(mjihe.get(i).getEndTime());
+        // String endTime = DateUtils.getDateToString(mjihe.get(i).getEndTime());
         String endTime = mjihe.get(i).getEndTime();
         viewHolder.finsh_time.setText(createTime+"-"+endTime);
         viewHolder.finsh_code.setText("订单号："+mjihe.get(i).getOrderId());

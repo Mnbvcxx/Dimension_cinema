@@ -2,7 +2,6 @@ package com.bw.movie.activity.fragment.myactivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -10,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -26,8 +24,6 @@ import com.bw.movie.activity.fragment.myactivity.bean.RecordBean;
 import com.bw.movie.activity.fragment.myactivity.bean.RecordPayBean;
 import com.bw.movie.apis.Apis;
 import com.bw.movie.base.BaseActivity;
-import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveTicketBean;
-import com.bw.movie.utils.EncryptUtil;
 import com.bw.movie.utils.ToastUtil;
 
 import java.util.HashMap;
@@ -155,7 +151,7 @@ public class RecordActivity extends BaseActivity {
             }
         }
         //支付
-        if (object instanceof RecordPayBean){
+       else if (object instanceof RecordPayBean){
             RecordPayBean recordPayBean=(RecordPayBean)object;
             ToastUtil.showToast("支付情况"+recordPayBean.getMessage());
         }
