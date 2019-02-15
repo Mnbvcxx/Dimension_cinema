@@ -77,7 +77,18 @@
         <activity android:name=".movie.fragment.cinemaActivity.SeatActivity" />
         <activity android:name=".activity.activity.fragment.adapter.activity.MovieTicketActivity" />
         <activity android:name=".activity.activity.fragment.adapter.activity.MovieFilmActivity" />
-        <activity android:name=".activity.addressselector.CityPickerActivity"></activity>
+        <activity android:name=".activity.addressselector.CityPickerActivity" />
+        <!--支付-->
+        <activity android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="wxb3852e6a6b7d9516"/>
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

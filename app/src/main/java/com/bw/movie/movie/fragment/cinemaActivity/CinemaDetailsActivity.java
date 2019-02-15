@@ -281,4 +281,6 @@ public class CinemaDetailsActivity extends BaseActivity {
         ToastUtil.showToast(s);
     }
 
+
+
 }

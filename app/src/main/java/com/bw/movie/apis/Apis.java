@@ -78,7 +78,7 @@ public class Apis {
     //购票下单
     public static final String MOVE_TICKET="movie/v1/verify/buyMovieTicket";
     //支付
-    public static final String MOVE_RECORD_PAY="movieApi/movie/v1/verify/pay";
+    public static final String MOVE_RECORD_PAY="movie/v1/verify/pay";
     //根据电影ID查询当前排片该电影的影院列表
     public static final String MOVIE_ID_URL="movie/v1/findCinemasListByMovieId?movieId=";
     //根据电影ID和影院ID查询电影排期列表

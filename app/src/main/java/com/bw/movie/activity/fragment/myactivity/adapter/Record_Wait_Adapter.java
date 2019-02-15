@@ -41,7 +41,7 @@ public class Record_Wait_Adapter extends RecyclerView.Adapter<Record_Wait_Adapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
             //电影名
             viewHolder.wait_title.setText(mjihe.get(i).getMovieName());
         viewHolder.wait_code.setText("订单号："+mjihe.get(i).getOrderId());
@@ -52,13 +52,13 @@ public class Record_Wait_Adapter extends RecyclerView.Adapter<Record_Wait_Adapte
         String endTime = mjihe.get(i).getEndTime();
         viewHolder.wait_time.setText("时间："+createTime+"-"+endTime);
         viewHolder.wait_amount.setText("数量："+mjihe.get(i).getAmount());
-        viewHolder.wait_price.setText("金额："+mjihe.get(i).getPrice());
+        viewHolder.wait_price.setText("金额："+mjihe.get(i).getPrice()*mjihe.get(i).getAmount());
         //付款的点击事件
         viewHolder.wait_butt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mWaitCallBack!=null){
-                    mWaitCallBack.waitcallback(i);
+                    mWaitCallBack.waitcallback(mjihe.get(i).getPrice()*mjihe.get(i).getAmount()+"");
                 }
             }
         });
@@ -87,7 +87,7 @@ public class Record_Wait_Adapter extends RecyclerView.Adapter<Record_Wait_Adapte
     }
 
     public interface WaitCallBack{
-        void waitcallback(int position);
+        void waitcallback(String price);
     }
     public WaitCallBack mWaitCallBack;
 
