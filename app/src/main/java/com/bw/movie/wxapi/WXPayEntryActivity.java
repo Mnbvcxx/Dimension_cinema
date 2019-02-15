@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.bw.movie.MyApplication;
 import com.bw.movie.R;
+import com.bw.movie.activity.fragment.myactivity.RecordActivity;
 import com.bw.movie.utils.ToastUtil;
 import com.bw.movie.utils.WeiXinUtil;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
@@ -60,6 +61,8 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             if (resp.errCode==0){
                 ToastUtil.showToast("付款成功");
+                Intent intent = new Intent(this, RecordActivity.class);
+                startActivity(intent);
             }else if (resp.errCode==-2){
                 ToastUtil.showToast("您已取消付款");
             }else {

@@ -233,6 +233,7 @@ public class RecordActivity extends BaseActivity {
                 for (int i = 0; i < mResult.size(); i++) {
                     mOrderId = mResult.get(i).getOrderId();
                 }
+
                 HashMap<String, String> map = new HashMap<>();
                 //如果微信选中，payType==1；
                 if (popup_wei.isChecked()) {
@@ -265,6 +266,6 @@ public class RecordActivity extends BaseActivity {
 
     @Override
     protected void netFailed(String s) {
-        ToastUtil.showToast(s);
+
     }
 }
