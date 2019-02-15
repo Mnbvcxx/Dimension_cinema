@@ -41,7 +41,7 @@ public class Record_Wait_Adapter extends RecyclerView.Adapter<Record_Wait_Adapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
             //电影名
             viewHolder.wait_title.setText(mjihe.get(i).getMovieName());
         viewHolder.wait_code.setText("订单号："+mjihe.get(i).getOrderId());
@@ -58,7 +58,7 @@ public class Record_Wait_Adapter extends RecyclerView.Adapter<Record_Wait_Adapte
             @Override
             public void onClick(View v) {
                 if (mWaitCallBack!=null){
-                    mWaitCallBack.waitcallback();
+                    mWaitCallBack.waitcallback(i);
                 }
             }
         });
@@ -87,7 +87,7 @@ public class Record_Wait_Adapter extends RecyclerView.Adapter<Record_Wait_Adapte
     }
 
     public interface WaitCallBack{
-        void waitcallback();
+        void waitcallback(int position);
     }
     public WaitCallBack mWaitCallBack;
 

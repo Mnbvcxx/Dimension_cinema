@@ -12,6 +12,7 @@ import com.bw.movie.R;
 import com.bw.movie.activity.fragment.myactivity.bean.RecordBean;
 import com.bw.movie.utils.DateUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +25,7 @@ public class Record_Finsh_Adapter extends RecyclerView.Adapter<Record_Finsh_Adap
 
     public Record_Finsh_Adapter(Context context) {
         mContext = context;
+        mjihe = new ArrayList<>();
     }
 
     public void setMjihe(List<RecordBean.ResultBean> mjihe) {

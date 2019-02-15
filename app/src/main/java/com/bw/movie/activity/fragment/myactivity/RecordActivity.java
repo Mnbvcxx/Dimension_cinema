@@ -79,17 +79,17 @@ public class RecordActivity extends BaseActivity {
             //待付款
             case R.id.record_wait:
                 mRecordOk.setBackgroundResource(R.drawable.movie_selecter);
-                mRecordOk.setTextColor(R.color.colorfff);
+                mRecordOk.setTextColor(this.getResources().getColor(R.color.color333));
                 mRecordWait.setBackgroundResource(R.drawable.movie_shape_bg_failed);
-                mRecordWait.setTextColor(R.color.colorfff);
+                mRecordWait.setTextColor(this.getResources().getColor(R.color.colorfff));
                 initwait();
                 break;
             //已完成
             case R.id.record_ok:
                 mRecordOk.setBackgroundResource(R.drawable.movie_shape_bg_failed);
-                mRecordOk.setTextColor(R.color.colorfff);
+                mRecordOk.setTextColor(this.getResources().getColor(R.color.colorfff));
                 mRecordWait.setBackgroundResource(R.drawable.movie_selecter);
-                mRecordWait.setTextColor(R.color.color333);
+                mRecordWait.setTextColor(this.getResources().getColor(R.color.color333));
                 initfinsh();
                 break;
             case R.id.record_request:
@@ -104,7 +104,7 @@ public class RecordActivity extends BaseActivity {
     private void initfinsh() {
         //将待支付隐藏
         mRecordRecyclerWait.setVisibility(View.GONE);
-        mRecordRecyclerFinsh.setVisibility(View.INVISIBLE);
+        mRecordRecyclerFinsh.setVisibility(View.VISIBLE);
         //布局
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(OrientationHelper.VERTICAL);
@@ -122,7 +122,7 @@ public class RecordActivity extends BaseActivity {
     private void initwait() {
         //将已完成隐藏
         mRecordRecyclerFinsh.setVisibility(View.GONE);
-        mRecordRecyclerWait.setVisibility(View.INVISIBLE);
+        mRecordRecyclerWait.setVisibility(View.VISIBLE);
         //布局
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(OrientationHelper.VERTICAL);
@@ -130,6 +130,13 @@ public class RecordActivity extends BaseActivity {
         //适配器
         mRecordWaitAdapter = new Record_Wait_Adapter(this);
         mRecordRecyclerWait.setAdapter(mRecordWaitAdapter);
+        //弹出popupwindow
+        mRecordWaitAdapter.setWaitCallBack(new Record_Wait_Adapter.WaitCallBack() {
+            @Override
+            public void waitcallback(int position) {
+                initpopup();
+            }
+        });
         //网络请求
         doGetData(Apis.RECORD_ACTIVITY + "?page=" + 1 + "&count=" + 10 + "&status=" + 1, RecordBean.class);
 
@@ -140,24 +147,16 @@ public class RecordActivity extends BaseActivity {
         //待付款
         if (object instanceof RecordBean) {
             RecordBean recordBean = (RecordBean) object;
-            if (recordBean.getResult().size() > 0) {
+            if (recordBean.getResult().size() == 0) {
+                ToastUtil.showToast(recordBean.getMessage());
+
+            } else {
                 mRecordWaitAdapter.setMjihe(recordBean.getResult());
                 mRecordFinshAdapter.setMjihe(recordBean.getResult());
-                //弹出popupwindow
-                mRecordWaitAdapter.setWaitCallBack(new Record_Wait_Adapter.WaitCallBack() {
-                    @Override
-                    public void waitcallback() {
-                        initpopup();
-                    }
-                });
-            } else {
-                ToastUtil.showToast(recordBean.getMessage());
             }
-        }
-        //支付
-        if (object instanceof RecordPayBean){
-            RecordPayBean recordPayBean=(RecordPayBean)object;
-            ToastUtil.showToast("支付情况"+recordPayBean.getMessage());
+        } else if (object instanceof RecordPayBean) {//支付
+            RecordPayBean recordPayBean = (RecordPayBean) object;
+            ToastUtil.showToast("支付情况" + recordPayBean.getMessage());
         }
     }
 
@@ -168,21 +167,22 @@ public class RecordActivity extends BaseActivity {
     private SpannableString mSpannableString;
     private PopupWindow mPopupWindow;
     private ImageView popup_request;
-    private CheckBox popup_wei,popup_zhi;
+    private CheckBox popup_wei, popup_zhi;
     private Button popup_button;
     int payType;
+
     private void initpopup() {
         View view = View.inflate(this, R.layout.seat_ok_popup, null);
-        popup_request =(ImageView) view.findViewById(R.id.popup_request);
-        popup_wei =(CheckBox) view.findViewById(R.id.popup_wei);
-        popup_zhi =(CheckBox) view.findViewById(R.id.popup_zhi);
-        popup_button =(Button) view.findViewById(R.id.popup_button);
+        popup_request = (ImageView) view.findViewById(R.id.popup_request);
+        popup_wei = (CheckBox) view.findViewById(R.id.popup_wei);
+        popup_zhi = (CheckBox) view.findViewById(R.id.popup_zhi);
+        popup_button = (Button) view.findViewById(R.id.popup_button);
         //得到价钱
         String mPrice = intent.getCharSequenceExtra("price").toString();
-        mSpannableString = changTVsize(mPrice +"");
-        popup_button.setText("微信支付"+mSpannableString+"元");
-        mPopupWindow=new PopupWindow(view,WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT,true);
-        mPopupWindow.showAtLocation(view,Gravity.BOTTOM,0,0);
+        mSpannableString = changTVsize(mPrice + "");
+        popup_button.setText("微信支付" + mSpannableString + "元");
+        mPopupWindow = new PopupWindow(view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
+        mPopupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
         mPopupWindow.setFocusable(true);
         mPopupWindow.setTouchable(true);
         //点击事件
@@ -196,14 +196,14 @@ public class RecordActivity extends BaseActivity {
         popup_wei.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popup_button.setText("微信支付"+mSpannableString+"元");
+                popup_button.setText("微信支付" + mSpannableString + "元");
                 popup_zhi.setChecked(false);
             }
         });
         popup_zhi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popup_button.setText("支付宝支付"+mSpannableString+"元");
+                popup_button.setText("支付宝支付" + mSpannableString + "元");
                 popup_wei.setChecked(false);
             }
         });
@@ -215,19 +215,20 @@ public class RecordActivity extends BaseActivity {
                 String orderId = intent.getStringExtra("orderId");
                 HashMap<String, String> map = new HashMap<>();
                 //如果微信选中，payType==1；
-                if (popup_wei.isChecked()){
-                    payType=1;
+                if (popup_wei.isChecked()) {
+                    payType = 1;
                     //支付宝选中，payType=2;
-                }else if (popup_zhi.isChecked()){
-                    payType=2;
+                } else if (popup_zhi.isChecked()) {
+                    payType = 2;
                 }
                 //网络请求
-                map.put("payType",payType+"");
-                map.put("orderId",orderId);
-                doPost(Apis.MOVE_RECORD_PAY,map,RecordPayBean.class);
+                map.put("payType", payType + "");
+                map.put("orderId", orderId);
+                doPost(Apis.MOVE_RECORD_PAY, map, RecordPayBean.class);
             }
         });
     }
+
     /**
      * 小数点前后大小不一致
      *
@@ -241,6 +242,7 @@ public class RecordActivity extends BaseActivity {
         }
         return spannableString;
     }
+
     @Override
     protected void netFailed(String s) {
         ToastUtil.showToast(s);
