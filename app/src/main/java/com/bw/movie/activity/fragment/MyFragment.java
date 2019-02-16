@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -32,6 +33,7 @@ import com.bw.movie.login.LoginActivity;
 import com.bw.movie.mvc.presenter.MyPresenter;
 import com.bw.movie.mvc.view.MyView;
 import com.bw.movie.register.bean.RegisterBean;
+import com.bw.movie.utils.CustomDialog;
 import com.bw.movie.utils.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -77,11 +79,24 @@ public class MyFragment extends Fragment implements MyView {
     private Unbinder unbinder;
     private MyPresenter mMyPresenter;
     private NewVersionBean mVersionBean;
+    private CustomDialog mCustomDialog;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my, container, false);
+        mCustomDialog = new CustomDialog(getActivity());
+        mCustomDialog.show();//显示,显示时页面不可点击,只能点击返回
+        /**
+         * 通过handler进行延时
+         */
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mCustomDialog.dismiss();
+            }
+        }, 2000); //停留3秒钟
         //绑定ButterKnife
         unbinder = ButterKnife.bind(this, view);
         mMyPresenter = new MyPresenter(this);

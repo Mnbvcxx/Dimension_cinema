@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -36,6 +37,7 @@ import com.bw.movie.apis.Apis;
 import com.bw.movie.mvc.presenter.MyPresenter;
 import com.bw.movie.mvc.view.MyView;
 import com.bw.movie.register.bean.RegisterBean;
+import com.bw.movie.utils.CustomDialog;
 import com.bw.movie.utils.IntentUtils;
 import com.bw.movie.utils.NetworkUtils;
 import com.bw.movie.utils.ToastUtil;
@@ -123,11 +125,24 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
     private List<String> mListImg;
     private MyMovieSeachAdapter mMyMovieSeachAdapter;
     private int num;
+    private CustomDialog mCustomDialog;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_film, container, false);
+        mCustomDialog = new CustomDialog(getActivity());
+        mCustomDialog.show();//显示,显示时页面不可点击,只能点击返回
+        /**
+         * 通过handler进行延时
+         */
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mCustomDialog.dismiss();
+            }
+        }, 2000); //停留3秒钟
         unbinder = ButterKnife.bind(this, view);
         if (!NetworkUtils.isConnected(getActivity())) {
             ToastUtil.showToast("网络未连接");

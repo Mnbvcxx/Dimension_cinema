@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
@@ -127,6 +128,16 @@ public class RegisterActivity extends BaseActivity {
                 } else {
                     mCustomDialog = new CustomDialog(this);
                     mCustomDialog.show();//显示,显示时页面不可点击,只能点击返回
+                    /**
+                     * 通过handler进行延时
+                     */
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mCustomDialog.dismiss();
+                        }
+                    }, 1500); //停留3秒钟
                     initButton();
                 }
                 break;
@@ -208,8 +219,14 @@ public class RegisterActivity extends BaseActivity {
                 infoBean.setInfopwd(regpwd);
                 EventBus.getDefault().postSticky(infoBean);
             }else {
-                mCustomDialog.show();//显示,显示时页面不可点击,只能点击返回
-                mCustomDialog.dismiss();
+                mCustomDialog.show();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mCustomDialog.dismiss();
+                    }
+                }, 1500);
             }
         } else if (object instanceof LoginBean) {
             LoginBean loginBean = (LoginBean) object;
@@ -237,8 +254,14 @@ public class RegisterActivity extends BaseActivity {
      */
     @Override
     protected void netFailed(String s) {
-        mCustomDialog.show();//显示,显示时页面不可点击,只能点击返回
-        mCustomDialog.dismiss();
+        mCustomDialog.show();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mCustomDialog.dismiss();
+            }
+        }, 1000);
         ToastUtil.showToast("请输入完整信息");
     }
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -25,6 +26,8 @@ import com.bw.movie.activity.activity.MainActivity;
 import com.bw.movie.apis.Apis;
 import com.bw.movie.apis.UserApis;
 import com.bw.movie.base.BaseActivity;
+import com.bw.movie.guideView.activity.GuideViewActivity;
+import com.bw.movie.homepage.HomePageActivity;
 import com.bw.movie.login.bean.EventBusInfoBean;
 import com.bw.movie.login.bean.LoginBean;
 import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatAmount;
@@ -177,15 +180,16 @@ public class LoginActivity extends BaseActivity {
                         .putString("userId", loginBean.getResult().getUserId() + "")
                         .putString("sessionId", loginBean.getResult().getSessionId())
                         .commit();
-//                //登录成功，将邮编密码给我的信息
-//                String infoemail = infoBean.getInfoemail();
-//                Log.i("TAG","登录邮箱"+infoemail);
-//                EventBus.getDefault().postSticky(infoBean);
-//                Log.i("TAG","登录得到邮箱"+infoBean.getInfoemail());
                 finish();
             } else {
                 mCustomDialog.show();
-                mCustomDialog.dismiss();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mCustomDialog.dismiss();
+                    }
+                }, 1500);
                 ToastUtil.showToast("登录失败,手机号或密码错误");
             }
         }
@@ -212,7 +216,16 @@ public class LoginActivity extends BaseActivity {
                 }else {
                     mCustomDialog = new CustomDialog(this);
                     mCustomDialog.show();//显示,显示时页面不可点击,只能点击返回
-                    mCustomDialog.dismiss();//消失
+                    /**
+                     * 通过handler进行延时
+                     */
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mCustomDialog.dismiss();
+                        }
+                    }, 1500); //停留3秒钟
                     mPhone = mLoginPhone.getText().toString().trim();
                     mPwd = mLoginPwd.getText().toString().trim();
                     //手机号  正则表达式验证

@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -21,6 +22,7 @@ import com.bw.movie.activity.fragment.FilmFragment;
 import com.bw.movie.activity.fragment.MovieFragment;
 import com.bw.movie.activity.fragment.MyFragment;
 import com.bw.movie.base.BaseActivity;
+import com.bw.movie.utils.CustomDialog;
 
 import java.util.ArrayList;
 import java.util.List;

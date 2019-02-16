@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -40,6 +41,7 @@ import com.bw.movie.movie.fragment.adapter.NearbyAdapter;
 import com.bw.movie.mvc.presenter.MyPresenter;
 import com.bw.movie.mvc.view.MyView;
 import com.bw.movie.register.bean.RegisterBean;
+import com.bw.movie.utils.CustomDialog;
 import com.bw.movie.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -89,11 +91,24 @@ public class MovieFragment extends Fragment implements MyView {
     private MyMovieSeachAdapter mMyMovieSeachAdapter;
     private int num;
     private FragmentManager manager;
+    private CustomDialog mCustomDialog;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
+        mCustomDialog = new CustomDialog(getActivity());
+        mCustomDialog.show();//显示,显示时页面不可点击,只能点击返回
+        /**
+         * 通过handler进行延时
+         */
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mCustomDialog.dismiss();
+            }
+        }, 2000); //停留3秒钟
         //绑定ButterKnife
         unbinder = ButterKnife.bind(this, view);
         mMyPresenter = new MyPresenter(this);

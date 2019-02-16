@@ -41,6 +41,7 @@
         android:background="@drawable/film_seach_bg"
         android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/dp_30"
+        android:visibility="gone"
         android:layout_marginRight="@dimen/dp_m_170"
         >
         <ImageView
