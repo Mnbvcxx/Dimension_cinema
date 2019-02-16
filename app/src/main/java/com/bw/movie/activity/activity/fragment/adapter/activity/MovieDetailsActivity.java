@@ -10,20 +10,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.activity.fragment.adapter.adapter.CommentRecyclerAdapter;
 import com.bw.movie.activity.activity.fragment.adapter.adapter.MyDetaillsReviewAdapter;
 import com.bw.movie.activity.activity.fragment.adapter.adapter.StillsAdapter;
 import com.bw.movie.activity.activity.fragment.adapter.adapter.VideoAdapter;
+import com.bw.movie.activity.activity.fragment.adapter.bean.CommentLikeBean;
 import com.bw.movie.activity.activity.fragment.adapter.bean.DetailsMovieBean;
 import com.bw.movie.activity.activity.fragment.adapter.bean.ReviewsBean;
 import com.bw.movie.apis.Apis;
@@ -110,6 +114,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
     private String mImageUrl;
     private EditText mPubEdTxt;
     private ImageView mCommentImageView1;
+    private int mPosition1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -322,7 +327,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
      */
     private void initCommentPopup(ImageView commentImageView, List<EvaluateCommentBean.ResultBean> result) {
         View view = LayoutInflater.from(this).inflate(R.layout.details_popup_comment, null, false);
-        PopupWindow popupWindow = new PopupWindow(view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
+        final PopupWindow popupWindow = new PopupWindow(view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         popupWindow.setOutsideTouchable(true);
         //点击空白处时，隐藏掉pop窗口
@@ -331,8 +336,71 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
         popupWindow.showAsDropDown(commentImageView,0,20);
         //获取资源ID
         TextView commentText = view.findViewById(R.id.comment_text);
-        ImageView viewById = view.findViewById(R.id.comment_publish);
+        ImageView commentPublish = view.findViewById(R.id.comment_publish);
+        ImageView commentBack = view.findViewById(R.id.comment_back);
+        RecyclerView commentRecycler = view.findViewById(R.id.comment_recycler);
+        //返回
+        commentBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+        //评论
+        commentPublish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtil.showToast("还无法回复哦");
+                initCommentPublish();
+            }
+        });
+        //recycler列表
+        //布局
+        commentRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        //TODO:适配器
+        CommentRecyclerAdapter commentRecyclerAdapter = new CommentRecyclerAdapter(this, result);
+        //回复的点赞
+        commentRecyclerAdapter.setOnClickedListener(new CommentRecyclerAdapter.onClickedListener() {
+            @Override
+            public void onChecled(int position, ImageView imageView) {
+                Map<String, String> map = new HashMap<>();
+                map.put(UserApis.FILM_COMMENT_DZ, position + "");
+                mMyPresenter.onPostDatas(Apis.COMMENT_DZ_URL, map, CommentLikeBean.class);
+                imageView.setImageResource(R.mipmap.com_icon_praise_selected);
+            }
+        });
+        commentRecycler.setAdapter(commentRecyclerAdapter);
     }
+
+    /**
+     * 回复评论
+     */
+    private void initCommentPublish() {
+            View view = LayoutInflater.from(this).inflate(R.layout.publish_popup_view, null, false);
+            final PopupWindow popupWindow = new PopupWindow(view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
+            popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            popupWindow.setOutsideTouchable(true);
+            //设置显示位置,findViewById获取的是包含当前整个页面的view
+            popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+            //点击空白处时，隐藏掉pop窗口
+            popupWindow.setFocusable(true);
+            popupWindow.setTouchable(true);
+            mPubEdTxt = (EditText) view.findViewById(R.id.pub_ed_txt);
+            TextView PubSend = view.findViewById(R.id.pub_send);
+            PubSend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Map<String, String> map = new HashMap<>();
+                    map.put(UserApis.COMMENT_KEY, mMovieId + "");
+                    map.put(UserApis.COMMENT_COMMENTCONTENT_KEY, mPubEdTxt.getText().toString().trim());
+                    mMyPresenter.onPostDatas(Apis.USER_COMMENT_URL, map, CommentLikeBean.class);
+                    popupWindow.dismiss();
+                }
+            });
+
+
+    }
+
     @Override
     public void onMySuccess(Object data) {
         if (data instanceof DetailsMovieBean) {
@@ -378,8 +446,9 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
                     //查看回复的信息
                     @Override
                     public void onComment(int position,ImageView commentImageView) {
+                        mPosition1 = position;
                         //访问接口
-                        mMyPresenter.onGetDatas(Apis.CINEMA_EVALUATE_COMMENT+"?commentId="+position+"&page="+1+"&count="+10,EvaluateCommentBean.class);
+                        mMyPresenter.onGetDatas(Apis.CINEMA_EVALUATE_COMMENT+"?commentId="+ mPosition1 +"&page="+1+"&count="+10,EvaluateCommentBean.class);
                         mCommentImageView1 = commentImageView;
                     }
 
@@ -388,7 +457,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
         } else if (data instanceof RegisterBean) {
             RegisterBean registerBean = (RegisterBean) data;
             if (registerBean.getStatus().equals("0000")) {
-                mMyPresenter.onGetDatas(Apis.REVIEW_CINEMA + mMovieId + "&page=1&count=10", ReviewsBean.class);
+               mMyPresenter.onGetDatas(Apis.REVIEW_CINEMA + mMovieId + "&page=1&count=10", ReviewsBean.class);
                 ToastUtil.showToast(registerBean.getMessage());
             } else {
                 ToastUtil.showToast("不能重复点赞");
@@ -396,10 +465,24 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
         }else if (data instanceof EvaluateCommentBean){
             //查询影片评论回复
             EvaluateCommentBean commentBean=(EvaluateCommentBean)data;
-            if (commentBean.getStatus().equals("0000")){
-                List<EvaluateCommentBean.ResultBean> result = commentBean.getResult();
-                initCommentPopup(mCommentImageView1,result);
+            if (commentBean.getStatus().equals("0000")) {
+                if (commentBean.getResult() == null) {
+                    ToastUtil.showToast("暂时还未有回复");
+                } else {
+                    List<EvaluateCommentBean.ResultBean> result = commentBean.getResult();
+                    initCommentPopup(mCommentImageView1, result);
+                }
             }
+        }else if (data instanceof CommentLikeBean){
+            //回复点赞的结果
+            CommentLikeBean commentLikeBean=(CommentLikeBean)data;
+            if (commentLikeBean.getStatus().equals("0000")){
+               mMyPresenter.onGetDatas(Apis.CINEMA_EVALUATE_COMMENT+"?commentId="+ mPosition1 +"&page="+1+"&count="+10,EvaluateCommentBean.class);
+                ToastUtil.showToast(commentLikeBean.getMessage());
+
+        } else {
+            ToastUtil.showToast("不能重复点赞");
+        }
         }
     }
 
