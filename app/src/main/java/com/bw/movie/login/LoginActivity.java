@@ -30,7 +30,6 @@ import com.bw.movie.guideView.activity.GuideViewActivity;
 import com.bw.movie.homepage.HomePageActivity;
 import com.bw.movie.login.bean.EventBusInfoBean;
 import com.bw.movie.login.bean.LoginBean;
-import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatAmount;
 import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatUserID;
 import com.bw.movie.register.activity.RegisterActivity;
 import com.bw.movie.utils.CustomDialog;

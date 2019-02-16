@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.fragment.myactivity.AttentionActivity;
@@ -48,6 +51,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * @author : FangShiKang
@@ -81,6 +86,8 @@ public class MyFragment extends Fragment implements MyView {
     private NewVersionBean mVersionBean;
     private CustomDialog mCustomDialog;
 
+    private SharedPreferences sharedPreferences;
+    private Editor editor;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -102,6 +109,8 @@ public class MyFragment extends Fragment implements MyView {
         mMyPresenter = new MyPresenter(this);
         //根据用户ID查询用户信息
         mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
+        sharedPreferences = getActivity().getSharedPreferences("config", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         return view;
     }
 
@@ -124,7 +133,7 @@ public class MyFragment extends Fragment implements MyView {
                 mMyPresenter.onGetDatas(Apis.USER_SIGNIN_URL, RegisterBean.class);
                 break;
             case R.id.my_info:
-                ToastUtil.showToast("进入我的信息页面");
+                ToastUtil.showToast("点击了我的信息");
                 Intent info = new Intent(getActivity(), InfoActivity.class);
                 startActivity(info);
                 break;
@@ -148,7 +157,9 @@ public class MyFragment extends Fragment implements MyView {
                 mMyPresenter.onGetDatas(Apis.USER_NEW_VERSION, NewVersionBean.class);
                 break;
             case R.id.my_logout:
-                //跳转到登录页
+                //清空跳转到登录页
+                editor.clear();
+                editor.commit();
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 break;

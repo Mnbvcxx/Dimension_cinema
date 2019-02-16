@@ -197,6 +197,9 @@ public class CinemaDetailsActivity extends BaseActivity {
             CinemaDetailsBean cinemaDetailsBean = (CinemaDetailsBean) object;
             if (cinemaDetailsBean.getStatus().equals("0000")) {
                 List<CinemaDetailsBean.ResultBean> result = cinemaDetailsBean.getResult();
+                if (result.size()==0){
+                    ToastUtil.showToast("无数据呢");
+                }else {
                 mCinemaDetailsAdapter = new CinemaDetailsAdapter(this, result);
                 mCinRcf.setAdapter(mCinemaDetailsAdapter);
                 mCinRcf.scrollToPosition(2);
@@ -207,6 +210,7 @@ public class CinemaDetailsActivity extends BaseActivity {
                         doGetData(Apis.MOVIEANDCINEMA_ID_URL + mCinemaId + "&movieId=" + position, MovieAndCinemaBean.class);
                     }
                 });
+              }
             }
         } else if (object instanceof MovieAndCinemaBean) {
             MovieAndCinemaBean movieAndCinemaBean = (MovieAndCinemaBean) object;
