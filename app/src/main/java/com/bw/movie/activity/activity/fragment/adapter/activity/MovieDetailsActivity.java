@@ -318,8 +318,9 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
     /**
      * 查看回复的消息
      * @param commentImageView
+     * @param result
      */
-    private void initCommentPopup(ImageView commentImageView) {
+    private void initCommentPopup(ImageView commentImageView, List<EvaluateCommentBean.ResultBean> result) {
         View view = LayoutInflater.from(this).inflate(R.layout.details_popup_comment, null, false);
         PopupWindow popupWindow = new PopupWindow(view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -330,7 +331,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
         popupWindow.showAsDropDown(commentImageView,0,20);
         //获取资源ID
         TextView commentText = view.findViewById(R.id.comment_text);
-
+        ImageView viewById = view.findViewById(R.id.comment_publish);
     }
     @Override
     public void onMySuccess(Object data) {
@@ -396,7 +397,8 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
             //查询影片评论回复
             EvaluateCommentBean commentBean=(EvaluateCommentBean)data;
             if (commentBean.getStatus().equals("0000")){
-                initCommentPopup(mCommentImageView1);
+                List<EvaluateCommentBean.ResultBean> result = commentBean.getResult();
+                initCommentPopup(mCommentImageView1,result);
             }
         }
     }
