@@ -1,7 +1,6 @@
 package com.bw.movie.register.activity;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,7 +18,6 @@ import com.bw.movie.base.BaseActivity;
 import com.bw.movie.login.bean.EventBusInfoBean;
 import com.bw.movie.login.bean.LoginBean;
 import com.bw.movie.register.bean.RegisterBean;
-import com.bw.movie.utils.CustomDialog;
 import com.bw.movie.utils.EncryptUtil;
 import com.bw.movie.utils.IntentUtils;
 import com.bw.movie.utils.JudgeNetWorkUtils;
@@ -124,8 +122,8 @@ public class RegisterActivity extends BaseActivity {
                 if (!JudgeNetWorkUtils.hasNetwork(this)) {
                     ToastUtil.showToast("无可用网络，请检查网络是否连接");
                 } else {
-                    CustomDialog customDialog = new CustomDialog(this);
-                    customDialog.show();//显示,显示时页面不可点击,只能点击返回
+//                    CustomDialog customDialog = new CustomDialog(this);
+//                    customDialog.show();//显示,显示时页面不可点击,只能点击返回
                     initButton();
                 }
                 break;
@@ -206,6 +204,10 @@ public class RegisterActivity extends BaseActivity {
                 infoBean.setInfoemail(regemile);
                 infoBean.setInfopwd(regpwd);
                 EventBus.getDefault().postSticky(infoBean);
+            }else {
+                ToastUtil.showToast(registerBean.getMessage());
+//                CustomDialog customDialog = new CustomDialog(this);
+//                customDialog.dismiss();
             }
         } else if (object instanceof LoginBean) {
             LoginBean loginBean = (LoginBean) object;

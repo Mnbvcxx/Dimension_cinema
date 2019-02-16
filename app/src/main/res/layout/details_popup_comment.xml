@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dp_10"
+    android:background="@color/colorFFF"
+    >
+    <View
+        android:layout_width="@dimen/dp_312"
+        android:layout_height="@dimen/dp_5"
+        android:background="@color/colorA999"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        />
+    <TextView
+        android:id="@+id/comment_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="共52条评论"
+        android:textSize="@dimen/sp_12"
+        android:textColor="@color/color999"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_24"
+        />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/comment_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_24"
+        android:layout_marginRight="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_18"
+        android:layout_below="@id/comment_text"
+        ></android.support.v7.widget.RecyclerView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_100"
+        android:background="@drawable/details_dy_back_shape_bg"
+        android:layout_alignParentBottom="true"
+        >
+
+        <ImageView
+            android:id="@+id/comment_back"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginBottom="@dimen/sp_20"
+            android:src="@mipmap/com_icon_default" />
+
+        <ImageView
+            android:id="@+id/comment_publish"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/dp_24"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:src="@mipmap/com_icon_publish_default" />
+
+    </RelativeLayout>
+</RelativeLayout>

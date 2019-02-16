@@ -67,6 +67,8 @@ public class Apis {
     public static final String CIINEMA_EVALUATE="cinema/v1/findAllCinemaComment";
     //影院评论点赞
     public static final String CINEMA_EVALUATE_GREAT="cinema/v1/verify/cinemaCommentGreat";
+    //查询影片评论回复
+    public static final String CINEMA_EVALUATE_COMMENT="movie/v1/findCommentReply";
     //查询影片评论
     public static final String REVIEW_CINEMA="movie/v1/findAllMovieComment?movieId=";
     //评论点赞

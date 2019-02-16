@@ -66,6 +66,15 @@ public class MyDetaillsReviewAdapter extends RecyclerView.Adapter<MyDetaillsRevi
                 }
             }
         });
+        //回复
+        myReviewViewHolder.mImageViewComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    if (mOnClickedListener!=null){
+                        mOnClickedListener.onComment(mResultBeans.get(i).getCommentId(),myReviewViewHolder.mImageViewComment);
+                    }
+            }
+        });
     }
 
     @Override
@@ -101,5 +110,6 @@ public class MyDetaillsReviewAdapter extends RecyclerView.Adapter<MyDetaillsRevi
 
     public interface onClickedListener {
         void onChecled(int position, ImageView imageView);
+        void onComment(int position,ImageView commentImageView);
     }
 }

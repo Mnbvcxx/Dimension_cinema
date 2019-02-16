@@ -27,10 +27,8 @@ import com.bw.movie.apis.UserApis;
 import com.bw.movie.base.BaseActivity;
 import com.bw.movie.login.bean.EventBusInfoBean;
 import com.bw.movie.login.bean.LoginBean;
-import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatAmount;
 import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatUserID;
 import com.bw.movie.register.activity.RegisterActivity;
-import com.bw.movie.utils.CustomDialog;
 import com.bw.movie.utils.EncryptUtil;
 import com.bw.movie.utils.IntentUtils;
 import com.bw.movie.utils.JudgeNetWorkUtils;
@@ -82,6 +80,7 @@ public class LoginActivity extends BaseActivity {
     private String mPhone;
     private String mPwd;
     private Intent mIntent;
+   // CustomDialog customDialog;
     EventBusInfoBean infoBean=new EventBusInfoBean();
     //布局
     @Override
@@ -182,7 +181,9 @@ public class LoginActivity extends BaseActivity {
 //                Log.i("TAG","登录得到邮箱"+infoBean.getInfoemail());
                 finish();
             } else {
-                ToastUtil.showToast("登录失败");
+                //customDialog.show();
+                 //customDialog.dismiss();//消失
+            ToastUtil.showToast("失败：请检查账号或密码");
             }
         }
     }
@@ -206,9 +207,9 @@ public class LoginActivity extends BaseActivity {
                 if (!JudgeNetWorkUtils.hasNetwork(this)){
                     ToastUtil.showToast("无可用网络，请检查网络是否连接");
                 }else {
-                    CustomDialog customDialog = new CustomDialog(this);
-                    customDialog.show();//显示,显示时页面不可点击,只能点击返回
-                    //customDialog.dismiss();//消失
+
+//                    customDialog = new CustomDialog(this);
+//                    customDialog.show();//显示,显示时页面不可点击,只能点击返回
                     mPhone = mLoginPhone.getText().toString().trim();
                     mPwd = mLoginPwd.getText().toString().trim();
                     //手机号  正则表达式验证
