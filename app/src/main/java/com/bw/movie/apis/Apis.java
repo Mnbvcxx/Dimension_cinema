@@ -60,7 +60,7 @@ public class Apis {
     //我关注的影院列表
     public static final String ATTEN_CINEMA="cinema/v1/verify/findCinemaPageList";
     //用户购票记录查询列表
-    public static final String RECORD_ACTIVITY="user/v1/verify/findUserBuyTicketRecordList";
+    public static final String RECORD_ACTIVITY="user/v1/verify/findUserBuyTicketRecordList?page=1&count=10&status=";
     //影院详情
     public static final String CINEMA_INFO="cinema/v1/findCinemaInfo";
     //影院评价
@@ -89,5 +89,7 @@ public class Apis {
     public static final String USER_SIGNIN_URL="user/v1/verify/userSignIn";
     //查询版本
     public static final String USER_NEW_VERSION="tool/v1/findNewVersion";
+    //系统消息读取状态修改
+    public static final String USER_GET_NEW_VERSION="tool/v1/verify/changeSysMsgStatus?id=";
 
 }

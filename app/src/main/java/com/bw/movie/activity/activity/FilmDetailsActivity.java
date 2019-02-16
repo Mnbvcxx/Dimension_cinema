@@ -1,7 +1,9 @@
 package com.bw.movie.activity.activity;
 
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -18,6 +20,8 @@ import com.bw.movie.activity.activity.fragment.DetailsRmFragment;
 import com.bw.movie.activity.activity.fragment.DetailsRyFragment;
 import com.bw.movie.activity.activity.fragment.DetailsSoonFragment;
 import com.bw.movie.activity.adapter.MyDetailsAdapter;
+import com.bw.movie.activity.addressselector.CityPickerActivity;
+import com.bw.movie.activity.addressselector.addressview.RequestCodeInfo;
 import com.bw.movie.base.BaseActivity;
 import com.bw.movie.utils.ToastUtil;
 
@@ -108,7 +112,8 @@ public class FilmDetailsActivity extends BaseActivity {
         switch (v.getId()) {
             default:
                 break;
-            case R.id.layout_detail_ress:
+            case R.id.layout_detail_ress://点击定位图标跳到地址选择器
+                startActivityForResult(new Intent(FilmDetailsActivity.this, CityPickerActivity.class), RequestCodeInfo.GETCITY);
                 break;
             case R.id.detail_ress_name:
                 break;
@@ -217,6 +222,23 @@ public class FilmDetailsActivity extends BaseActivity {
         @Override
         public void onPageScrollStateChanged(int i) {
 
+        }
+    }
+
+    //地址选择器
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case RequestCodeInfo.GETCITY:
+                    String city = data.getExtras().getString("city");
+                    if (city != null) {
+                        System.out.println("ccccccctttttt" + city);
+                        mDetailRessName.setText(city);
+                    }
+                    break;
+            }
         }
     }
 

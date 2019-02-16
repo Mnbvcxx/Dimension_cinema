@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -35,6 +36,7 @@ import com.bw.movie.login.LoginActivity;
 import com.bw.movie.mvc.presenter.MyPresenter;
 import com.bw.movie.mvc.view.MyView;
 import com.bw.movie.register.bean.RegisterBean;
+import com.bw.movie.utils.CustomDialog;
 import com.bw.movie.utils.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -82,12 +84,26 @@ public class MyFragment extends Fragment implements MyView {
     private Unbinder unbinder;
     private MyPresenter mMyPresenter;
     private NewVersionBean mVersionBean;
+    private CustomDialog mCustomDialog;
+
     private SharedPreferences sharedPreferences;
     private Editor editor;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my, container, false);
+        mCustomDialog = new CustomDialog(getActivity());
+        mCustomDialog.show();//显示,显示时页面不可点击,只能点击返回
+        /**
+         * 通过handler进行延时
+         */
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mCustomDialog.dismiss();
+            }
+        }, 2000); //停留3秒钟
         //绑定ButterKnife
         unbinder = ButterKnife.bind(this, view);
         mMyPresenter = new MyPresenter(this);
@@ -105,6 +121,7 @@ public class MyFragment extends Fragment implements MyView {
             default:
                 break;
             case R.id.my_message:
+                ToastUtil.showToast("进入系统消息页面");
                 Intent message = new Intent(getActivity(), MessageActivity.class);
                 startActivity(message);
                 break;
@@ -121,14 +138,17 @@ public class MyFragment extends Fragment implements MyView {
                 startActivity(info);
                 break;
             case R.id.my_attentions:
+                ToastUtil.showToast("进入我的页面");
                 Intent attent = new Intent(getActivity(), AttentionActivity.class);
                 startActivity(attent);
                 break;
             case R.id.my_rccord:
+                ToastUtil.showToast("进入购票记录页面");
                 Intent record = new Intent(getActivity(), RecordActivity.class);
                 startActivity(record);
                 break;
             case R.id.my_feedbacks:
+                ToastUtil.showToast("进入页面反馈页面");
                 Intent feedbacks = new Intent(getActivity(), FeedBacksActivity.class);
                 startActivity(feedbacks);
                 break;
@@ -169,6 +189,7 @@ public class MyFragment extends Fragment implements MyView {
         } else if (data instanceof RegisterBean) {
             RegisterBean registerBean = (RegisterBean) data;
             if (registerBean.getStatus().equals("0000")) {
+                mMySignIn.setBackgroundResource(R.drawable.shape_bg_buttons);
                 ToastUtil.showToast(registerBean.getMessage());
             } else {
                 ToastUtil.showToast(registerBean.getMessage());

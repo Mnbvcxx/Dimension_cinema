@@ -3,6 +3,7 @@ package com.bw.movie.register.activity;
 import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
@@ -57,6 +58,7 @@ public class RegisterActivity extends BaseActivity {
     private String mPwd;
     private String mEncrypt_pwd;
     private SharedPreferences mSP;
+    private CustomDialog mCustomDialog;
 
 
     //布局
@@ -122,8 +124,18 @@ public class RegisterActivity extends BaseActivity {
                 if (!JudgeNetWorkUtils.hasNetwork(this)) {
                     ToastUtil.showToast("无可用网络，请检查网络是否连接");
                 } else {
-//                    CustomDialog customDialog = new CustomDialog(this);
-//                    customDialog.show();//显示,显示时页面不可点击,只能点击返回
+                    mCustomDialog = new CustomDialog(this);
+                    mCustomDialog.show();//显示,显示时页面不可点击,只能点击返回
+                    /**
+                     * 通过handler进行延时
+                     */
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mCustomDialog.dismiss();
+                        }
+                    }, 1500); //停留3秒钟
                     initButton();
                 }
                 break;
@@ -205,9 +217,14 @@ public class RegisterActivity extends BaseActivity {
                 infoBean.setInfopwd(regpwd);
                 EventBus.getDefault().postSticky(infoBean);
             }else {
-                ToastUtil.showToast(registerBean.getMessage());
-//                CustomDialog customDialog = new CustomDialog(this);
-//                customDialog.dismiss();
+                mCustomDialog.show();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mCustomDialog.dismiss();
+                    }
+                }, 1500);
             }
         } else if (object instanceof LoginBean) {
             LoginBean loginBean = (LoginBean) object;
@@ -235,7 +252,15 @@ public class RegisterActivity extends BaseActivity {
      */
     @Override
     protected void netFailed(String s) {
-        ToastUtil.showToast("获取请求失败");
+        mCustomDialog.show();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mCustomDialog.dismiss();
+            }
+        }, 1000);
+        ToastUtil.showToast("请输入完整信息");
     }
 
 }

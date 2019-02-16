@@ -37,11 +37,20 @@ public class MessageInfoBean {
     public static class ResultBean {
         private long birthday;
         private String headPic;
+        private String email;
         private int id;
         private long lastLoginTime;
         private String nickName;
         private String phone;
         private int sex;
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
 
         public long getBirthday() {
             return birthday;
