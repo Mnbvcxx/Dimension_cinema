@@ -97,6 +97,7 @@ public class MyFragment extends Fragment implements MyView {
             default:
                 break;
             case R.id.my_message:
+                ToastUtil.showToast("进入系统消息页面");
                 Intent message = new Intent(getActivity(), MessageActivity.class);
                 startActivity(message);
                 break;
@@ -108,19 +109,22 @@ public class MyFragment extends Fragment implements MyView {
                 mMyPresenter.onGetDatas(Apis.USER_SIGNIN_URL, RegisterBean.class);
                 break;
             case R.id.my_info:
-                ToastUtil.showToast("点击了我的信息");
+                ToastUtil.showToast("进入我的信息页面");
                 Intent info = new Intent(getActivity(), InfoActivity.class);
                 startActivity(info);
                 break;
             case R.id.my_attentions:
+                ToastUtil.showToast("进入我的页面");
                 Intent attent = new Intent(getActivity(), AttentionActivity.class);
                 startActivity(attent);
                 break;
             case R.id.my_rccord:
+                ToastUtil.showToast("进入购票记录页面");
                 Intent record = new Intent(getActivity(), RecordActivity.class);
                 startActivity(record);
                 break;
             case R.id.my_feedbacks:
+                ToastUtil.showToast("进入页面反馈页面");
                 Intent feedbacks = new Intent(getActivity(), FeedBacksActivity.class);
                 startActivity(feedbacks);
                 break;
@@ -159,6 +163,7 @@ public class MyFragment extends Fragment implements MyView {
         } else if (data instanceof RegisterBean) {
             RegisterBean registerBean = (RegisterBean) data;
             if (registerBean.getStatus().equals("0000")) {
+                mMySignIn.setBackgroundResource(R.drawable.shape_bg_buttons);
                 ToastUtil.showToast(registerBean.getMessage());
             } else {
                 ToastUtil.showToast(registerBean.getMessage());

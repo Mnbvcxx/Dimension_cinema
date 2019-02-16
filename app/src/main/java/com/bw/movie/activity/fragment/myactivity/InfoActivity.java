@@ -124,6 +124,7 @@ public class InfoActivity extends BaseActivity {
                 break;
             //重置密码
             case R.id.info_reset_psw:
+                pwdWindow.showAtLocation(mInfoResetPsw, Gravity.CENTER, 0, 0);
                 pwdWindow.showAsDropDown(mInfoResetPsw, 0, 50);
                 break;
             case R.id.info_request:
@@ -356,6 +357,8 @@ public class InfoActivity extends BaseActivity {
                 //昵称
                 mInfoNick.setText(mResult.getNickName());
                 mUserNick.setText(mResult.getNickName());
+                mUserEmail.setText(mResult.getEmail());
+                mInfoMail.setText(mResult.getEmail());
                 //性别
                 if (mResult.getSex() == 1) {
                     mInfoSex.setText("男");
@@ -405,8 +408,8 @@ public class InfoActivity extends BaseActivity {
     public void onLoginmail(EventBusInfoBean mlist) {
         mInfoemail = mlist.getInfoemail();
         //邮编--通过登录得到
-        mInfoMail.setText(mInfoemail);
-        mUserEmail.setText(mInfoemail);
+
+
         Log.i("TAG", "infoemail=" + mInfoemail);
     }
 

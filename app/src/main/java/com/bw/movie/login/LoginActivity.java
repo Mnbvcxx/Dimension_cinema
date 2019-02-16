@@ -83,6 +83,8 @@ public class LoginActivity extends BaseActivity {
     private String mPwd;
     private Intent mIntent;
     EventBusInfoBean infoBean=new EventBusInfoBean();
+    private CustomDialog mCustomDialog;
+
     //布局
     @Override
     protected int getLayoutId() {
@@ -182,7 +184,9 @@ public class LoginActivity extends BaseActivity {
 //                Log.i("TAG","登录得到邮箱"+infoBean.getInfoemail());
                 finish();
             } else {
-                ToastUtil.showToast("登录失败");
+                mCustomDialog.show();
+                mCustomDialog.dismiss();
+                ToastUtil.showToast("登录失败,手机号或密码错误");
             }
         }
     }
@@ -206,9 +210,9 @@ public class LoginActivity extends BaseActivity {
                 if (!JudgeNetWorkUtils.hasNetwork(this)){
                     ToastUtil.showToast("无可用网络，请检查网络是否连接");
                 }else {
-                    CustomDialog customDialog = new CustomDialog(this);
-                    customDialog.show();//显示,显示时页面不可点击,只能点击返回
-                    //customDialog.dismiss();//消失
+                    mCustomDialog = new CustomDialog(this);
+                    mCustomDialog.show();//显示,显示时页面不可点击,只能点击返回
+                    mCustomDialog.dismiss();//消失
                     mPhone = mLoginPhone.getText().toString().trim();
                     mPwd = mLoginPwd.getText().toString().trim();
                     //手机号  正则表达式验证

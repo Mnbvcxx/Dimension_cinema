@@ -59,6 +59,7 @@ public class RegisterActivity extends BaseActivity {
     private String mPwd;
     private String mEncrypt_pwd;
     private SharedPreferences mSP;
+    private CustomDialog mCustomDialog;
 
 
     //布局
@@ -124,8 +125,8 @@ public class RegisterActivity extends BaseActivity {
                 if (!JudgeNetWorkUtils.hasNetwork(this)) {
                     ToastUtil.showToast("无可用网络，请检查网络是否连接");
                 } else {
-                    CustomDialog customDialog = new CustomDialog(this);
-                    customDialog.show();//显示,显示时页面不可点击,只能点击返回
+                    mCustomDialog = new CustomDialog(this);
+                    mCustomDialog.show();//显示,显示时页面不可点击,只能点击返回
                     initButton();
                 }
                 break;
@@ -206,6 +207,9 @@ public class RegisterActivity extends BaseActivity {
                 infoBean.setInfoemail(regemile);
                 infoBean.setInfopwd(regpwd);
                 EventBus.getDefault().postSticky(infoBean);
+            }else {
+                mCustomDialog.show();//显示,显示时页面不可点击,只能点击返回
+                mCustomDialog.dismiss();
             }
         } else if (object instanceof LoginBean) {
             LoginBean loginBean = (LoginBean) object;
@@ -233,7 +237,9 @@ public class RegisterActivity extends BaseActivity {
      */
     @Override
     protected void netFailed(String s) {
-        ToastUtil.showToast("获取请求失败");
+        mCustomDialog.show();//显示,显示时页面不可点击,只能点击返回
+        mCustomDialog.dismiss();
+        ToastUtil.showToast("请输入完整信息");
     }
 
 }

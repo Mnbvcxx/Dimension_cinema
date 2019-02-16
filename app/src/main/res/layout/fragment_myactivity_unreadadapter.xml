@@ -48,6 +48,6 @@
         android:layout_height="2dp"
         android:layout_below="@id/adapter_content"
         android:layout_marginTop="@dimen/dp_10"
-        android:background="#81111111"
+        android:background="@color/colorA999"
         />
 </RelativeLayout>
