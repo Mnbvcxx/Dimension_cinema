@@ -1,5 +1,6 @@
 package com.bw.movie.activity.activity.fragment.adapter.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -12,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -20,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.activity.fragment.adapter.adapter.MyDetaillsReviewAdapter;
@@ -379,4 +382,5 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
         JZVideoPlayer.releaseAllVideos();
         super.onPause();
     }
+
 }
