@@ -37,7 +37,7 @@ public class MyPresenter {
             @Override
             public void onFailed(String error) {
                 return;
-                //mMyView.onMyFailed("阿欧，出错啦"+error);
+                //mMyView.onMyFailed(error);
             }
         });
     }
