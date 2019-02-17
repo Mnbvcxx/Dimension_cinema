@@ -1,8 +1,10 @@
 package com.bw.movie.activity.activity.fragment.adapter.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.activity.fragment.adapter.adapter.CommentRecyclerAdapter;
@@ -115,6 +119,9 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
     private EditText mPubEdTxt;
     private ImageView mCommentImageView1;
     private int mPosition1;
+    private int mCommentId;
+    private View mView;
+    private PopupWindow mPopupWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -248,17 +255,17 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
 
     //点击预告弹出popupwindow
     private void initNotice() {
-        View view = LayoutInflater.from(this).inflate(R.layout.notice_popup_view, null, false);
-        PopupWindow popupWindow = new PopupWindow(view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
-        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        popupWindow.setOutsideTouchable(true);
+        mView = LayoutInflater.from(this).inflate(R.layout.notice_popup_view, null, false);
+        mPopupWindow = new PopupWindow(mView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
+        mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        mPopupWindow.setOutsideTouchable(true);
         //设置显示位置,findViewById获取的是包含当前整个页面的view
-        popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+        mPopupWindow.showAtLocation(mView, Gravity.BOTTOM, 0, 0);
         //点击空白处时，隐藏掉pop窗口
-        popupWindow.setFocusable(true);
-        popupWindow.setTouchable(true);
-        popupWindow.showAsDropDown(mDyDetailsPrediction, 0, 0);
-        initNoticePopup(view, popupWindow);
+        mPopupWindow.setFocusable(true);
+        mPopupWindow.setTouchable(true);
+        mPopupWindow.showAsDropDown(mDyDetailsPrediction, 0, 0);
+        initNoticePopup(mView, mPopupWindow);
     }
 
     private void initNoticePopup(View view, final PopupWindow popupWindow) {
@@ -350,7 +357,6 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
         commentPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.showToast("还无法回复哦");
                 initCommentPublish();
             }
         });
@@ -391,9 +397,9 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
                 @Override
                 public void onClick(View view) {
                     Map<String, String> map = new HashMap<>();
-                    map.put(UserApis.COMMENT_KEY, mMovieId + "");
-                    map.put(UserApis.COMMENT_COMMENTCONTENT_KEY, mPubEdTxt.getText().toString().trim());
-                    mMyPresenter.onPostDatas(Apis.USER_COMMENT_URL, map, CommentLikeBean.class);
+                    map.put(UserApis.COMMENT_COMMENTID_KEY, mCommentId + "");
+                    map.put(UserApis.COMMENT_REPLYCONTENT_COMMENTCONTENT_KEY, mPubEdTxt.getText().toString().trim());
+                    mMyPresenter.onPostDatas(Apis.USER_COMMENT_REPLY_URL, map, CommentLikeBean.class);
                     popupWindow.dismiss();
                 }
             });
@@ -437,6 +443,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
                 mReviewAdapter.setOnClickedListener(new MyDetaillsReviewAdapter.onClickedListener() {
                     @Override
                     public void onChecled(int position, ImageView imageView) {
+                        mCommentId = result.get(position).getCommentId();
                         Map<String, String> map = new HashMap<>();
                         map.put(UserApis.FILM_COMMENT_DZ, position + "");
                         mMyPresenter.onPostDatas(Apis.COMMENT_DZ_URL, map, RegisterBean.class);
@@ -477,7 +484,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
             //回复点赞的结果
             CommentLikeBean commentLikeBean=(CommentLikeBean)data;
             if (commentLikeBean.getStatus().equals("0000")){
-               mMyPresenter.onGetDatas(Apis.CINEMA_EVALUATE_COMMENT+"?commentId="+ mPosition1 +"&page="+1+"&count="+10,EvaluateCommentBean.class);
+                mMyPresenter.onGetDatas(Apis.CINEMA_EVALUATE_COMMENT+"?commentId="+ mPosition1 +"&page="+1+"&count="+10,EvaluateCommentBean.class);
                 ToastUtil.showToast(commentLikeBean.getMessage());
 
         } else {
@@ -495,7 +502,17 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
 
     @Override
     protected void onPause() {
-        JZVideoPlayer.releaseAllVideos();
         super.onPause();
+        JZVideoPlayer.releaseAllVideos();
+        mPopupWindow.dismiss();
+        // 视频回去的时候要暂停
+        ((AudioManager) getSystemService(
+                Context.AUDIO_SERVICE)).requestAudioFocus(
+                new AudioManager.OnAudioFocusChangeListener() {
+                    @Override
+                    public void onAudioFocusChange(int focusChange) {
+                    }
+                }, AudioManager.STREAM_MUSIC,
+                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
     }
 }
