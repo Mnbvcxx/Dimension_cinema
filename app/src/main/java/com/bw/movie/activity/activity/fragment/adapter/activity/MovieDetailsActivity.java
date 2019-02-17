@@ -120,8 +120,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
     private ImageView mCommentImageView1;
     private int mPosition1;
     private int mCommentId;
-    private View mView;
-    private PopupWindow mPopupWindow;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -255,8 +254,8 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
 
     //点击预告弹出popupwindow
     private void initNotice() {
-        mView = LayoutInflater.from(this).inflate(R.layout.notice_popup_view, null, false);
-        mPopupWindow = new PopupWindow(mView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
+        View mView = LayoutInflater.from(this).inflate(R.layout.notice_popup_view, null, false);
+        PopupWindow mPopupWindow = new PopupWindow(mView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
         mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mPopupWindow.setOutsideTouchable(true);
         //设置显示位置,findViewById获取的是包含当前整个页面的view
@@ -502,9 +501,8 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
 
     @Override
     protected void onPause() {
-        super.onPause();
         JZVideoPlayer.releaseAllVideos();
-        mPopupWindow.dismiss();
+        super.onPause();
         // 视频回去的时候要暂停
         ((AudioManager) getSystemService(
                 Context.AUDIO_SERVICE)).requestAudioFocus(
