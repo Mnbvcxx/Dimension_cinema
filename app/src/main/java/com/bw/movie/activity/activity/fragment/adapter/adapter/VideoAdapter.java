@@ -49,12 +49,12 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyVideoViewH
         myVideoViewHolder.mJZVideoPlayerStandard.setUp(videoUrl, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "预告片");
         myVideoViewHolder.mJZVideoPlayerStandard.thumbImageView.setScaleType(ImageView.ScaleType.FIT_XY);
         myVideoViewHolder.mJZVideoPlayerStandard.fullscreenButton.setVisibility(View.GONE);
-        myVideoViewHolder.mJZVideoPlayerStandard.progressBar.setVisibility(View.GONE);
+        myVideoViewHolder.mJZVideoPlayerStandard.progressBar.setVisibility(View.VISIBLE);
         myVideoViewHolder.mJZVideoPlayerStandard.currentTimeTextView.setVisibility(View.GONE);
         myVideoViewHolder.mJZVideoPlayerStandard.totalTimeTextView.setVisibility(View.GONE);
         myVideoViewHolder.mJZVideoPlayerStandard.tinyBackImageView.setVisibility(View.GONE);
         myVideoViewHolder.mJZVideoPlayerStandard.batteryLevel.setVisibility(View.GONE);
-        myVideoViewHolder.mJZVideoPlayerStandard.startButton.setVisibility(View.GONE);
+        myVideoViewHolder.mJZVideoPlayerStandard.startButton.setVisibility(View.VISIBLE);
         //设置容器内播放器高,解决黑边（视频全屏）
         JZVideoPlayer.setVideoImageDisplayType(JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT);
         JZVideoPlayer.TOOL_BAR_EXIST = false;

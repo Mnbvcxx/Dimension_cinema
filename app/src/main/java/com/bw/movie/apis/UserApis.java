@@ -43,4 +43,10 @@ public class UserApis {
     public static final String COMMENT_KEY = "movieId";
     public static final String COMMENT_COMMENTCONTENT_KEY = "commentContent";
 
+    /**
+     * 添加用户对评论的回复
+     */
+    public static final String COMMENT_COMMENTID_KEY = "commentId";
+    public static final String COMMENT_REPLYCONTENT_COMMENTCONTENT_KEY = "replyContent";
+
 }
