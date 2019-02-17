@@ -51,20 +51,27 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:background="@mipmap/register_icon_sex_default" />
-
-        <EditText
-            android:id="@+id/reg_txt_sex"
-            android:layout_width="match_parent"
+        <RadioGroup
+            android:id="@+id/reg_radio_group"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:layout_marginLeft="@dimen/dp_20"
-            android:background="@null"
-            android:digits="男女"
-            android:singleLine="true"
-            android:imeOptions="actionNext"
-            android:hint="性别"
-            android:textColor="#ffffff"
-            android:textColorHint="#ffffff"
-            android:textSize="16sp" />
+            >
+        <RadioButton
+            android:id="@+id/reg_radio_man"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="男" />
+        <RadioButton
+            android:id="@+id/reg_radio_woman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="女"/>
+    </RadioGroup>
     </LinearLayout>
 
     <View

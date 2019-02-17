@@ -4,12 +4,15 @@ import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.IdRes;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.activity.MainActivity;
@@ -43,8 +46,12 @@ public class RegisterActivity extends BaseActivity {
 
     @BindView(R.id.reg_txt_nick)
     EditText mRegTxtNick;
-    @BindView(R.id.reg_txt_sex)
-    EditText mRegTxtSex;
+    @BindView(R.id.reg_radio_group)
+    RadioGroup mRegGroup;
+    @BindView(R.id.reg_radio_man)
+    RadioButton mRegRadioMan;
+    @BindView(R.id.reg_radio_woman)
+    RadioButton mRegRadioWoman;
     @BindView(R.id.reg_txt_dte)
     EditText mRegTxtDte;
     @BindView(R.id.reg_txt_pho)
@@ -60,6 +67,7 @@ public class RegisterActivity extends BaseActivity {
     private String mEncrypt_pwd;
     private SharedPreferences mSP;
     private CustomDialog mCustomDialog;
+    private String mSex="女";
 
 
     //布局
@@ -99,6 +107,21 @@ public class RegisterActivity extends BaseActivity {
                 }
             }
         });
+
+        mRegGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton radbtn = (RadioButton) findViewById(checkedId);
+                mSex = radbtn.getText().toString();
+                // mSex = checkedId == R.id.reg_radio_man ? "男" : "女";
+                //改变男女为1/2
+            }
+        });
+        if (mSex.matches("男")) {
+            mSex = 1 + "";
+        } else if (mSex.matches("女")) {
+            mSex = 2 + "";
+        }
     }
 
     //第三方控件  日期格式
@@ -144,9 +167,9 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void initButton() {
+         Map<String, String> map = new HashMap<>();
         //获取输入的数据
         String name = mRegTxtNick.getText().toString().trim();
-        String sex = mRegTxtSex.getText().toString().trim();
         String date = mRegTxtDte.getText().toString().trim();
         mPhone = mRegTxtPho.getText().toString().trim();
         String email = mRegTxtEml.getText().toString().trim();
@@ -155,10 +178,7 @@ public class RegisterActivity extends BaseActivity {
         if (TextUtils.isEmpty(name)) {
             ToastUtil.showToast("输入的昵称不能为空");
         }
-        //判断性别
-        if (TextUtils.isEmpty(sex)) {
-            ToastUtil.showToast("请正确输入性别为“男”或“女”");
-        }
+
         //手机号
         String REGEX = "[1][3458]\\d{9}";
         if (TextUtils.isEmpty(mPhone) || !mPhone.matches(REGEX)) {
@@ -173,19 +193,13 @@ public class RegisterActivity extends BaseActivity {
         if (TextUtils.isEmpty(mPwd) || mPwd.length() < 6) {
             ToastUtil.showToast("密码最低由六位数字组成！");
         }
-        //改变男女为1/2
-        if (sex.matches("男")) {
-            sex = 1 + "";
-        } else if (sex.matches("女")) {
-            sex = 2 + "";
-        }
+
         //密码加密
         mEncrypt_pwd = EncryptUtil.encrypt(mPwd);
-        Map<String, String> map = new HashMap<>();
         map.put(UserApis.REG_KEY_NICKNAME, name);
+        map.put(UserApis.REG_KEY_SEX, mSex);
         map.put(UserApis.REG_KEY_PHONE, mPhone);
         map.put(UserApis.REG_KEY_PWD, mEncrypt_pwd);
-        map.put(UserApis.REG_KEY_SEX, sex);
         map.put(UserApis.REG_KEY_BIRTHDAY, date);
         map.put(UserApis.REG_KEY_EMAIL, email);
         map.put(UserApis.REG_KEY_PWD2, mEncrypt_pwd);
