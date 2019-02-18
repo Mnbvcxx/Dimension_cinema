@@ -232,6 +232,7 @@ public class RegisterActivity extends BaseActivity {
                 infoBean.setInfopwd(regpwd);
                 EventBus.getDefault().postSticky(infoBean);
             }else {
+                ToastUtil.showToast(registerBean.getMessage());
                 mCustomDialog.show();
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
