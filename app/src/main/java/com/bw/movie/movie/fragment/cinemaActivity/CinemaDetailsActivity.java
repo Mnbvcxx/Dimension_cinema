@@ -309,5 +309,4 @@ public class CinemaDetailsActivity extends BaseActivity {
     }
 
 
-
 }

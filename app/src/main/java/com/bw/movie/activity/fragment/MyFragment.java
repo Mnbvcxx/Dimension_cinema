@@ -138,7 +138,7 @@ public class MyFragment extends Fragment implements MyView {
                 startActivity(info);
                 break;
             case R.id.my_attentions:
-                ToastUtil.showToast("进入我的页面");
+                ToastUtil.showToast("进入我的关注页面");
                 Intent attent = new Intent(getActivity(), AttentionActivity.class);
                 startActivity(attent);
                 break;
