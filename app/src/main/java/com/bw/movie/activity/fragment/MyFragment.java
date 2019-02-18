@@ -88,6 +88,7 @@ public class MyFragment extends Fragment implements MyView {
 
     private SharedPreferences sharedPreferences;
     private Editor editor;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -110,6 +111,7 @@ public class MyFragment extends Fragment implements MyView {
         //根据用户ID查询用户信息
         mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
         sharedPreferences = getActivity().getSharedPreferences("config", MODE_PRIVATE);
+        boolean isClick = sharedPreferences.getBoolean("isClick", false);//是否自动登录
         editor = sharedPreferences.edit();
         return view;
     }

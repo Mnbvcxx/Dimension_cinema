@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/bit_map"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     tools:context=".register.activity.RegisterActivity">
     <!--昵称-->
@@ -26,8 +28,8 @@
             android:layout_marginLeft="@dimen/dp_20"
             android:background="@null"
             android:hint="昵称"
-            android:singleLine="true"
             android:imeOptions="actionNext"
+            android:singleLine="true"
             android:textColor="#ffffff"
             android:textColorHint="#ffffff"
             android:textSize="16sp" />
@@ -51,28 +53,30 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:background="@mipmap/register_icon_sex_default" />
+
         <RadioGroup
             android:id="@+id/reg_radio_group"
-            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
             android:layout_marginLeft="@dimen/dp_20"
-            >
-        <RadioButton
-            android:id="@+id/reg_radio_man"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:textColor="@color/colorfff"
-            android:text="男" />
-        <RadioButton
-            android:id="@+id/reg_radio_woman"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorfff"
-            android:text="女"/>
-    </RadioGroup>
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/reg_radio_man"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="男"
+                android:textColor="@color/colorfff" />
+
+            <RadioButton
+                android:id="@+id/reg_radio_woman"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="女"
+                android:textColor="@color/colorfff" />
+        </RadioGroup>
     </LinearLayout>
 
     <View
@@ -100,9 +104,9 @@
             android:layout_marginLeft="@dimen/dp_20"
             android:background="@null"
             android:hint="@string/birthdate"
-            android:singleLine="true"
             android:imeOptions="actionNext"
             android:inputType="date"
+            android:singleLine="true"
             android:textColor="#ffffff"
             android:textColorHint="#ffffff"
             android:textSize="16sp" />
@@ -133,9 +137,10 @@
             android:layout_marginLeft="@dimen/dp_20"
             android:background="@null"
             android:hint="手机号"
-            android:singleLine="true"
             android:imeOptions="actionNext"
             android:inputType="number"
+            android:maxLength="11"
+            android:singleLine="true"
             android:textColor="#ffffff"
             android:textColorHint="#ffffff"
             android:textSize="16sp" />
@@ -165,10 +170,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_20"
             android:background="@null"
+            android:digits="0123456789abcdefghijgklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@."
             android:hint="邮箱"
-            android:singleLine="true"
             android:imeOptions="actionNext"
-            android:inputType="textEmailAddress"
+            android:singleLine="true"
             android:textColor="#ffffff"
             android:textColorHint="#ffffff"
             android:textSize="16sp" />
@@ -199,9 +204,9 @@
             android:layout_marginLeft="@dimen/dp_20"
             android:background="@null"
             android:hint="登录密码"
-            android:singleLine="true"
             android:imeOptions="actionNext"
             android:inputType="textPassword"
+            android:singleLine="true"
             android:textColor="#ffffff"
             android:textColorHint="#ffffff"
             android:textSize="16sp" />

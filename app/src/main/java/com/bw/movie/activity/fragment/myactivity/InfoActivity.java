@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,16 +25,12 @@ import com.bw.movie.activity.fragment.myactivity.bean.InfoHeadBean;
 import com.bw.movie.activity.fragment.myactivity.bean.MessageInfoBean;
 import com.bw.movie.apis.Apis;
 import com.bw.movie.base.BaseActivity;
-import com.bw.movie.login.bean.EventBusInfoBean;
 import com.bw.movie.register.bean.RegisterBean;
 import com.bw.movie.utils.DateUtils;
 import com.bw.movie.utils.EncryptUtil;
 import com.bw.movie.utils.FileImageUntils;
 import com.bw.movie.utils.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.HashMap;
 
@@ -79,10 +74,6 @@ public class InfoActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         ButterKnife.bind(this);
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
-
 
     }
 
@@ -400,18 +391,6 @@ public class InfoActivity extends BaseActivity {
         }
     }
 
-    /**
-     * 得到邮箱
-     * @param mlist
-     */
-    @Subscribe(sticky = true)
-    public void onLoginmail(EventBusInfoBean mlist) {
-        mInfoemail = mlist.getInfoemail();
-        //邮编--通过登录得到
-
-
-        Log.i("TAG", "infoemail=" + mInfoemail);
-    }
 
     //动态权限
     private void initPermission() {

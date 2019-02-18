@@ -16,6 +16,7 @@
             android:layout_width="@dimen/dp_180"
             android:layout_height="@dimen/dp_258"
             fresco:roundedCornerRadius="@dimen/dp_8"
+            fresco:placeholderImage="@color/colorRed"
             fresco:roundBottomLeft="true"
             fresco:roundBottomRight="true"
             fresco:roundTopLeft="true"
