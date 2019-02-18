@@ -437,12 +437,14 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
             ReviewsBean reviewBean = (ReviewsBean) data;
             if (reviewBean.getStatus().equals("0000")) {
                 final List<ReviewsBean.ResultBean> result = reviewBean.getResult();
+                for (int i = 0; i < result.size(); i++) {
+                    mCommentId = result.get(i).getCommentId();
+                }
                 mReviewAdapter = new MyDetaillsReviewAdapter(this, result);
                 mReviewPpRv.setAdapter(mReviewAdapter);
                 mReviewAdapter.setOnClickedListener(new MyDetaillsReviewAdapter.onClickedListener() {
                     @Override
                     public void onChecled(int position, ImageView imageView) {
-                        mCommentId = result.get(position).getCommentId();
                         Map<String, String> map = new HashMap<>();
                         map.put(UserApis.FILM_COMMENT_DZ, position + "");
                         mMyPresenter.onPostDatas(Apis.COMMENT_DZ_URL, map, RegisterBean.class);
