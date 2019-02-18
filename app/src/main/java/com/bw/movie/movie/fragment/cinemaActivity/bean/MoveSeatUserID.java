@@ -6,6 +6,15 @@ package com.bw.movie.movie.fragment.cinemaActivity.bean;
  */
 public class MoveSeatUserID {
     int userId;
+    String sessionId;
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
 
     public int getUserId() {
         return userId;

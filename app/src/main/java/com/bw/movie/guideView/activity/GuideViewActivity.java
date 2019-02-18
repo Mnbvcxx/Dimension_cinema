@@ -54,50 +54,6 @@ public class GuideViewActivity extends BaseActivity {
         mFragments.add(new FragmentThird());
         mFragments.add(new FragmentFourth());
         mViewPager.setAdapter(new MyHomePageAdapter(getSupportFragmentManager(), this, mFragments));
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i1) {
-
-            }
-
-            @Override
-            public void onPageSelected(int i) {
-                if (mViewPager.getCurrentItem() == mFragments.size() - 1) {
-
-                    /**
-                     * 通过handler进行延时跳转
-                     */
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            //进行跳转操作,如果是第一次进入,将在引导页结束后进行跳转
-                            ps.edit().putBoolean("isFirst", true).commit();
-                            onIntent();
-                        }
-                    }, 1000); //在欢迎界面停留1秒钟
-
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i) {
-
-            }
-        });
-
-        /**
-         * 如果是第一次登陆的话 直接跳转到首页
-         */
-        if (isFirst) {
-            onIntent();
-        }
-    }
-
-    //跳转
-    private void onIntent() {
-        IntentUtils.getInstence().intent(GuideViewActivity.this, LoginActivity.class);
-        finish();
     }
 
     @Override
