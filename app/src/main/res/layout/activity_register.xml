@@ -64,12 +64,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
+            android:textColor="@color/colorfff"
             android:text="男" />
         <RadioButton
             android:id="@+id/reg_radio_woman"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
+            android:textColor="@color/colorfff"
             android:text="女"/>
     </RadioGroup>
     </LinearLayout>
