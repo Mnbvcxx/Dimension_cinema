@@ -181,7 +181,7 @@ public class RegisterActivity extends BaseActivity {
 
         //手机号
         String REGEX = "[1][3458]\\d{9}";
-        if (TextUtils.isEmpty(mPhone) || !mPhone.matches(REGEX)) {
+        if (TextUtils.isEmpty(mPhone) || !mPhone.matches(REGEX)||mPhone.length()!=11) {
             ToastUtil.showToast("请正确输入手机号格式");
         }
         //邮箱
@@ -276,7 +276,7 @@ public class RegisterActivity extends BaseActivity {
                 mCustomDialog.dismiss();
             }
         }, 1000);
-        ToastUtil.showToast("请输入完整信息");
+        ToastUtil.showToast("阿欧："+s);
     }
 
 }

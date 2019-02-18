@@ -1,6 +1,7 @@
 package com.bw.movie.activity.activity.fragment.adapter.adapter;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -46,8 +47,11 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyVideoViewH
         String imageUrl = mShortFilmListBeans.get(i).getImageUrl();
         String videoUrl = mShortFilmListBeans.get(i).getVideoUrl();
         Glide.with(mContext).load(imageUrl).into(myVideoViewHolder.mJZVideoPlayerStandard.thumbImageView);
+        //视频里的预告片
         myVideoViewHolder.mJZVideoPlayerStandard.setUp(videoUrl, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "预告片");
+
         myVideoViewHolder.mJZVideoPlayerStandard.thumbImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        //全屏
         myVideoViewHolder.mJZVideoPlayerStandard.fullscreenButton.setVisibility(View.GONE);
         myVideoViewHolder.mJZVideoPlayerStandard.progressBar.setVisibility(View.VISIBLE);
         myVideoViewHolder.mJZVideoPlayerStandard.currentTimeTextView.setVisibility(View.GONE);
