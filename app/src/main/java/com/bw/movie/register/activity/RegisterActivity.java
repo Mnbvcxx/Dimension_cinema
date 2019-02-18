@@ -113,8 +113,6 @@ public class RegisterActivity extends BaseActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton radbtn = (RadioButton) findViewById(checkedId);
                 mSex = radbtn.getText().toString();
-                // mSex = checkedId == R.id.reg_radio_man ? "男" : "女";
-                //改变男女为1/2
             }
         });
         if (mSex.matches("男")) {
