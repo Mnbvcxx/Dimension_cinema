@@ -26,9 +26,6 @@ import com.bw.movie.activity.activity.MainActivity;
 import com.bw.movie.apis.Apis;
 import com.bw.movie.apis.UserApis;
 import com.bw.movie.base.BaseActivity;
-import com.bw.movie.guideView.activity.GuideViewActivity;
-import com.bw.movie.homepage.HomePageActivity;
-import com.bw.movie.login.bean.EventBusInfoBean;
 import com.bw.movie.login.bean.LoginBean;
 import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatUserID;
 import com.bw.movie.register.activity.RegisterActivity;
@@ -84,7 +81,6 @@ public class LoginActivity extends BaseActivity {
     private String mPhone;
     private String mPwd;
     private Intent mIntent;
-    EventBusInfoBean infoBean=new EventBusInfoBean();
     private CustomDialog mCustomDialog;
 
     //布局
@@ -145,12 +141,6 @@ public class LoginActivity extends BaseActivity {
         if (object instanceof LoginBean) {
             LoginBean loginBean = (LoginBean) object;
             if (loginBean.getStatus().equals("0000")) {
-                //登录成功，将邮编密码给我的信息
-                String infoemail = infoBean.getInfoemail();
-                Log.i("TAG","登录邮箱"+infoemail);
-                EventBus.getDefault().postSticky(infoBean);
-                Log.i("TAG","登录得到邮箱"+infoBean.getInfoemail());
-
                 //记住密码
                 if (mLoginCheckbox.isChecked()) {
                     mEdit.putBoolean("isCheck", true);

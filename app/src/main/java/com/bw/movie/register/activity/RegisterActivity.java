@@ -1,11 +1,12 @@
 package com.bw.movie.register.activity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.IdRes;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -19,8 +20,9 @@ import com.bw.movie.activity.activity.MainActivity;
 import com.bw.movie.apis.Apis;
 import com.bw.movie.apis.UserApis;
 import com.bw.movie.base.BaseActivity;
-import com.bw.movie.login.bean.EventBusInfoBean;
+import com.bw.movie.login.LoginActivity;
 import com.bw.movie.login.bean.LoginBean;
+import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatUserID;
 import com.bw.movie.register.bean.RegisterBean;
 import com.bw.movie.utils.CustomDialog;
 import com.bw.movie.utils.EncryptUtil;
@@ -67,8 +69,8 @@ public class RegisterActivity extends BaseActivity {
     private String mEncrypt_pwd;
     private SharedPreferences mSP;
     private CustomDialog mCustomDialog;
-    private String mSex="女";
-
+    private String mSex;
+    private Intent mIntent;
 
     //布局
     @Override
@@ -107,7 +109,7 @@ public class RegisterActivity extends BaseActivity {
                 }
             }
         });
-
+        mSex="女";
         mRegGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -210,6 +212,7 @@ public class RegisterActivity extends BaseActivity {
      *
      * @param object
      */
+
     @Override
     protected void netSuccess(Object object) {
         if (object instanceof RegisterBean) {
@@ -222,13 +225,6 @@ public class RegisterActivity extends BaseActivity {
                 map.put(UserApis.LOGIN_KEY_PHONE, mPhone);
                 map.put(UserApis.LOGIN_KEY_PWD, mEncrypt_pwd);
                 doPost(Apis.LOGIN_URL, map, LoginBean.class);
-                //将邮编密码给我的信息
-                String regemile = mRegTxtEml.getText().toString();
-                String regpwd = mRegTxtPwd.getText().toString();
-                EventBusInfoBean infoBean = new EventBusInfoBean();
-                infoBean.setInfoemail(regemile);
-                infoBean.setInfopwd(regpwd);
-                EventBus.getDefault().postSticky(infoBean);
             }else {
                 ToastUtil.showToast(registerBean.getMessage());
                 mCustomDialog.show();
@@ -244,13 +240,18 @@ public class RegisterActivity extends BaseActivity {
             LoginBean loginBean = (LoginBean) object;
             if (loginBean.getStatus().equals("0000")) {
                 ToastUtil.showToast(loginBean.getMessage());
-                //将邮编密码给我的信息
-                String regemile = mRegTxtEml.getText().toString();
-                String regpwd = mRegTxtPwd.getText().toString();
-                EventBusInfoBean infoBean = new EventBusInfoBean();
-                infoBean.setInfoemail(regemile);
-                infoBean.setInfopwd(regpwd);
-                EventBus.getDefault().postSticky(infoBean);
+                mIntent = new Intent(RegisterActivity.this, MainActivity.class);
+                //intent传值,后续会用到这些参数,尤其是我们的 RequestHeader  入参
+                mIntent.putExtra("userId", loginBean.getResult().getUserId()+"");
+                MoveSeatUserID moveSeatUserID = new MoveSeatUserID();
+                moveSeatUserID.setUserId(loginBean.getResult().getUserId());
+                EventBus.getDefault().postSticky(moveSeatUserID);
+                Log.i("TAG","moveSeatBean集合中的UserID="+moveSeatUserID);
+                mIntent.putExtra("sessionId", loginBean.getResult().getSessionId());
+                mIntent.putExtra("nickName", loginBean.getResult().getUserInfo().getNickName());
+                mIntent.putExtra("headPic", loginBean.getResult().getUserInfo().getHeadPic());
+                mIntent.putExtra("phone", loginBean.getResult().getUserInfo().getPhone());
+                startActivity(mIntent);
                 mSP.edit()
                         .putString("userId", loginBean.getResult().getUserId() + "")
                         .putString("sessionId", loginBean.getResult().getSessionId())
