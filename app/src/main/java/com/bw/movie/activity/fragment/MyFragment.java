@@ -193,6 +193,7 @@ public class MyFragment extends Fragment implements MyView {
                 ToastUtil.showToast(registerBean.getMessage());
             } else {
                 ToastUtil.showToast(registerBean.getMessage());
+                mMySignIn.setBackgroundResource(R.drawable.shape_bg_buttons);
             }
         } else if (data instanceof NewVersionBean) {
             mVersionBean = (NewVersionBean) data;
