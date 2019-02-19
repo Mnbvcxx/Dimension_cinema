@@ -2,7 +2,7 @@ package com.bw.movie.activity.activity.fragment.adapter.bean;
 
 /**
  * @author: pengbo
- * @date:2019/2/16 desc:点赞的结果
+ * @date:2019/2/16 desc:点赞、用户对评价回复的结果
  */
 public class CommentLikeBean {
     public String message;

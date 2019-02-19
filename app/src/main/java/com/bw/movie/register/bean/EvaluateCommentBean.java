@@ -37,13 +37,6 @@ public class EvaluateCommentBean {
     }
 
     public static class ResultBean {
-        /**
-         * commentTime : 1532590303000
-         * replyHeadPic : http://172.17.8.100/images/head_pic/bwjy.jpg
-         * replyContent : 我还没看
-         * replyUserId : 6
-         * replyUserName : 谁的益达
-         */
 
         private long commentTime;
         private String replyHeadPic;
