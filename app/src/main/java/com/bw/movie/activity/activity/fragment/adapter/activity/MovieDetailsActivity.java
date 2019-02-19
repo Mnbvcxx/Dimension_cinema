@@ -36,12 +36,17 @@ import com.bw.movie.activity.activity.fragment.adapter.bean.DetailsMovieBean;
 import com.bw.movie.activity.activity.fragment.adapter.bean.ReviewsBean;
 import com.bw.movie.apis.Apis;
 import com.bw.movie.apis.UserApis;
+import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatUserID;
 import com.bw.movie.mvc.presenter.MyPresenter;
 import com.bw.movie.mvc.view.MyView;
 import com.bw.movie.register.bean.EvaluateCommentBean;
 import com.bw.movie.register.bean.RegisterBean;
+import com.bw.movie.utils.AlertDialogUntil;
 import com.bw.movie.utils.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -127,6 +132,9 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
         ButterKnife.bind(this);
+        if (!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().register(this);
+        }
         mMyPresenter = new MyPresenter(this);
         mReviewPpRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         Intent intent = getIntent();
@@ -368,6 +376,8 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
         commentRecyclerAdapter.setOnClickedListener(new CommentRecyclerAdapter.onClickedListener() {
             @Override
             public void onChecled(int position, ImageView imageView) {
+
+
                 Map<String, String> map = new HashMap<>();
                 map.put(UserApis.FILM_COMMENT_DZ, position + "");
                 mMyPresenter.onPostDatas(Apis.COMMENT_DZ_URL, map, CommentLikeBean.class);
@@ -445,11 +455,15 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
                 mReviewAdapter.setOnClickedListener(new MyDetaillsReviewAdapter.onClickedListener() {
                     @Override
                     public void onChecled(int position, ImageView imageView) {
-                        Map<String, String> map = new HashMap<>();
-                        map.put(UserApis.FILM_COMMENT_DZ, position + "");
-                        mMyPresenter.onPostDatas(Apis.COMMENT_DZ_URL, map, RegisterBean.class);
-                        imageView.setImageResource(R.mipmap.com_icon_praise_selected);
-
+                        //判断是否登录
+                        if (mUserId==null&&mSessionId==null){
+                            AlertDialogUntil.AlertDialogMy(MovieDetailsActivity.this);
+                        }else {
+                            Map<String, String> map = new HashMap<>();
+                            map.put(UserApis.FILM_COMMENT_DZ, position + "");
+                            mMyPresenter.onPostDatas(Apis.COMMENT_DZ_URL, map, RegisterBean.class);
+                            imageView.setImageResource(R.mipmap.com_icon_praise_selected);
+                        }
                     }
                     //查看回复的信息
                     @Override
@@ -514,5 +528,14 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
                     }
                 }, AudioManager.STREAM_MUSIC,
                 AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+    }
+
+    private String mUserId;
+    private String mSessionId;
+    //得到userId、sessionId
+    @Subscribe(sticky = true)
+    public void onLoginIntent(MoveSeatUserID moveSeatUserID){
+        mUserId = moveSeatUserID.getUserId()+"";
+        mSessionId = moveSeatUserID.getSessionId();
     }
 }

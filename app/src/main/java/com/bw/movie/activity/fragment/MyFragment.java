@@ -37,6 +37,7 @@ import com.bw.movie.activity.fragment.myactivity.bean.NewVersionBean;
 import com.bw.movie.apis.Apis;
 import com.bw.movie.base.BaseActivity;
 import com.bw.movie.login.LoginActivity;
+import com.bw.movie.movie.fragment.cinemaActivity.bean.EventBusName;
 import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatUserID;
 import com.bw.movie.mvc.presenter.MyPresenter;
 import com.bw.movie.mvc.view.MyView;
@@ -106,11 +107,12 @@ public class MyFragment extends Fragment implements MyView {
         if (!EventBus.getDefault().isRegistered(this)){
             EventBus.getDefault().register(this);
         }
+
         mCustomDialog = new CustomDialog(getActivity());
         mCustomDialog.show();//显示,显示时页面不可点击,只能点击返回
 
         /**
-         * 通过handler进行延时
+         * 通过handler进行延时Dialog
          */
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -122,13 +124,6 @@ public class MyFragment extends Fragment implements MyView {
         //绑定ButterKnife
         unbinder = ButterKnife.bind(this, view);
         mMyPresenter = new MyPresenter(this);
-        //根据用户ID查询用户信息
-        if (mUserId==null&&mSessionId==null){
-            AlertDialogUntil.AlertDialog(getActivity());
-        }else {
-            mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
-        }
-
         sharedPreferences = getActivity().getSharedPreferences("config", MODE_PRIVATE);
         editor = sharedPreferences.edit();
         return view;
@@ -143,13 +138,9 @@ public class MyFragment extends Fragment implements MyView {
                 ToastUtil.showToast("进入系统消息页面");
                 loginString(this.mUserId,mSessionId,MessageActivity.class);
                 break;
-            case R.id.my_icon:
-                break;
-            case R.id.my_name:
-                break;
             case R.id.my_sign_in:
                 if (mUserId==null&&mSessionId==null){
-                    AlertDialogUntil.AlertDialog(getActivity());
+                    AlertDialogUntil.AlertDialogMy(getActivity());
                 }else {
                     mMyPresenter.onGetDatas(Apis.USER_SIGNIN_URL,RegisterBean.class);
                 }
@@ -184,6 +175,9 @@ public class MyFragment extends Fragment implements MyView {
         }
     }
 
+    /**
+     * 解绑eventbus
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -340,7 +334,7 @@ public class MyFragment extends Fragment implements MyView {
 
     public void loginString(String userId,String sessionId,Class activity){
         if (userId==null&&sessionId==null){
-            AlertDialogUntil.AlertDialog(getActivity());
+            AlertDialogUntil.AlertDialogMy(getActivity());
         }else {
             Intent intent = new Intent(getActivity(), activity);
             startActivity(intent);
@@ -348,9 +342,31 @@ public class MyFragment extends Fragment implements MyView {
 
     }
 
+    /**
+     * 得到userid/sessionid
+     * @param moveSeatUserID
+     */
     @Subscribe(sticky = true)
     public void onLoginIntent(MoveSeatUserID moveSeatUserID){
          mUserId = moveSeatUserID.getUserId()+"";
          mSessionId = moveSeatUserID.getSessionId();
+    }
+    @Subscribe(sticky = true)
+    public void onLoginName(EventBusName eventBusName){
+        String nickName = eventBusName.getNickName();
+        String headPic = eventBusName.getHeadPic();
+        Uri parse = Uri.parse(headPic);
+        mMyIcon.setImageURI(parse);
+        mMyName.setText(nickName);
+
+    }
+
+    /**
+     * 刷新fragment
+     */
+    @Override
+    public void onStart() {
+        super.onStart();
+        mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
     }
 }
