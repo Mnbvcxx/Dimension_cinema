@@ -32,13 +32,19 @@ import com.bw.movie.activity.fragment.myactivity.RecordActivity;
 import com.bw.movie.activity.fragment.myactivity.bean.MessageInfoBean;
 import com.bw.movie.activity.fragment.myactivity.bean.NewVersionBean;
 import com.bw.movie.apis.Apis;
+import com.bw.movie.base.BaseActivity;
 import com.bw.movie.login.LoginActivity;
+import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatUserID;
 import com.bw.movie.mvc.presenter.MyPresenter;
 import com.bw.movie.mvc.view.MyView;
 import com.bw.movie.register.bean.RegisterBean;
+import com.bw.movie.utils.AlertDialogUntil;
 import com.bw.movie.utils.CustomDialog;
 import com.bw.movie.utils.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -88,6 +94,8 @@ public class MyFragment extends Fragment implements MyView {
 
     private SharedPreferences sharedPreferences;
     private Editor editor;
+    private String mUserId;
+    private String mSessionId;
 
     @Nullable
     @Override
@@ -111,7 +119,6 @@ public class MyFragment extends Fragment implements MyView {
         //根据用户ID查询用户信息
         mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
         sharedPreferences = getActivity().getSharedPreferences("config", MODE_PRIVATE);
-        boolean isClick = sharedPreferences.getBoolean("isClick", false);//是否自动登录
         editor = sharedPreferences.edit();
         return view;
     }
@@ -322,4 +329,19 @@ public class MyFragment extends Fragment implements MyView {
         startActivity(intent);
     }
 
+    public void loginString(String userId,String sessionId,Class activity){
+        if (userId==null&&sessionId==null){
+            AlertDialogUntil.AlertDialog(getActivity());
+        }else {
+            Intent intent = new Intent(getActivity(), activity);
+            startActivity(intent);
+        }
+
+    }
+
+    @Subscribe(sticky = true)
+    public void onLoginIntent(MoveSeatUserID moveSeatUserID){
+         mUserId = moveSeatUserID.getUserId()+"";
+         mSessionId = moveSeatUserID.getSessionId();
+    }
 }

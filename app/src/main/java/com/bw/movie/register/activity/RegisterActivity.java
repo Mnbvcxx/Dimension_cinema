@@ -112,6 +112,19 @@ public class RegisterActivity extends BaseActivity {
                 }
             }
         });
+
+        mRegGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton radbtn = (RadioButton) findViewById(checkedId);
+                mSex = radbtn.getText().toString();
+            }
+        });
+        if (mSex.matches("男")) {
+            mSex = 1 + "";
+        } else if (mSex.matches("女")) {
+            mSex = 2 + "";
+        }
     }
 
     //第三方控件  日期格式
@@ -164,12 +177,12 @@ public class RegisterActivity extends BaseActivity {
                     }, 1500); //停留3秒钟
                     initButton();
                 }
-
+                break;
         }
     }
 
     private void initButton() {
-        Map<String, String> map = new HashMap<>();
+         Map<String, String> map = new HashMap<>();
         //获取输入的数据
         String name = mRegTxtNick.getText().toString().trim();
         String date = mRegTxtDte.getText().toString().trim();

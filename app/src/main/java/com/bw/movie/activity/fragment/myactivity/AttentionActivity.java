@@ -133,11 +133,14 @@ public class AttentionActivity extends BaseActivity {
     protected void netSuccess(Object object) {
         if (object instanceof AttenMoveBean) {
             AttenMoveBean moveBean = (AttenMoveBean) object;
-            //适配器
-            mMoveAdapter = new AttenMoveAdapter(this);
-            mMoveAdapter.setMjihe(moveBean.getResult());
-            mMoveRecycler.setAdapter(mMoveAdapter);
-
+            if (moveBean.getResult()==null){
+                ToastUtil.showToast(moveBean.getMessage());
+            }else {
+                //适配器
+                mMoveAdapter = new AttenMoveAdapter(this);
+                mMoveAdapter.setMjihe(moveBean.getResult());
+                mMoveRecycler.setAdapter(mMoveAdapter);
+            }
         }
         if (object instanceof AttenCinemaBean) {
             AttenCinemaBean cinemaBean = (AttenCinemaBean) object;

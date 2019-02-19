@@ -1,6 +1,7 @@
 package com.bw.movie.activity.fragment.myactivity.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.fragment.myactivity.bean.AttenCinemaBean;
+import com.bw.movie.movie.fragment.cinemaActivity.CinemaDetailsActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
@@ -43,11 +45,23 @@ public class AttenCinemaAdapter extends RecyclerView.Adapter<AttenCinemaAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         Uri parse = Uri.parse(mjihe.get(i).getLogo());
         viewHolder.cinemaSDV.setImageURI(parse);
         viewHolder.cinemaTitle.setText(mjihe.get(i).getName());
         viewHolder.cinemaCount.setText(mjihe.get(i).getAddress());
+        //影院旗下所排期电影
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, CinemaDetailsActivity.class);
+                intent.putExtra("cinemaId", mjihe.get(i).getId());
+                intent.putExtra("logo", mjihe.get(i).getLogo());
+                intent.putExtra("name", mjihe.get(i).getName());
+                intent.putExtra("address", mjihe.get(i).getAddress());
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override

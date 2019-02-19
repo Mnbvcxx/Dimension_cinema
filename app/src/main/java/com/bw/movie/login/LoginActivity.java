@@ -155,14 +155,15 @@ public class LoginActivity extends BaseActivity {
                 mIntent = new Intent(LoginActivity.this, MainActivity.class);
                 //intent传值,后续会用到这些参数,尤其是我们的 RequestHeader  入参
                 mIntent.putExtra("userId", loginBean.getResult().getUserId()+"");
-                MoveSeatUserID moveSeatUserID = new MoveSeatUserID();
-                moveSeatUserID.setUserId(loginBean.getResult().getUserId());
-                EventBus.getDefault().postSticky(moveSeatUserID);
-                Log.i("TAG","moveSeatBean集合中的UserID="+moveSeatUserID);
                 mIntent.putExtra("sessionId", loginBean.getResult().getSessionId());
                 mIntent.putExtra("nickName", loginBean.getResult().getUserInfo().getNickName());
                 mIntent.putExtra("headPic", loginBean.getResult().getUserInfo().getHeadPic());
                 mIntent.putExtra("phone", loginBean.getResult().getUserInfo().getPhone());
+                MoveSeatUserID moveSeatUserID = new MoveSeatUserID();
+                moveSeatUserID.setUserId(loginBean.getResult().getUserId());
+                moveSeatUserID.setSessionId(loginBean.getResult().getSessionId());
+                EventBus.getDefault().postSticky(moveSeatUserID);
+                Log.i("TAG","moveSeatBean集合中的UserID="+moveSeatUserID);
                 startActivity(mIntent);
                 mSP.edit()
                         .putString("userId", loginBean.getResult().getUserId() + "")
@@ -175,7 +176,7 @@ public class LoginActivity extends BaseActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mCustomDialog.dismiss();
+                       // mCustomDialog.dismiss();
                     }
                 }, 1500);
                 ToastUtil.showToast("登录失败,手机号或密码错误");
@@ -203,7 +204,7 @@ public class LoginActivity extends BaseActivity {
                     ToastUtil.showToast("无可用网络，请检查网络是否连接");
                 }else {
                     mCustomDialog = new CustomDialog(this);
-                    mCustomDialog.show();//显示,显示时页面不可点击,只能点击返回
+                   // mCustomDialog.show();//显示,显示时页面不可点击,只能点击返回
                     /**
                      * 通过handler进行延时
                      */

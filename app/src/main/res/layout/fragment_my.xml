@@ -47,7 +47,8 @@
                 android:layout_below="@id/my_icon"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp_10"
-                android:text="冬天来了"
+                android:hint="昵称"
+                android:textColorHint="@color/colorfff"
                 android:textColor="@color/colorfff" />
 
             <Button
