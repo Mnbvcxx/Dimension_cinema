@@ -369,4 +369,6 @@ public class MyFragment extends Fragment implements MyView {
         super.onStart();
         mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
     }
+
+
 }

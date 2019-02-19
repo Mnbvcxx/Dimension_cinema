@@ -48,9 +48,10 @@ public class Record_Wait_Adapter extends RecyclerView.Adapter<Record_Wait_Adapte
         viewHolder.wait_cinema.setText("影院："+mjihe.get(i).getCinemaName());
         viewHolder.wait_hall.setText("影厅："+mjihe.get(i).getScreeningHall());
         String createTime = DateUtils.getDateToString(mjihe.get(i).getCreateTime());
-        //String endTime = DateUtils.getDateToString(mjihe.get(i).getEndTime());
-        String endTime = mjihe.get(i).getEndTime();
-        viewHolder.wait_time.setText("时间："+createTime+"-"+endTime);
+        String beginTime = DateUtils.getDateToString(mjihe.get(i).getBeginTime());
+        String endTime = DateUtils.getDateToString(mjihe.get(i).getEndTime());
+
+        viewHolder.wait_time.setText("时间："+createTime+" "+beginTime+"-"+endTime);
         viewHolder.wait_amount.setText("数量："+mjihe.get(i).getAmount());
         viewHolder.wait_price.setText("金额："+mjihe.get(i).getPrice()*mjihe.get(i).getAmount());
         //付款的点击事件

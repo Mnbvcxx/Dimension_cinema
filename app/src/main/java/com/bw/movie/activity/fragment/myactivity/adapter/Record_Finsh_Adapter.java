@@ -45,10 +45,9 @@ public class Record_Finsh_Adapter extends RecyclerView.Adapter<Record_Finsh_Adap
         //标题
         viewHolder.finsh_title.setText(mjihe.get(i).getMovieName());
         //播放时间
-        String createTime = DateUtils.getDateToString(mjihe.get(i).getCreateTime());
-       // String endTime = DateUtils.getDateToString(mjihe.get(i).getEndTime());
-        String endTime = mjihe.get(i).getEndTime();
-        viewHolder.finsh_time.setText(createTime+"-"+endTime);
+        String beginTime = DateUtils.getDateToString(mjihe.get(i).getBeginTime());
+        String endTime = DateUtils.getDateToString(mjihe.get(i).getEndTime());
+        viewHolder.finsh_time.setText(beginTime+"-"+endTime);
         viewHolder.finsh_code.setText("订单号："+mjihe.get(i).getOrderId());
         viewHolder.finsh_cinema.setText("影院："+mjihe.get(i).getCinemaName());
         viewHolder.finsh_hall.setText("影厅："+mjihe.get(i).getScreeningHall());

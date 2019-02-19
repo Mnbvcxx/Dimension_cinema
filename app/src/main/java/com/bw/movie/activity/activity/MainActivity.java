@@ -24,6 +24,8 @@ import com.bw.movie.activity.fragment.MyFragment;
 import com.bw.movie.base.BaseActivity;
 import com.bw.movie.utils.CustomDialog;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -200,6 +202,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
 
 }
