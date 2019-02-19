@@ -23,6 +23,7 @@ import android.view.animation.DecelerateInterpolator;
 
 import com.bw.movie.R;
 import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatAmount;
+import com.bw.movie.utils.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -409,17 +410,25 @@ public class MoveSeatView extends View {
     private boolean isHave(int x, int y) {
         if (list == null || list.isEmpty()) {
             //TODO：将list值即选座的数量传递！！！！
-            mMoveSeatBean=new MoveSeatAmount();
-            mMoveSeatBean.setNum(list.size());
-            EventBus.getDefault().postSticky(mMoveSeatBean);
+            if (list.size()>3){
+                ToastUtil.showToast("选座最多只能选3个,如果大于3，将按先选的3个座位来计算");
+            }else {
+                mMoveSeatBean = new MoveSeatAmount();
+                mMoveSeatBean.setNum(list.size());
+                EventBus.getDefault().postSticky(mMoveSeatBean);
+            }
             return false;
         }
         for (Point point : list) {
             if (point.x == x && point.y == y) {
                 //TODO：将list值即选座的数量传递！！！！
-                mMoveSeatBean=new MoveSeatAmount();
-                mMoveSeatBean.setNum(list.size());
-                EventBus.getDefault().postSticky(mMoveSeatBean);
+                if (list.size()>3){
+                    ToastUtil.showToast("选座最多只能选3个,如果大于3，将按先选的3个座位来计算");
+                }else {
+                    mMoveSeatBean = new MoveSeatAmount();
+                    mMoveSeatBean.setNum(list.size());
+                    EventBus.getDefault().postSticky(mMoveSeatBean);
+                }
                 return true;
 
             }
