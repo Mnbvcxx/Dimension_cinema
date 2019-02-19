@@ -123,7 +123,12 @@ public class MyFragment extends Fragment implements MyView {
         unbinder = ButterKnife.bind(this, view);
         mMyPresenter = new MyPresenter(this);
         //根据用户ID查询用户信息
-        mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
+        if (mUserId==null&&mSessionId==null){
+            AlertDialogUntil.AlertDialog(getActivity());
+        }else {
+            mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
+        }
+
         sharedPreferences = getActivity().getSharedPreferences("config", MODE_PRIVATE);
         editor = sharedPreferences.edit();
         return view;
@@ -143,8 +148,11 @@ public class MyFragment extends Fragment implements MyView {
             case R.id.my_name:
                 break;
             case R.id.my_sign_in:
-                //签到
-                loginString(this.mUserId,mSessionId,RegisterBean.class);
+                if (mUserId==null&&mSessionId==null){
+                    AlertDialogUntil.AlertDialog(getActivity());
+                }else {
+                    mMyPresenter.onGetDatas(Apis.USER_SIGNIN_URL,RegisterBean.class);
+                }
                 break;
             case R.id.my_info:
                 ToastUtil.showToast("点击了我的信息");

@@ -47,8 +47,7 @@ public class FragmentFourth extends Fragment implements View.OnClickListener {
                 break;
             case R.id.guide_button:
                 AlertDialogUntil.AlertDialog(getActivity());
-               Intent intent = new Intent(getActivity(), MainActivity.class);
-               startActivity(intent);
+
                 break;
         }
     }
