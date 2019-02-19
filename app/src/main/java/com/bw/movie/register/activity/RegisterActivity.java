@@ -113,18 +113,6 @@ public class RegisterActivity extends BaseActivity {
             }
         });
 
-        mRegGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton radbtn = (RadioButton) findViewById(checkedId);
-                mSex = radbtn.getText().toString();
-            }
-        });
-        if (mSex.matches("男")) {
-            mSex = 1 + "";
-        } else if (mSex.matches("女")) {
-            mSex = 2 + "";
-        }
     }
 
     //第三方控件  日期格式
