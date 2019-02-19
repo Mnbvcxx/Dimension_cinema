@@ -334,7 +334,6 @@ public class MyFragment extends Fragment implements MyView {
         if (userId==null&&sessionId==null){
             AlertDialogUntil.AlertDialog(getActivity());
         }else {
-            ToastUtil.showToast("登录成功");
             Intent intent = new Intent(getActivity(), activity);
             startActivity(intent);
         }
