@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.activity.MainActivity;
 import com.bw.movie.base.BaseActivity;
 import com.bw.movie.guideView.adapter.MyHomePageAdapter;
 import com.bw.movie.guideView.fragment.FragmentFirst;
@@ -54,6 +55,14 @@ public class GuideViewActivity extends BaseActivity {
         mFragments.add(new FragmentThird());
         mFragments.add(new FragmentFourth());
         mViewPager.setAdapter(new MyHomePageAdapter(getSupportFragmentManager(), this, mFragments));
+        /**
+         * 如果不是第一次登陆的话 跳过启动页到登录页面
+         */
+        if (isFirst) {
+            IntentUtils.getInstence().intent(this, MainActivity.class);
+            finish();
+        }
+
     }
 
     @Override

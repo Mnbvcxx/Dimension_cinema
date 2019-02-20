@@ -6,6 +6,15 @@ package com.bw.movie.movie.fragment.cinemaActivity.bean;
  */
 public class EventBusName {
     String nickName,headPic;
+    String toKen;
+
+    public String getToKen() {
+        return toKen;
+    }
+
+    public void setToKen(String toKen) {
+        this.toKen = toKen;
+    }
 
     public String getNickName() {
         return nickName;

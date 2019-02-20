@@ -99,6 +99,7 @@ public class MyFragment extends Fragment implements MyView {
     private Editor editor;
     private String mUserId;
     private String mSessionId;
+    private Object mToKen;
 
     @Nullable
     @Override
@@ -355,6 +356,7 @@ public class MyFragment extends Fragment implements MyView {
     public void onLoginName(EventBusName eventBusName){
         String nickName = eventBusName.getNickName();
         String headPic = eventBusName.getHeadPic();
+        mToKen = eventBusName.getToKen();
         Uri parse = Uri.parse(headPic);
         mMyIcon.setImageURI(parse);
         mMyName.setText(nickName);

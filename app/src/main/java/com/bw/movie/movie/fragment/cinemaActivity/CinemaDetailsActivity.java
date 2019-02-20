@@ -197,7 +197,7 @@ public class CinemaDetailsActivity extends BaseActivity {
         if (object instanceof CinemaDetailsBean) {
             CinemaDetailsBean cinemaDetailsBean = (CinemaDetailsBean) object;
             if (cinemaDetailsBean.getStatus().equals("0000")) {
-                List<CinemaDetailsBean.ResultBean> result = cinemaDetailsBean.getResult();
+                final List<CinemaDetailsBean.ResultBean> result = cinemaDetailsBean.getResult();
                 if (result.size()==0){
                     ToastUtil.showToast("无数据呢");
                 }else {

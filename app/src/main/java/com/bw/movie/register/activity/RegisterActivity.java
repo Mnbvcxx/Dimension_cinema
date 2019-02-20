@@ -28,6 +28,7 @@ import com.bw.movie.utils.CustomDialog;
 import com.bw.movie.utils.EncryptUtil;
 import com.bw.movie.utils.IntentUtils;
 import com.bw.movie.utils.JudgeNetWorkUtils;
+import com.bw.movie.utils.SexUtils;
 import com.bw.movie.utils.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -69,8 +70,10 @@ public class RegisterActivity extends BaseActivity {
     private String mEncrypt_pwd;
     private SharedPreferences mSP;
     private CustomDialog mCustomDialog;
-    private String mSex;
+    private String mText;
+    private int mOnSex;
     private Intent mIntent;
+
 
     //布局
     @Override
@@ -109,19 +112,7 @@ public class RegisterActivity extends BaseActivity {
                 }
             }
         });
-        mSex="女";
-        mRegGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton radbtn = (RadioButton) findViewById(checkedId);
-                mSex = radbtn.getText().toString();
-            }
-        });
-        if (mSex.matches("男")) {
-            mSex = 1 + "";
-        } else if (mSex.matches("女")) {
-            mSex = 2 + "";
-        }
+
     }
 
     //第三方控件  日期格式
@@ -134,6 +125,9 @@ public class RegisterActivity extends BaseActivity {
                 RegisterActivity.this.mRegTxtDte.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        //设置起始日期和结束日期
+        DatePicker datePicker = datePickerDialog.getDatePicker();
+        datePicker.setMaxDate(System.currentTimeMillis());
         datePickerDialog.show();
 
     }
@@ -145,6 +139,15 @@ public class RegisterActivity extends BaseActivity {
             default:
                 break;
             case R.id.reg_button://注册按钮
+
+                for (int i = 0; i < mRegGroup.getChildCount(); i++) {
+                    RadioButton childAt = (RadioButton) mRegGroup.getChildAt(i);
+                    if (childAt.isChecked()) {
+                        mText = childAt.getText().toString();
+                        break;
+                    }
+                    mOnSex = SexUtils.onSex(mText);
+                }
                 if (!JudgeNetWorkUtils.hasNetwork(this)) {
                     ToastUtil.showToast("无可用网络，请检查网络是否连接");
                 } else {
@@ -172,7 +175,7 @@ public class RegisterActivity extends BaseActivity {
         String name = mRegTxtNick.getText().toString().trim();
         String date = mRegTxtDte.getText().toString().trim();
         mPhone = mRegTxtPho.getText().toString().trim();
-        String email = mRegTxtEml.getText().toString().trim();
+        final String email = mRegTxtEml.getText().toString().trim();
         mPwd = mRegTxtPwd.getText().toString().trim();
         //判断昵称
         if (TextUtils.isEmpty(name)) {
@@ -181,13 +184,13 @@ public class RegisterActivity extends BaseActivity {
 
         //手机号
         String REGEX = "[1][3458]\\d{9}";
-        if (TextUtils.isEmpty(mPhone) || !mPhone.matches(REGEX)||mPhone.length()!=11) {
+        if (TextUtils.isEmpty(mPhone) || !mPhone.matches(REGEX)) {
             ToastUtil.showToast("请正确输入手机号格式");
         }
         //邮箱
-        String EMAIL = "^[A-Za-z0-9][\\w\\._]*[a-zA-Z0-9]+@[A-Za-z0-9-_]+\\.([A-Za-z]{2,4})";
-        if (TextUtils.isEmpty(email) || !email.matches(EMAIL)) {
-            ToastUtil.showToast("请正确输入邮箱格式");
+        final String EMAIL = "^[A-Za-z0-9][\\w._]*[a-zA-Z0-9]+@[A-Za-z0-9-_]+\\.([A-Za-z]{2,4})";
+        if (TextUtils.isEmpty(email) || !TextUtils.isEmpty(EMAIL)){
+            ToastUtil.showToast("请输入正确的邮箱格式！");
         }
 
         if (TextUtils.isEmpty(mPwd) || mPwd.length() < 6) {
@@ -197,7 +200,7 @@ public class RegisterActivity extends BaseActivity {
         //密码加密
         mEncrypt_pwd = EncryptUtil.encrypt(mPwd);
         map.put(UserApis.REG_KEY_NICKNAME, name);
-        map.put(UserApis.REG_KEY_SEX, mSex);
+        map.put(UserApis.REG_KEY_SEX, mOnSex + "");
         map.put(UserApis.REG_KEY_PHONE, mPhone);
         map.put(UserApis.REG_KEY_PWD, mEncrypt_pwd);
         map.put(UserApis.REG_KEY_BIRTHDAY, date);
@@ -212,7 +215,6 @@ public class RegisterActivity extends BaseActivity {
      *
      * @param object
      */
-
     @Override
     protected void netSuccess(Object object) {
         if (object instanceof RegisterBean) {
@@ -225,7 +227,7 @@ public class RegisterActivity extends BaseActivity {
                 map.put(UserApis.LOGIN_KEY_PHONE, mPhone);
                 map.put(UserApis.LOGIN_KEY_PWD, mEncrypt_pwd);
                 doPost(Apis.LOGIN_URL, map, LoginBean.class);
-            }else {
+            } else {
                 ToastUtil.showToast(registerBean.getMessage());
                 mCustomDialog.show();
                 Handler handler = new Handler();
@@ -275,7 +277,7 @@ public class RegisterActivity extends BaseActivity {
                 mCustomDialog.dismiss();
             }
         }, 1000);
-        ToastUtil.showToast("阿欧："+s);
+        ToastUtil.showToast("请输入完整信息");
     }
 
 }

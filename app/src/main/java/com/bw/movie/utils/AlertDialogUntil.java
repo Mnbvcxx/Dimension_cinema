@@ -23,9 +23,9 @@ public class AlertDialogUntil {
         //添加"Yes"按钮
 //添加取消
         alertDialogLogin = new AlertDialog.Builder(context)
-                .setTitle("未登录")
+                .setTitle("请选择")
                 .setMessage("您尚未登录，是否现在去登陆?")
-                .setIcon(R.mipmap.ic_launcher)
+                .setIcon(R.mipmap.icon)
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {//添加"Yes"按钮
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -55,9 +55,9 @@ public class AlertDialogUntil {
         //添加"Yes"按钮
 //添加取消
         alertDialogMy = new AlertDialog.Builder(context)
-                .setTitle("未登录")
+                .setTitle("请选择")
                 .setMessage("您尚未登录，是否现在去登陆?")
-                .setIcon(R.mipmap.ic_launcher)
+                .setIcon(R.mipmap.icon)
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {//添加"Yes"按钮
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -70,7 +70,7 @@ public class AlertDialogUntil {
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {//添加取消
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        ToastUtil.showToast("您已选则取消");
+                        ToastUtil.showToast("您已选择取消");
                         alertDialogMy.dismiss();
                     }
                 })

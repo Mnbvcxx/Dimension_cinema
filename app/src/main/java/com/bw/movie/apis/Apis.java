@@ -91,5 +91,7 @@ public class Apis {
     public static final String USER_NEW_VERSION="tool/v1/findNewVersion";
     //系统消息读取状态修改
     public static final String USER_GET_NEW_VERSION="tool/v1/verify/changeSysMsgStatus?id=";
+    //信鸽推送
+    public static final String USER_POST_TOKEN="tool/v1/verify/uploadPushToken";
 
 }

@@ -21,10 +21,13 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.bean.ToKenBean;
 import com.bw.movie.activity.fragment.myactivity.bean.InfoHeadBean;
 import com.bw.movie.activity.fragment.myactivity.bean.MessageInfoBean;
 import com.bw.movie.apis.Apis;
+import com.bw.movie.apis.UserApis;
 import com.bw.movie.base.BaseActivity;
+import com.bw.movie.movie.fragment.cinemaActivity.bean.EventBusName;
 import com.bw.movie.register.bean.RegisterBean;
 import com.bw.movie.utils.DateUtils;
 import com.bw.movie.utils.EncryptUtil;
@@ -32,7 +35,10 @@ import com.bw.movie.utils.FileImageUntils;
 import com.bw.movie.utils.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,6 +71,7 @@ public class InfoActivity extends BaseActivity {
     private WindowManager.LayoutParams mParams;
     private String mInfoemail;
     private String mNewEmail;
+    private Object mToKen;
 
     @Override
     protected int getLayoutId() {
@@ -158,9 +165,9 @@ public class InfoActivity extends BaseActivity {
                     ToastUtil.showToast("新密码最低由六位数字组成！");
                 } else if (aginpwd.length() < 6 || TextUtils.isEmpty(aginpwd)) {
                     ToastUtil.showToast("重输新密码最低由六位数字组成！");
-                } else if (oldpwd==newpwd){
+                } else if (oldpwd == newpwd) {
                     ToastUtil.showToast("新旧密码不能一样");
-                }else {
+                } else {
                     String encrypt_old = EncryptUtil.encrypt(oldpwd);
                     String encrypt_new = EncryptUtil.encrypt(newpwd);
                     String encrypt_agin = EncryptUtil.encrypt(aginpwd);
@@ -378,6 +385,10 @@ public class InfoActivity extends BaseActivity {
         if (object instanceof RegisterBean) {
             RegisterBean registerBean = (RegisterBean) object;
             if (registerBean.getStatus().equals("0000")) {
+                Map<String, String> map = new HashMap<>();
+                map.put(UserApis.TOKEN_KEY, mToKen + "");
+                map.put(UserApis.OS_KEY, 1 + "");
+                doPost(Apis.USER_POST_TOKEN, map, ToKenBean.class);
                 ToastUtil.showToast(registerBean.getMessage());
                 userWindow.dismiss();
                 pwdWindow.dismiss();
@@ -389,8 +400,18 @@ public class InfoActivity extends BaseActivity {
                 ToastUtil.showToast(registerBean.getMessage());
             }
         }
+        if (object instanceof ToKenBean){
+            ToKenBean toKenBean = (ToKenBean) object;
+            if (toKenBean.getStatus().equals("0000")){
+                ToastUtil.showToast(toKenBean.getMessage());
+            }
+        }
     }
 
+    @Subscribe(sticky = true)
+    public void onLoginName(EventBusName eventBusName) {
+        mToKen = eventBusName.getToKen();
+    }
 
     //动态权限
     private void initPermission() {
