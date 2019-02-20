@@ -36,6 +36,8 @@ import com.bw.movie.utils.IntentUtils;
 import com.bw.movie.utils.JudgeNetWorkUtils;
 import com.bw.movie.utils.ToastUtil;
 import com.bw.movie.utils.WeiXinUtil;
+import com.tencent.android.tpush.XGIOperateCallback;
+import com.tencent.android.tpush.XGPushManager;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 
 import org.greenrobot.eventbus.EventBus;
@@ -83,6 +85,7 @@ public class LoginActivity extends BaseActivity {
     private String mPwd;
     private Intent mIntent;
     private CustomDialog mCustomDialog;
+    private String mDataToKen;
 
     //布局
     @Override
@@ -152,6 +155,19 @@ public class LoginActivity extends BaseActivity {
                     mEdit.clear();
                     mEdit.commit();
                 }
+                //信鸽推送获取本机token值
+                XGPushManager.registerPush(this, new XGIOperateCallback() {
+                    @Override
+                    public void onSuccess(Object data, int flag) {
+                        mDataToKen = (String) data;
+                        Log.d("TPush", "注册成功，设备token为：" + mDataToKen);
+                    }
+                    @Override
+                    public void onFail(Object data, int errCode, String msg) {
+                        Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+                    }
+                });
+
                 ToastUtil.showToast(loginBean.getMessage());
                 //通过eventbus保存userid、sessionid
                 MoveSeatUserID moveSeatUserID = new MoveSeatUserID();
@@ -165,6 +181,7 @@ public class LoginActivity extends BaseActivity {
                 String headPic = userInfo.getHeadPic();
                 eventBusName.setNickName(nickName);
                 eventBusName.setHeadPic(headPic);
+                eventBusName.setToKen(mDataToKen);
                 EventBus.getDefault().postSticky(eventBusName);
                 mSP.edit()
                         .putString("userId", loginBean.getResult().getUserId() + "")

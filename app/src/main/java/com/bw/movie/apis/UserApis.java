@@ -49,4 +49,10 @@ public class UserApis {
     public static final String COMMENT_COMMENTID_KEY = "commentId";
     public static final String COMMENT_REPLYCONTENT_COMMENTCONTENT_KEY = "replyContent";
 
+    /**
+     * 信鸽推送
+     */
+    public static final String TOKEN_KEY = "token";
+    public static final String OS_KEY = "os";
+
 }
