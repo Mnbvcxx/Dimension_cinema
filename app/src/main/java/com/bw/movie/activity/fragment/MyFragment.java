@@ -1,5 +1,6 @@
 package com.bw.movie.activity.fragment;
 
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -12,6 +13,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.activity.MainActivity;
 import com.bw.movie.activity.fragment.myactivity.AttentionActivity;
 import com.bw.movie.activity.fragment.myactivity.FeedBacksActivity;
 import com.bw.movie.activity.fragment.myactivity.InfoActivity;
@@ -91,7 +94,6 @@ public class MyFragment extends Fragment implements MyView {
     private MyPresenter mMyPresenter;
     private NewVersionBean mVersionBean;
     private CustomDialog mCustomDialog;
-
     private SharedPreferences sharedPreferences;
     private Editor editor;
     private String mUserId;
@@ -103,6 +105,7 @@ public class MyFragment extends Fragment implements MyView {
         View view = inflater.inflate(R.layout.fragment_my, container, false);
         mCustomDialog = new CustomDialog(getActivity());
         mCustomDialog.show();//显示,显示时页面不可点击,只能点击返回
+
         /**
          * 通过handler进行延时
          */
@@ -117,12 +120,16 @@ public class MyFragment extends Fragment implements MyView {
         unbinder = ButterKnife.bind(this, view);
         mMyPresenter = new MyPresenter(this);
         //根据用户ID查询用户信息
-        mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
+        if (mUserId==null&&mSessionId==null){
+            AlertDialogUntil.AlertDialog(getActivity());
+        }else {
+            mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
+        }
+
         sharedPreferences = getActivity().getSharedPreferences("config", MODE_PRIVATE);
         editor = sharedPreferences.edit();
         return view;
     }
-
     //点击事件
     @OnClick({R.id.my_message, R.id.my_icon, R.id.my_name, R.id.my_sign_in, R.id.my_info, R.id.my_attentions, R.id.my_rccord, R.id.my_feedbacks, R.id.my_version, R.id.my_logout})
     public void onClick(View v) {
@@ -140,6 +147,11 @@ public class MyFragment extends Fragment implements MyView {
                 break;
             case R.id.my_sign_in:
                 mMyPresenter.onGetDatas(Apis.USER_SIGNIN_URL, RegisterBean.class);
+                if (mUserId==null&&mSessionId==null){
+                    AlertDialogUntil.AlertDialog(getActivity());
+                }else {
+                    mMyPresenter.onGetDatas(Apis.USER_SIGNIN_URL,RegisterBean.class);
+                }
                 break;
             case R.id.my_info:
                 ToastUtil.showToast("点击了我的信息");
