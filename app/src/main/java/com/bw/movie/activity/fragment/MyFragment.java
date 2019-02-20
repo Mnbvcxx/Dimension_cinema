@@ -26,7 +26,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import com.bw.movie.R;
-import com.bw.movie.activity.activity.MainActivity;
 import com.bw.movie.activity.fragment.myactivity.AttentionActivity;
 import com.bw.movie.activity.fragment.myactivity.FeedBacksActivity;
 import com.bw.movie.activity.fragment.myactivity.InfoActivity;
@@ -35,7 +34,6 @@ import com.bw.movie.activity.fragment.myactivity.RecordActivity;
 import com.bw.movie.activity.fragment.myactivity.bean.MessageInfoBean;
 import com.bw.movie.activity.fragment.myactivity.bean.NewVersionBean;
 import com.bw.movie.apis.Apis;
-import com.bw.movie.base.BaseActivity;
 import com.bw.movie.login.LoginActivity;
 import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatUserID;
 import com.bw.movie.mvc.presenter.MyPresenter;
@@ -46,7 +44,6 @@ import com.bw.movie.utils.CustomDialog;
 import com.bw.movie.utils.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.BufferedInputStream;
@@ -119,17 +116,12 @@ public class MyFragment extends Fragment implements MyView {
         //绑定ButterKnife
         unbinder = ButterKnife.bind(this, view);
         mMyPresenter = new MyPresenter(this);
-        //根据用户ID查询用户信息
-        if (mUserId==null&&mSessionId==null){
-            AlertDialogUntil.AlertDialog(getActivity());
-        }else {
-            mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
-        }
-
+        mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
         sharedPreferences = getActivity().getSharedPreferences("config", MODE_PRIVATE);
         editor = sharedPreferences.edit();
         return view;
     }
+
     //点击事件
     @OnClick({R.id.my_message, R.id.my_icon, R.id.my_name, R.id.my_sign_in, R.id.my_info, R.id.my_attentions, R.id.my_rccord, R.id.my_feedbacks, R.id.my_version, R.id.my_logout})
     public void onClick(View v) {
@@ -147,11 +139,7 @@ public class MyFragment extends Fragment implements MyView {
                 break;
             case R.id.my_sign_in:
                 mMyPresenter.onGetDatas(Apis.USER_SIGNIN_URL, RegisterBean.class);
-                if (mUserId==null&&mSessionId==null){
-                    AlertDialogUntil.AlertDialog(getActivity());
-                }else {
-                    mMyPresenter.onGetDatas(Apis.USER_SIGNIN_URL,RegisterBean.class);
-                }
+                mMyPresenter.onGetDatas(Apis.USER_SIGNIN_URL, RegisterBean.class);
                 break;
             case R.id.my_info:
                 ToastUtil.showToast("点击了我的信息");
@@ -341,19 +329,9 @@ public class MyFragment extends Fragment implements MyView {
         startActivity(intent);
     }
 
-    public void loginString(String userId,String sessionId,Class activity){
-        if (userId==null&&sessionId==null){
-            AlertDialogUntil.AlertDialog(getActivity());
-        }else {
-            Intent intent = new Intent(getActivity(), activity);
-            startActivity(intent);
-        }
-
-    }
-
     @Subscribe(sticky = true)
-    public void onLoginIntent(MoveSeatUserID moveSeatUserID){
-         mUserId = moveSeatUserID.getUserId()+"";
-         mSessionId = moveSeatUserID.getSessionId();
+    public void onLoginIntent(MoveSeatUserID moveSeatUserID) {
+        mUserId = moveSeatUserID.getUserId() + "";
+        mSessionId = moveSeatUserID.getSessionId();
     }
 }
