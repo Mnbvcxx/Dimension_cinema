@@ -228,6 +228,7 @@ public class SeatActivity extends BaseActivity {
                 Intent intent = new Intent(this, RecordActivity.class);
                 //获取订单号
                 intent.putExtra("orderId", moveTicketBean.getOrderId() + "");
+                Log.i("TAG","订单号=="+moveTicketBean.getOrderId() + "");
                 startActivity(intent);
                 finish();
             } else {
