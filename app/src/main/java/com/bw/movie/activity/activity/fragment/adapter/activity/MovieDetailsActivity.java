@@ -36,12 +36,17 @@ import com.bw.movie.activity.activity.fragment.adapter.bean.DetailsMovieBean;
 import com.bw.movie.activity.activity.fragment.adapter.bean.ReviewsBean;
 import com.bw.movie.apis.Apis;
 import com.bw.movie.apis.UserApis;
+import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatUserID;
 import com.bw.movie.mvc.presenter.MyPresenter;
 import com.bw.movie.mvc.view.MyView;
 import com.bw.movie.register.bean.EvaluateCommentBean;
 import com.bw.movie.register.bean.RegisterBean;
+import com.bw.movie.utils.AlertDialogUntil;
 import com.bw.movie.utils.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -127,6 +132,9 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
         ButterKnife.bind(this);
+        if (!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().register(this);
+        }
         mMyPresenter = new MyPresenter(this);
         mReviewPpRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         Intent intent = getIntent();
@@ -327,7 +335,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
     }
 
     /**
-     * 查看回复的消息
+     * 查看评论回复的消息
      * @param commentImageView
      * @param result
      */
@@ -352,7 +360,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
                 popupWindow.dismiss();
             }
         });
-        //评论
+        //对回复的评论
         commentPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -362,23 +370,28 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
         //recycler列表
         //布局
         commentRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        //TODO:适配器
-        CommentRecyclerAdapter commentRecyclerAdapter = new CommentRecyclerAdapter(this, result);
-        //回复的点赞
-        commentRecyclerAdapter.setOnClickedListener(new CommentRecyclerAdapter.onClickedListener() {
-            @Override
-            public void onChecled(int position, ImageView imageView) {
-                Map<String, String> map = new HashMap<>();
-                map.put(UserApis.FILM_COMMENT_DZ, position + "");
-                mMyPresenter.onPostDatas(Apis.COMMENT_DZ_URL, map, CommentLikeBean.class);
-                imageView.setImageResource(R.mipmap.com_icon_praise_selected);
-            }
-        });
-        commentRecycler.setAdapter(commentRecyclerAdapter);
+        if (result!=null) {
+            //TODO:适配器
+            CommentRecyclerAdapter commentRecyclerAdapter = new CommentRecyclerAdapter(this, result);
+            //评论回复的列表点赞
+            commentRecyclerAdapter.setOnClickedListener(new CommentRecyclerAdapter.onClickedListener() {
+                @Override
+                public void onChecled(int position, ImageView imageView) {
+                    Map<String, String> map = new HashMap<>();
+                    map.put(UserApis.FILM_COMMENT_DZ, position + "");
+                    mMyPresenter.onPostDatas(Apis.COMMENT_DZ_URL, map, CommentLikeBean.class);
+                    imageView.setImageResource(R.mipmap.com_icon_praise_selected);
+                }
+            });
+            commentRecycler.setAdapter(commentRecyclerAdapter);
+        }
+        else {
+            ToastUtil.showToast("还未有回复哦");
+        }
     }
 
     /**
-     * 回复评论
+     * 用户对评论的回复进行评论
      */
     private void initCommentPublish() {
             View view = LayoutInflater.from(this).inflate(R.layout.publish_popup_view, null, false);
@@ -398,6 +411,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
                     Map<String, String> map = new HashMap<>();
                     map.put(UserApis.COMMENT_COMMENTID_KEY, mCommentId + "");
                     map.put(UserApis.COMMENT_REPLYCONTENT_COMMENTCONTENT_KEY, mPubEdTxt.getText().toString().trim());
+                   //添加用户对评论的回复
                     mMyPresenter.onPostDatas(Apis.USER_COMMENT_REPLY_URL, map, CommentLikeBean.class);
                     popupWindow.dismiss();
                 }
@@ -445,17 +459,22 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
                 mReviewAdapter.setOnClickedListener(new MyDetaillsReviewAdapter.onClickedListener() {
                     @Override
                     public void onChecled(int position, ImageView imageView) {
-                        Map<String, String> map = new HashMap<>();
-                        map.put(UserApis.FILM_COMMENT_DZ, position + "");
-                        mMyPresenter.onPostDatas(Apis.COMMENT_DZ_URL, map, RegisterBean.class);
-                        imageView.setImageResource(R.mipmap.com_icon_praise_selected);
-
+                        //判断是否登录
+                        if (mUserId==null&&mSessionId==null){
+                            AlertDialogUntil.AlertDialogMy(MovieDetailsActivity.this);
+                        }else {
+                            //评论点赞
+                            Map<String, String> map = new HashMap<>();
+                            map.put(UserApis.FILM_COMMENT_DZ, position + "");
+                            mMyPresenter.onPostDatas(Apis.COMMENT_DZ_URL, map, RegisterBean.class);
+                            imageView.setImageResource(R.mipmap.com_icon_praise_selected);
+                        }
                     }
-                    //查看回复的信息
+                    //查看评论回复的信息
                     @Override
                     public void onComment(int position,ImageView commentImageView) {
                         mPosition1 = position;
-                        //访问接口
+                        //查看影片评论回复
                         mMyPresenter.onGetDatas(Apis.CINEMA_EVALUATE_COMMENT+"?commentId="+ mPosition1 +"&page="+1+"&count="+10,EvaluateCommentBean.class);
                         mCommentImageView1 = commentImageView;
                     }
@@ -471,25 +490,26 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
                 ToastUtil.showToast("不能重复点赞");
             }
         }else if (data instanceof EvaluateCommentBean){
-            //查询影片评论回复
+            //查询评论回复
             EvaluateCommentBean commentBean=(EvaluateCommentBean)data;
             if (commentBean.getStatus().equals("0000")) {
                 if (commentBean.getResult() == null) {
                     ToastUtil.showToast("暂时还未有回复");
+                    initCommentPopup(mCommentImageView1, null);
                 } else {
                     List<EvaluateCommentBean.ResultBean> result = commentBean.getResult();
+                    //查看评论回复的popupwindow
                     initCommentPopup(mCommentImageView1, result);
                 }
             }
         }else if (data instanceof CommentLikeBean){
-            //回复点赞的结果
+            //回复点赞、对评论的回复的结果
             CommentLikeBean commentLikeBean=(CommentLikeBean)data;
+            //如果回复成功，
             if (commentLikeBean.getStatus().equals("0000")){
                 mMyPresenter.onGetDatas(Apis.CINEMA_EVALUATE_COMMENT+"?commentId="+ mPosition1 +"&page="+1+"&count="+10,EvaluateCommentBean.class);
-                ToastUtil.showToast(commentLikeBean.getMessage());
-
         } else {
-            ToastUtil.showToast("不能重复点赞");
+            ToastUtil.showToast(commentLikeBean.getMessage());
         }
         }
     }
@@ -514,5 +534,14 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
                     }
                 }, AudioManager.STREAM_MUSIC,
                 AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+    }
+
+    private String mUserId;
+    private String mSessionId;
+    //得到userId、sessionId
+    @Subscribe(sticky = true)
+    public void onLoginIntent(MoveSeatUserID moveSeatUserID){
+        mUserId = moveSeatUserID.getUserId()+"";
+        mSessionId = moveSeatUserID.getSessionId();
     }
 }

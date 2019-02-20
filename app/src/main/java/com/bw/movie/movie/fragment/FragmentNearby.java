@@ -18,9 +18,15 @@ import com.bw.movie.movie.fragment.adapter.NearbyAdapter;
 import com.bw.movie.movie.fragment.adapter.RecommendedAdapter;
 import com.bw.movie.movie.fragment.bean.NearbyBean;
 import com.bw.movie.movie.fragment.bean.RecommendedBean;
+import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatUserID;
 import com.bw.movie.mvc.presenter.MyPresenter;
 import com.bw.movie.mvc.view.MyView;
 import com.bw.movie.register.bean.RegisterBean;
+import com.bw.movie.utils.AlertDialogUntil;
+import com.bw.movie.utils.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -47,6 +53,9 @@ public class FragmentNearby extends Fragment implements MyView {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_nearby, container, false);
+        if (!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().register(this);
+        }
         unbinder = ButterKnife.bind(this, view);
         mMyPresenter = new MyPresenter(this);
         mMyPresenter.onGetDatas(Apis.NEARBY_URL, NearbyBean.class);
@@ -72,15 +81,19 @@ public class FragmentNearby extends Fragment implements MyView {
                 mNearbyAdapter.setOnClickedListener(new NearbyAdapter.onClickedListener() {
                     @Override
                     public void onClicked(int position, ImageView imageView) {
-                        num++;
-                        if (num % 2 == 0) {
-                            //为偶数时取消关注
-                            mMyPresenter.onGetDatas(Apis.CANCELFOLLOW_CINEMA_ID_URL + position, RegisterBean.class);
-                            imageView.setImageResource(R.mipmap.com_icon_collection_default);
+                        if (mUserId == null && mSessionId == null) {
+                            AlertDialogUntil.AlertDialogMy(getActivity());
                         } else {
-                            //为奇数时关注成功
-                            mMyPresenter.onGetDatas(Apis.FOLLOW_CINEMA_ID_URL + position, RegisterBean.class);
-                            imageView.setImageResource(R.mipmap.com_icon_collection_selected);
+                            num++;
+                            if (num % 2 == 0) {
+                                //为偶数时取消关注
+                                mMyPresenter.onGetDatas(Apis.CANCELFOLLOW_CINEMA_ID_URL + position, RegisterBean.class);
+                                imageView.setImageResource(R.mipmap.com_icon_collection_default);
+                            } else {
+                                //为奇数时关注成功
+                                mMyPresenter.onGetDatas(Apis.FOLLOW_CINEMA_ID_URL + position, RegisterBean.class);
+                                imageView.setImageResource(R.mipmap.com_icon_collection_selected);
+                            }
                         }
                     }
                 });
@@ -95,6 +108,17 @@ public class FragmentNearby extends Fragment implements MyView {
 
     @Override
     public void onMyFailed(String error) {
-
+        ToastUtil.showToast(error);
+    }
+    /**
+     * 得到userid/sessionid
+     * @param moveSeatUserID
+     */
+    private String mUserId;
+    private String mSessionId;
+    @Subscribe(sticky = true)
+    public void onLoginIntent(MoveSeatUserID moveSeatUserID){
+        mUserId = moveSeatUserID.getUserId()+"";
+        mSessionId = moveSeatUserID.getSessionId();
     }
 }

@@ -18,10 +18,15 @@ import com.bw.movie.activity.activity.fragment.adapter.DetailsSoonAdapter;
 import com.bw.movie.activity.bean.FilmBean;
 import com.bw.movie.activity.bean.FilmComingSoonBean;
 import com.bw.movie.apis.Apis;
+import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatUserID;
 import com.bw.movie.mvc.presenter.MyPresenter;
 import com.bw.movie.mvc.view.MyView;
 import com.bw.movie.register.bean.RegisterBean;
+import com.bw.movie.utils.AlertDialogUntil;
 import com.bw.movie.utils.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -51,6 +56,9 @@ public class DetailsSoonFragment extends Fragment implements MyView {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_details_soon, container, false);
+        if (!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().register(this);
+        }
         unbinder = ButterKnife.bind(this, view);
         mMyPresenter = new MyPresenter(this);
         mMyPresenter.onGetDatas(Apis.MOVIE_COMINGSOON_URL, FilmComingSoonBean.class);
@@ -89,15 +97,19 @@ public class DetailsSoonFragment extends Fragment implements MyView {
                 mDetailsSoonAdapter.setOnCheckedListener(new DetailsSoonAdapter.onCheckedListener() {
                     @Override
                     public void onClicked(int position, ImageView imageView) {
-                        num++;
-                        if (num % 2 == 0) {
-                            //为偶数时取消关注
-                            mMyPresenter.onGetDatas(Apis.USER_MOVIE_CANCEL_URL + position, RegisterBean.class);
-                            imageView.setImageResource(R.mipmap.com_icon_collection_default);
-                        } else {
-                            //为奇数时关注成功
-                            mMyPresenter.onGetDatas(Apis.USER_MOVIE_ATTENTION_URL + position, RegisterBean.class);
-                            imageView.setImageResource(R.mipmap.com_icon_collection_selected);
+                        if (mUserId == null && mSessionId == null) {
+                            AlertDialogUntil.AlertDialogMy(getActivity());
+                        }else {
+                            num++;
+                            if (num % 2 == 0) {
+                                //为偶数时取消关注
+                                mMyPresenter.onGetDatas(Apis.USER_MOVIE_CANCEL_URL + position, RegisterBean.class);
+                                imageView.setImageResource(R.mipmap.com_icon_collection_default);
+                            } else {
+                                //为奇数时关注成功
+                                mMyPresenter.onGetDatas(Apis.USER_MOVIE_ATTENTION_URL + position, RegisterBean.class);
+                                imageView.setImageResource(R.mipmap.com_icon_collection_selected);
+                            }
                         }
                     }
                 });
@@ -116,5 +128,17 @@ public class DetailsSoonFragment extends Fragment implements MyView {
     @Override
     public void onMyFailed(String error) {
         ToastUtil.showToast(error);
+    }
+
+    /**
+     * 得到userid/sessionid
+     * @param moveSeatUserID
+     */
+    private String mUserId;
+    private String mSessionId;
+    @Subscribe(sticky = true)
+    public void onLoginIntent(MoveSeatUserID moveSeatUserID){
+        mUserId = moveSeatUserID.getUserId()+"";
+        mSessionId = moveSeatUserID.getSessionId();
     }
 }

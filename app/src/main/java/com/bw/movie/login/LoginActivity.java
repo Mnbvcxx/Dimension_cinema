@@ -27,6 +27,7 @@ import com.bw.movie.apis.Apis;
 import com.bw.movie.apis.UserApis;
 import com.bw.movie.base.BaseActivity;
 import com.bw.movie.login.bean.LoginBean;
+import com.bw.movie.movie.fragment.cinemaActivity.bean.EventBusName;
 import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatUserID;
 import com.bw.movie.register.activity.RegisterActivity;
 import com.bw.movie.utils.CustomDialog;
@@ -152,19 +153,19 @@ public class LoginActivity extends BaseActivity {
                     mEdit.commit();
                 }
                 ToastUtil.showToast(loginBean.getMessage());
-                mIntent = new Intent(LoginActivity.this, MainActivity.class);
-                //intent传值,后续会用到这些参数,尤其是我们的 RequestHeader  入参
-                mIntent.putExtra("userId", loginBean.getResult().getUserId()+"");
-                mIntent.putExtra("sessionId", loginBean.getResult().getSessionId());
-                mIntent.putExtra("nickName", loginBean.getResult().getUserInfo().getNickName());
-                mIntent.putExtra("headPic", loginBean.getResult().getUserInfo().getHeadPic());
-                mIntent.putExtra("phone", loginBean.getResult().getUserInfo().getPhone());
+                //通过eventbus保存userid、sessionid
                 MoveSeatUserID moveSeatUserID = new MoveSeatUserID();
                 moveSeatUserID.setUserId(loginBean.getResult().getUserId());
                 moveSeatUserID.setSessionId(loginBean.getResult().getSessionId());
                 EventBus.getDefault().postSticky(moveSeatUserID);
-                Log.i("TAG","moveSeatBean集合中的UserID="+moveSeatUserID);
-                startActivity(mIntent);
+               //通过eventbus保存昵称和头像，用到我的信息中
+                EventBusName eventBusName=new EventBusName();
+                LoginBean.ResultBean.UserInfoBean userInfo = loginBean.getResult().getUserInfo();
+                String nickName = userInfo.getNickName();
+                String headPic = userInfo.getHeadPic();
+                eventBusName.setNickName(nickName);
+                eventBusName.setHeadPic(headPic);
+                EventBus.getDefault().postSticky(eventBusName);
                 mSP.edit()
                         .putString("userId", loginBean.getResult().getUserId() + "")
                         .putString("sessionId", loginBean.getResult().getSessionId())

@@ -26,6 +26,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.activity.MainActivity;
 import com.bw.movie.activity.fragment.myactivity.AttentionActivity;
 import com.bw.movie.activity.fragment.myactivity.FeedBacksActivity;
 import com.bw.movie.activity.fragment.myactivity.InfoActivity;
@@ -34,7 +35,9 @@ import com.bw.movie.activity.fragment.myactivity.RecordActivity;
 import com.bw.movie.activity.fragment.myactivity.bean.MessageInfoBean;
 import com.bw.movie.activity.fragment.myactivity.bean.NewVersionBean;
 import com.bw.movie.apis.Apis;
+import com.bw.movie.base.BaseActivity;
 import com.bw.movie.login.LoginActivity;
+import com.bw.movie.movie.fragment.cinemaActivity.bean.EventBusName;
 import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatUserID;
 import com.bw.movie.mvc.presenter.MyPresenter;
 import com.bw.movie.mvc.view.MyView;
@@ -44,6 +47,7 @@ import com.bw.movie.utils.CustomDialog;
 import com.bw.movie.utils.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.BufferedInputStream;
@@ -100,11 +104,15 @@ public class MyFragment extends Fragment implements MyView {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my, container, false);
+        if (!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().register(this);
+        }
+
         mCustomDialog = new CustomDialog(getActivity());
         mCustomDialog.show();//显示,显示时页面不可点击,只能点击返回
 
         /**
-         * 通过handler进行延时
+         * 通过handler进行延时Dialog
          */
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -116,12 +124,10 @@ public class MyFragment extends Fragment implements MyView {
         //绑定ButterKnife
         unbinder = ButterKnife.bind(this, view);
         mMyPresenter = new MyPresenter(this);
-        mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
         sharedPreferences = getActivity().getSharedPreferences("config", MODE_PRIVATE);
         editor = sharedPreferences.edit();
         return view;
     }
-
     //点击事件
     @OnClick({R.id.my_message, R.id.my_icon, R.id.my_name, R.id.my_sign_in, R.id.my_info, R.id.my_attentions, R.id.my_rccord, R.id.my_feedbacks, R.id.my_version, R.id.my_logout})
     public void onClick(View v) {
@@ -130,36 +136,30 @@ public class MyFragment extends Fragment implements MyView {
                 break;
             case R.id.my_message:
                 ToastUtil.showToast("进入系统消息页面");
-                Intent message = new Intent(getActivity(), MessageActivity.class);
-                startActivity(message);
-                break;
-            case R.id.my_icon:
-                break;
-            case R.id.my_name:
+                loginString(this.mUserId,mSessionId,MessageActivity.class);
                 break;
             case R.id.my_sign_in:
-                mMyPresenter.onGetDatas(Apis.USER_SIGNIN_URL, RegisterBean.class);
-                mMyPresenter.onGetDatas(Apis.USER_SIGNIN_URL, RegisterBean.class);
+                if (mUserId==null&&mSessionId==null){
+                    AlertDialogUntil.AlertDialogMy(getActivity());
+                }else {
+                    mMyPresenter.onGetDatas(Apis.USER_SIGNIN_URL,RegisterBean.class);
+                }
                 break;
             case R.id.my_info:
                 ToastUtil.showToast("点击了我的信息");
-                Intent info = new Intent(getActivity(), InfoActivity.class);
-                startActivity(info);
+                loginString(this.mUserId,mSessionId,InfoActivity.class);
                 break;
             case R.id.my_attentions:
-                ToastUtil.showToast("进入我的页面");
-                Intent attent = new Intent(getActivity(), AttentionActivity.class);
-                startActivity(attent);
+                ToastUtil.showToast("进入我的关注页面");
+                loginString(this.mUserId,mSessionId,AttentionActivity.class);
                 break;
             case R.id.my_rccord:
                 ToastUtil.showToast("进入购票记录页面");
-                Intent record = new Intent(getActivity(), RecordActivity.class);
-                startActivity(record);
+                loginString(this.mUserId,mSessionId,RecordActivity.class);
                 break;
             case R.id.my_feedbacks:
                 ToastUtil.showToast("进入页面反馈页面");
-                Intent feedbacks = new Intent(getActivity(), FeedBacksActivity.class);
-                startActivity(feedbacks);
+                loginString(this.mUserId,mSessionId,FeedBacksActivity.class);
                 break;
             case R.id.my_version:
                 //请求网络
@@ -175,6 +175,9 @@ public class MyFragment extends Fragment implements MyView {
         }
     }
 
+    /**
+     * 解绑eventbus
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -329,9 +332,41 @@ public class MyFragment extends Fragment implements MyView {
         startActivity(intent);
     }
 
+    public void loginString(String userId,String sessionId,Class activity){
+        if (userId==null&&sessionId==null){
+            AlertDialogUntil.AlertDialogMy(getActivity());
+        }else {
+            Intent intent = new Intent(getActivity(), activity);
+            startActivity(intent);
+        }
+
+    }
+
+    /**
+     * 得到userid/sessionid
+     * @param moveSeatUserID
+     */
     @Subscribe(sticky = true)
-    public void onLoginIntent(MoveSeatUserID moveSeatUserID) {
-        mUserId = moveSeatUserID.getUserId() + "";
-        mSessionId = moveSeatUserID.getSessionId();
+    public void onLoginIntent(MoveSeatUserID moveSeatUserID){
+         mUserId = moveSeatUserID.getUserId()+"";
+         mSessionId = moveSeatUserID.getSessionId();
+    }
+    @Subscribe(sticky = true)
+    public void onLoginName(EventBusName eventBusName){
+        String nickName = eventBusName.getNickName();
+        String headPic = eventBusName.getHeadPic();
+        Uri parse = Uri.parse(headPic);
+        mMyIcon.setImageURI(parse);
+        mMyName.setText(nickName);
+
+    }
+
+    /**
+     * 刷新fragment
+     */
+    @Override
+    public void onStart() {
+        super.onStart();
+        mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
     }
 }

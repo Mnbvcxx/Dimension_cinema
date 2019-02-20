@@ -22,6 +22,7 @@ import com.bw.movie.base.BaseActivity;
 import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatAmount;
 import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatUserID;
 import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveTicketBean;
+import com.bw.movie.utils.AlertDialogUntil;
 import com.bw.movie.utils.MD5Utils;
 import com.bw.movie.utils.ToastUtil;
 
@@ -160,6 +161,7 @@ public class SeatActivity extends BaseActivity {
             public void onClick(View v) {
                 //下单成功跳转到购票记录
                 //得到排期表，数量，sign
+
                 HashMap<String, String> map = new HashMap<>();
                 map.put("scheduleId", mScheduleId + "");
                 map.put("amount", mNum + "");
@@ -191,6 +193,9 @@ public class SeatActivity extends BaseActivity {
             mSpannableString = changTVsize(v + "");
             mSeatPrice.setText(mSpannableString);
         } else {
+            if (mNum>3){
+                mNum=3;
+            }
             double v = mMPrice * mNum;
             //保证总价为double
             BigDecimal bg = new BigDecimal(v);
@@ -226,7 +231,7 @@ public class SeatActivity extends BaseActivity {
                 startActivity(intent);
                 finish();
             } else {
-                ToastUtil.showToast(moveTicketBean.getMessage());
+                AlertDialogUntil.AlertDialogMy(this);
             }
         }
     }
