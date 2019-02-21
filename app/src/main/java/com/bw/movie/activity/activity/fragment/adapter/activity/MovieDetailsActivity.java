@@ -536,6 +536,20 @@ public class MovieDetailsActivity extends AppCompatActivity implements MyView {
                 AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // 视频回去的时候要暂停
+        ((AudioManager) getSystemService(
+                Context.AUDIO_SERVICE)).requestAudioFocus(
+                new AudioManager.OnAudioFocusChangeListener() {
+                    @Override
+                    public void onAudioFocusChange(int focusChange) {
+                    }
+                }, AudioManager.STREAM_MUSIC,
+                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+    }
+
     private String mUserId;
     private String mSessionId;
     //得到userId、sessionId

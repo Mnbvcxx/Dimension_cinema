@@ -12,6 +12,7 @@ import com.bw.movie.apis.Apis;
 import com.bw.movie.apis.UserApis;
 import com.bw.movie.base.BaseActivity;
 import com.bw.movie.login.bean.WXbean;
+import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveSeatUserID;
 import com.bw.movie.mvc.view.MyView;
 import com.bw.movie.utils.IntentUtils;
 import com.bw.movie.utils.ToastUtil;
@@ -20,6 +21,8 @@ import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -111,6 +114,11 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler,
         if (data instanceof WXbean) {
             WXbean wXbean = (WXbean) data;
             if (wXbean.getStatus().equals("0000")) {
+                //通过eventbus保存userid、sessionid
+                MoveSeatUserID moveSeatUserID = new MoveSeatUserID();
+                moveSeatUserID.setUserId(wXbean.getResult().getUserId());
+                moveSeatUserID.setSessionId(wXbean.getResult().getSessionId());
+                EventBus.getDefault().postSticky(moveSeatUserID);
                 ToastUtil.showToast(wXbean.getMessage());
                 mSP.edit()
                         .putString("userId", wXbean.getResult().getUserId() + "")
