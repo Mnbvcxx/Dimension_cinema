@@ -144,7 +144,6 @@ public class RegisterActivity extends BaseActivity {
                     RadioButton childAt = (RadioButton) mRegGroup.getChildAt(i);
                     if (childAt.isChecked()) {
                         mText = childAt.getText().toString();
-                        break;
                     }
                     mOnSex = SexUtils.onSex(mText);
                 }

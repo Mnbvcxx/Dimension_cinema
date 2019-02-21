@@ -41,6 +41,8 @@ import butterknife.OnClick;
  * @date:2019/1/29 desc:下单
  */
 public class SeatActivity extends BaseActivity {
+    private static final String TAG = "SeatActivity";
+
     @BindView(R.id.seat_begingtime)
     TextView mSeatBegingtime;
     @BindView(R.id.seat_endtime)
@@ -228,6 +230,7 @@ public class SeatActivity extends BaseActivity {
                 Intent intent = new Intent(this, RecordActivity.class);
                 //获取订单号
                 intent.putExtra("orderId", moveTicketBean.getOrderId() + "");
+                Log.i(TAG,"订单号---"+moveTicketBean.getOrderId() );
                 startActivity(intent);
                 finish();
             } else {
@@ -254,8 +257,5 @@ public class SeatActivity extends BaseActivity {
         }
         return spannableString;
     }
-
-    //得到userID
-
 
 }
