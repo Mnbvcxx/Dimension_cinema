@@ -183,6 +183,9 @@ public class LoginActivity extends BaseActivity {
                 eventBusName.setHeadPic(headPic);
                 eventBusName.setToKen(mDataToKen);
                 EventBus.getDefault().postSticky(eventBusName);
+                //跳转
+                mIntent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(mIntent);
                 mSP.edit()
                         .putString("userId", loginBean.getResult().getUserId() + "")
                         .putString("sessionId", loginBean.getResult().getSessionId())

@@ -172,12 +172,7 @@ public class RecordActivity extends BaseActivity {
         mRecordWaitAdapter = new Record_Wait_Adapter(this);
         mRecordRecyclerWait.setAdapter(mRecordWaitAdapter);
         //弹出popupwindow
-        mRecordWaitAdapter.setWaitCallBack(new Record_Wait_Adapter.WaitCallBack() {
-            @Override
-            public void waitcallback(String price) {
-                initpopup(price);
-            }
-        });
+
         //网络请求
         doGetData(Apis.RECORD_ACTIVITY + ONE, RecordBean.class);
     }
@@ -195,16 +190,24 @@ public class RecordActivity extends BaseActivity {
                 mRecordFinshAdapter = new Record_Finsh_Adapter(this);
                 mRecordRecyclerFinsh.setAdapter(mRecordFinshAdapter);
                 mResult = recordBean.getResult();
+                //得到订单号
+                mRecordWaitAdapter.setWaitCallBack(new Record_Wait_Adapter.WaitCallBack() {
+                    @Override
+                    public void waitcallback(double price,int position) {
+                            mOrderId = mResult.get(position).getOrderId();
+                            initpopup(price);
+                    }
+                });
+
                 mRecordWaitAdapter.setMjihe(mResult);
                 mRecordFinshAdapter.setMjihe(mResult);
             }
         } else if (object instanceof RecordPayBean) {//支付
             final RecordPayBean recordPayBean = (RecordPayBean) object;
-            ToastUtil.showToast("支付情况------" + recordPayBean);
             if (recordPayBean.getStatus().equals("0000")) {
                 Log.i(TAG, "支付宝信息---" + recordPayBean.getResult());
                 mPopupWindow.dismiss();
-                if (recordPayBean.getResult().length() > 0) {
+                if (recordPayBean.getResult() != null) {
                     //支付宝支付
                     Runnable payRunnable = new Runnable() {
                         @Override
@@ -247,7 +250,7 @@ public class RecordActivity extends BaseActivity {
     private Button popup_button;
     int payType;
 
-    private void initpopup(String price) {
+    private void initpopup(double price) {
         mView = View.inflate(this, R.layout.seat_ok_popup, null);
 
         popup_request = (ImageView) mView.findViewById(R.id.popup_request);
@@ -255,7 +258,7 @@ public class RecordActivity extends BaseActivity {
         popup_zhi = (CheckBox) mView.findViewById(R.id.popup_zhi);
         popup_button = (Button) mView.findViewById(R.id.popup_button);
         //得到价钱
-        mSpannableString = changTVsize(price);
+        mSpannableString = changTVsize(String.valueOf(price));
         popup_button.setText("微信支付" + mSpannableString + "元");
         mPopupWindow = new PopupWindow(mView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, true);
         mPopupWindow.showAtLocation(mView, Gravity.BOTTOM, 0, 0);
@@ -287,11 +290,6 @@ public class RecordActivity extends BaseActivity {
         popup_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = getIntent();
-                //得到订单号
-                for (int i = 0; i < mResult.size(); i++) {
-                    mOrderId = mResult.get(i).getOrderId();
-                }
                 HashMap<String, String> map = new HashMap<>();
                 //如果微信选中，payType==1；
                 if (popup_wei.isChecked()) {

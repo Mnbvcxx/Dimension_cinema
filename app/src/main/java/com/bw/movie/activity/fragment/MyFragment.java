@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -168,10 +169,11 @@ public class MyFragment extends Fragment implements MyView {
                 break;
             case R.id.my_logout:
                 //清空跳转到登录页
-                editor.clear();
-                editor.commit();
+                //editor.clear();
+                //editor.commit();
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
+                getActivity().finish();
                 break;
         }
     }
@@ -370,5 +372,35 @@ public class MyFragment extends Fragment implements MyView {
     public void onStart() {
         super.onStart();
         mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getFourse();
+    }
+
+    long exitTime = 0;
+    //  点击返回键回退到首页的fragment
+    private void getFourse() {
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+
+                    if ((System.currentTimeMillis() - exitTime) > 1000) {
+                        Toast.makeText(getActivity(), "再按一次退出", Toast.LENGTH_SHORT).show();
+                        exitTime = System.currentTimeMillis();
+                    } else {
+                        getActivity().finish();
+                        System.exit(0);
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 }

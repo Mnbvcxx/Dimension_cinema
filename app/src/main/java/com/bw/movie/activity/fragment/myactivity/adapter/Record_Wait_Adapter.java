@@ -53,12 +53,13 @@ public class Record_Wait_Adapter extends RecyclerView.Adapter<Record_Wait_Adapte
         viewHolder.wait_time.setText("时间："+createTime+"-"+endTime);
         viewHolder.wait_amount.setText("数量："+mjihe.get(i).getAmount());
         viewHolder.wait_price.setText("金额："+mjihe.get(i).getPrice()*mjihe.get(i).getAmount());
+        final double price = (mjihe.get(i).getPrice()*mjihe.get(i).getAmount());
         //付款的点击事件
         viewHolder.wait_butt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mWaitCallBack!=null){
-                    mWaitCallBack.waitcallback(mjihe.get(i).getPrice()*mjihe.get(i).getAmount()+"");
+                    mWaitCallBack.waitcallback(price,i);
                 }
             }
         });
@@ -87,7 +88,7 @@ public class Record_Wait_Adapter extends RecyclerView.Adapter<Record_Wait_Adapte
     }
 
     public interface WaitCallBack{
-        void waitcallback(String price);
+        void waitcallback(double price,int position);
     }
     public WaitCallBack mWaitCallBack;
 
