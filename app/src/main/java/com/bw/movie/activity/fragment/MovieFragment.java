@@ -16,6 +16,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -297,5 +298,34 @@ public class MovieFragment extends Fragment implements MyView {
                     break;
             }
         }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        getFourse();
+    }
+
+    long exitTime = 0;
+    //  点击返回键回退到首页的fragment
+    private void getFourse() {
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+
+                    if ((System.currentTimeMillis() - exitTime) > 1000) {
+                        Toast.makeText(getActivity(), "再按一次退出", Toast.LENGTH_SHORT).show();
+                        exitTime = System.currentTimeMillis();
+                    } else {
+                        getActivity().finish();
+                        System.exit(0);
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 }

@@ -185,7 +185,6 @@ public class LoginActivity extends BaseActivity {
                 eventBusName.setHeadPic(mHeadPic);
                 eventBusName.setToKen(mDataToKen);
                 EventBus.getDefault().postSticky(eventBusName);
-                //跳转
                 mIntent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(mIntent);
                 mSP.edit()
