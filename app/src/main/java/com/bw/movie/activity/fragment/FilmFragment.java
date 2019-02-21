@@ -1,17 +1,23 @@
 package com.bw.movie.activity.fragment;
 
+import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +28,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.bw.movie.R;
 import com.bw.movie.activity.activity.FilmDetailsActivity;
+import com.bw.movie.activity.activity.MainActivity;
 import com.bw.movie.activity.adapter.CinemaFlowAdapter;
 import com.bw.movie.activity.adapter.MyFilmCinemaxAdapter;
 import com.bw.movie.activity.adapter.MyFilmComingSoonAdapter;
@@ -63,7 +74,7 @@ import static android.view.View.VISIBLE;
  * desc :   影片  页面
  */
 public class FilmFragment extends Fragment implements MyView, View.OnClickListener {
-
+    private static final String TAG = "FilmFragment";
     @BindView(R.id.film_ress)
     ImageView mFilmRess;
     @BindView(R.id.film_ress_name)
@@ -128,6 +139,8 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
     private MyMovieSeachAdapter mMyMovieSeachAdapter;
     private int num;
     private CustomDialog mCustomDialog;
+    private AMapLocationClient mLocationClient;
+    private AMapLocationClientOption mLocationOption;
 
     @Nullable
     @Override
@@ -158,8 +171,78 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
             mFilmJijRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
 
         }
+
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {//未开启定位权限
+            //开启定位权限,200是标识码
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 200);
+        } else {
+            startLocaion();//进入页面开始定位
+            Toast.makeText(getActivity(), "已开启定位权限", Toast.LENGTH_LONG).show();
+        }
         return view;
     }
+
+    private void startLocaion() {
+        mLocationClient = new AMapLocationClient(getContext());
+        mLocationClient.setLocationListener(mLocationListener);
+
+        mLocationOption = new AMapLocationClientOption();
+        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        //设置是否返回地址信息（默认返回地址信息）
+        mLocationOption.setNeedAddress(true);
+        //获取一次定位结果：
+        //该方法默认为false。
+        mLocationOption.setOnceLocation(true);
+        //设置是否允许模拟位置,默认为false，不允许模拟位置
+        mLocationOption.setMockEnable(false);
+
+        //给定位客户端对象设置定位参数
+        mLocationClient.setLocationOption(mLocationOption);
+        //启动定位
+        mLocationClient.startLocation();
+    }
+
+
+    private String mCity;
+    private SharedPreferences mSP;
+    //声明定位回调监听器
+    public AMapLocationListener mLocationListener = new AMapLocationListener() {
+        @Override
+        public void onLocationChanged(AMapLocation amapLocation) {
+            if (amapLocation != null) {
+                if (amapLocation.getErrorCode() == 0) {
+                    //定位成功回调信息，设置相关消息
+                    Log.i(TAG, "当前定位结果来源-----" + amapLocation.getLocationType());//获取当前定位结果来源，如网络定位结果，详见定位类型表
+                    Log.i(TAG, "纬度 ----------------" + amapLocation.getLatitude());//获取纬度
+                    Log.i(TAG, "经度-----------------" + amapLocation.getLongitude());//获取经度
+                    Log.i(TAG, "精度信息-------------" + amapLocation.getAccuracy());//获取精度信息
+                    Log.i(TAG, "地址-----------------" + amapLocation.getAddress());//地址，如果option中设置isNeedAddress为false，则没有此结果，网络定位结果中会有地址信息，GPS定位不返回地址信息。
+                    Log.i(TAG, "国家信息-------------" + amapLocation.getCountry());//国家信息
+                    Log.i(TAG, "省信息---------------" + amapLocation.getProvince());//省信息
+                    Log.i(TAG, "城市信息-------------" + amapLocation.getCity());//城市信息
+                    Log.i(TAG, "城区信息-------------" + amapLocation.getDistrict());//城区信息
+                    Log.i(TAG, "街道信息-------------" + amapLocation.getStreet());//街道信息
+                    Log.i(TAG, "街道门牌号信息-------" + amapLocation.getStreetNum());//街道门牌号信息
+                    Log.i(TAG, "城市编码-------------" + amapLocation.getCityCode());//城市编码
+                    Log.i(TAG, "地区编码-------------" + amapLocation.getAdCode());//地区编码
+                    Log.i(TAG, "当前定位点的信息-----" + amapLocation.getAoiName());//获取当前定位点的AOI信息
+                    ToastUtil.showToast("当前定位城市：" + amapLocation.getCity());
+                    //创建SharedPreferences储存数据
+                    mSP = getActivity().getSharedPreferences("configs", Context.MODE_PRIVATE);
+                    mSP.edit().putString("city",amapLocation.getCity()).commit();
+                    mCity = amapLocation.getCity();
+                    mFilmRessName.setText(amapLocation.getCity());
+                } else {
+                    //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
+                    Log.e("AmapError", "location Error, ErrCode:"
+                            + amapLocation.getErrorCode() + ", errInfo:"
+                            + amapLocation.getErrorInfo());
+                }
+            }
+        }
+    };
 
     @Override
     @OnClick({R.id.film_ress, R.id.film_rcf, R.id.film_vpi, R.id.film_seach_ima,
@@ -169,7 +252,11 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
             default:
                 break;
             case R.id.film_ress://点击定位图标跳到地址选择器
-                startActivityForResult(new Intent(getActivity(), CityPickerActivity.class), RequestCodeInfo.GETCITY);
+                startLocaion();
+                Intent intent = new Intent(getActivity(), CityPickerActivity.class);
+                intent.putExtra("citys", mCity);
+                startActivityForResult(intent, RequestCodeInfo.GETCITY);
+
                 break;
             case R.id.film_rmdy:
                 IntentUtils.getInstence().intent(getContext(), FilmDetailsActivity.class);
@@ -198,7 +285,6 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
                 break;
         }
     }
-
 
     public static int dp2px(Context context, float dipValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
@@ -254,7 +340,7 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
             if (filmBean.getStatus().equals("0000")) {
                 mListImg = new ArrayList<>();
                 final List<FilmBean.ResultBean> result = filmBean.getResult();
-                if (result.size()==0){
+                if (result.size() == 0) {
                     ToastUtil.showToast("无数据");
                 }
                 for (int i = 0; i < result.size(); i++) {
@@ -276,7 +362,7 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
             FilmCinemaxBean filmCinemaxBean = (FilmCinemaxBean) data;
             if (filmCinemaxBean.getStatus().equals("0000")) {
                 List<FilmCinemaxBean.ResultBean> result = filmCinemaxBean.getResult();
-                if (result.size()==0){
+                if (result.size() == 0) {
                     ToastUtil.showToast("无数据");
                 }
                 //创建热门电影适配器
@@ -288,7 +374,7 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
             FilmComingSoonBean filmComingSoonBean = (FilmComingSoonBean) data;
             if (filmComingSoonBean.getStatus().equals("0000")) {
                 List<FilmComingSoonBean.ResultBean> result = filmComingSoonBean.getResult();
-                if (result.size()==0){
+                if (result.size() == 0) {
                     ToastUtil.showToast("无数据");
                 }
                 //创建即将上映适配器
@@ -299,7 +385,7 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
             SeachBean seachBean = (SeachBean) data;
             if (seachBean.getStatus().equals("0000")) {
                 List<SeachBean.ResultBean> result = seachBean.getResult();
-                if (result.size()==0){
+                if (result.size() == 0) {
                     ToastUtil.showToast("无数据");
                 }
                 ToastUtil.showToast(seachBean.getMessage());
@@ -332,6 +418,23 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 200://刚才的识别码
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {//用户同意权限,执行我们的操作
+                    startLocaion();//开始定位
+                } else {//用户拒绝之后,当然我们也可以弹出一个窗口,直接跳转到系统设置页面
+                    Toast.makeText(getActivity(), "未开启定位权限,请手动到设置去开启权限", Toast.LENGTH_LONG).show();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+
     //地址选择器
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -356,6 +459,7 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
     }
 
     long exitTime = 0;
+
     //  点击返回键回退到首页的fragment
     private void getFourse() {
         getView().setFocusableInTouchMode(true);

@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -93,6 +94,8 @@ public class MovieFragment extends Fragment implements MyView {
     private int num;
     private FragmentManager manager;
     private CustomDialog mCustomDialog;
+    private SharedPreferences mConfig;
+    private String mString,mStrings;
 
     @Nullable
     @Override
@@ -115,6 +118,9 @@ public class MovieFragment extends Fragment implements MyView {
         mMyPresenter = new MyPresenter(this);
         //初始化fragment
         initFragmentDatas();
+        mConfig = getActivity().getSharedPreferences("configs", Context.MODE_PRIVATE);
+        mString = mConfig.getString("city", "");
+        mMovieRessName.setText(mString);
         return view;
     }
 
@@ -168,7 +174,9 @@ public class MovieFragment extends Fragment implements MyView {
             default:
                 break;
             case R.id.movie_ress://地址图标
-                startActivityForResult(new Intent(getActivity(), CityPickerActivity.class), RequestCodeInfo.GETCITY);
+                Intent intent = new Intent(getActivity(), CityPickerActivity.class);
+                intent.putExtra("citys", mString);
+                startActivityForResult(intent, RequestCodeInfo.GETCITY);
                 break;
             case R.id.movie_ress_name://地址名称
                 break;
@@ -293,7 +301,7 @@ public class MovieFragment extends Fragment implements MyView {
                     String city = data.getExtras().getString("city");
                     if (city != null) {
                         System.out.println("ccccccctttttt" + city);
-                        mMovieRessName.setText(city);
+                        mMovieRessName.setText(mString);
                     }
                     break;
             }

@@ -37,10 +37,14 @@ public class CityPickerActivity extends AppCompatActivity {
     private ArrayList<String> list;
     private ImageView pic_contact_back;
     private Intent intent;
+    private String mCitys;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_picker);
+        Intent mIntent = getIntent();
+        mCitys = mIntent.getStringExtra("citys");
         initview();
         initAdapter();
         onlisten();
@@ -139,10 +143,11 @@ public class CityPickerActivity extends AppCompatActivity {
                     finish();
                 }
             });
+            vh.item_header_city_dw.setText(mCitys);
             vh.item_header_city_dw.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    intent.putExtra("city", vh.item_header_city_dw.getText().toString());
+                public void onClick(View v) {//定位城市
+                    intent.putExtra("city", mCitys);
                     setResult(RESULT_OK, intent);
                     finish();
                 }
