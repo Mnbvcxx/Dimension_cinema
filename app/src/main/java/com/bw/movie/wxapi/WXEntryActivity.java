@@ -116,7 +116,7 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler,
                         .putString("userId", wXbean.getResult().getUserId() + "")
                         .putString("sessionId", wXbean.getResult().getSessionId())
                         .commit();
-                IntentUtils.getInstence().intent(WXEntryActivity.this, MainActivity.class);
+                //IntentUtils.getInstence().intent(WXEntryActivity.this, MainActivity.class);
                 finish();
             }
         }
