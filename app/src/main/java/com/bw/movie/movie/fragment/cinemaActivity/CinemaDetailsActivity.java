@@ -208,7 +208,7 @@ public class CinemaDetailsActivity extends BaseActivity {
                 mCinRcf.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {
                     @Override
                     public void onItemSelected(int position) {
-                        doGetData(Apis.MOVIEANDCINEMA_ID_URL + mCinemaId + "&movieId=" + position, MovieAndCinemaBean.class);
+                        doGetData(Apis.MOVIEANDCINEMA_ID_URL + mCinemaId + "&movieId=" + result.get(position).getId(), MovieAndCinemaBean.class);
                     }
                 });
               }
