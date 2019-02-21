@@ -11,6 +11,7 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,10 +21,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
+import com.alipay.sdk.app.PayTask;
 import com.bw.movie.R;
 import com.bw.movie.activity.fragment.myactivity.adapter.Record_Finsh_Adapter;
 import com.bw.movie.activity.fragment.myactivity.adapter.Record_Wait_Adapter;
+import com.bw.movie.activity.fragment.myactivity.bean.PayResult;
 import com.bw.movie.activity.fragment.myactivity.bean.RecordBean;
 import com.bw.movie.activity.fragment.myactivity.bean.RecordPayBean;
 import com.bw.movie.apis.Apis;
@@ -36,6 +40,7 @@ import com.bw.movie.wxapi.WXPayEntryActivity;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -199,11 +204,10 @@ public class RecordActivity extends BaseActivity {
             }
         } else if (object instanceof RecordPayBean) {//支付
             final RecordPayBean recordPayBean = (RecordPayBean) object;
-            ToastUtil.showToast("支付情况------" + recordPayBean);
             if (recordPayBean.getStatus().equals("0000")) {
                 Log.i(TAG, "支付宝信息---" + recordPayBean.getResult());
                 mPopupWindow.dismiss();
-                if (recordPayBean.getResult().length() > 0) {
+                if (recordPayBean.getResult()!=null) {
                     //支付宝支付
                     Runnable payRunnable = new Runnable() {
                         @Override

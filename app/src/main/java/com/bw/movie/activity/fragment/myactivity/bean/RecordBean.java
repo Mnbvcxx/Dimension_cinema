@@ -38,10 +38,10 @@ public class RecordBean {
     public static class ResultBean {
 
         private int amount;
-        private long beginTime;
+        private String beginTime;
         private String cinemaName;
         private long createTime;
-        private Long endTime;
+        private String endTime;
         private int id;
         private String movieName;
         private String orderId;
@@ -58,11 +58,11 @@ public class RecordBean {
             this.amount = amount;
         }
 
-        public Long getBeginTime() {
+        public String getBeginTime() {
             return beginTime;
         }
 
-        public void setBeginTime(Long beginTime) {
+        public void setBeginTime(String beginTime) {
             this.beginTime = beginTime;
         }
 
@@ -82,11 +82,11 @@ public class RecordBean {
             this.createTime = createTime;
         }
 
-        public Long getEndTime() {
+        public String getEndTime() {
             return endTime;
         }
 
-        public void setEndTime(Long endTime) {
+        public void setEndTime(String endTime) {
             this.endTime = endTime;
         }
 

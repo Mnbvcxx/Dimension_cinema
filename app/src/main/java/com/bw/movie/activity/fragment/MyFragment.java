@@ -172,6 +172,7 @@ public class MyFragment extends Fragment implements MyView {
                 //清空跳转到登录页
                 editor.clear();
                 editor.commit();
+
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 break;
