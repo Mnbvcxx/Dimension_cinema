@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +20,9 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 
+import com.alipay.sdk.app.PayTask;
 import com.bw.movie.R;
+import com.bw.movie.activity.activity.MainActivity;
 import com.bw.movie.activity.fragment.myactivity.adapter.Record_Finsh_Adapter;
 import com.bw.movie.activity.fragment.myactivity.adapter.Record_Wait_Adapter;
 import com.bw.movie.activity.fragment.myactivity.bean.RecordBean;
@@ -27,12 +30,14 @@ import com.bw.movie.activity.fragment.myactivity.bean.RecordPayBean;
 import com.bw.movie.apis.Apis;
 import com.bw.movie.base.BaseActivity;
 import com.bw.movie.movie.fragment.cinemaActivity.bean.MoveTicketBean;
+import com.bw.movie.utils.AlipayUntil;
 import com.bw.movie.utils.EncryptUtil;
 import com.bw.movie.utils.ToastUtil;
 import com.bw.movie.wxapi.WXPayEntryActivity;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -168,16 +173,21 @@ public class RecordActivity extends BaseActivity {
             ToastUtil.showToast("支付情况" + recordPayBean.getMessage());
             if (recordPayBean.getStatus().equals("0000")) {
                 mPopupWindow.dismiss();
-                //带值到微信支付页
-                Intent intent = new Intent(this, WXPayEntryActivity.class);
-                intent.putExtra("appId", recordPayBean.getAppId());
-                intent.putExtra("nonceStr", recordPayBean.getNonceStr());
-                intent.putExtra("partnerId", recordPayBean.getPartnerId());
-                intent.putExtra("prepayId", recordPayBean.getPrepayId());
-                intent.putExtra("sign", recordPayBean.getSign());
-                intent.putExtra("timeStamp", recordPayBean.getTimeStamp());
-                intent.putExtra("packageValue", recordPayBean.getPackageValue());
-                startActivity(intent);
+                //跳转到支付宝
+                if (recordPayBean.getResult().length()>0){
+                    AlipayUntil.Alipay(RecordActivity.this,recordPayBean.getResult());
+                }else {
+                    //带值到微信支付页
+                    Intent intent = new Intent(this, WXPayEntryActivity.class);
+                    intent.putExtra("appId", recordPayBean.getAppId());
+                    intent.putExtra("nonceStr", recordPayBean.getNonceStr());
+                    intent.putExtra("partnerId", recordPayBean.getPartnerId());
+                    intent.putExtra("prepayId", recordPayBean.getPrepayId());
+                    intent.putExtra("sign", recordPayBean.getSign());
+                    intent.putExtra("timeStamp", recordPayBean.getTimeStamp());
+                    intent.putExtra("packageValue", recordPayBean.getPackageValue());
+                    startActivity(intent);
+                }
             }
         }
     }

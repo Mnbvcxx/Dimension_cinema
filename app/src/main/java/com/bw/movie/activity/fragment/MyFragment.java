@@ -100,6 +100,8 @@ public class MyFragment extends Fragment implements MyView {
     private String mUserId;
     private String mSessionId;
     private Object mToKen;
+    private String mHeadPic;
+    private String mNickName;
 
     @Nullable
     @Override
@@ -354,12 +356,14 @@ public class MyFragment extends Fragment implements MyView {
     }
     @Subscribe(sticky = true)
     public void onLoginName(EventBusName eventBusName){
-        String nickName = eventBusName.getNickName();
-        String headPic = eventBusName.getHeadPic();
+        mNickName = eventBusName.getNickName();
+        mHeadPic = eventBusName.getHeadPic();
         mToKen = eventBusName.getToKen();
-        Uri parse = Uri.parse(headPic);
-        mMyIcon.setImageURI(parse);
-        mMyName.setText(nickName);
+        Uri parse = Uri.parse(mHeadPic);
+        if (mUserId!=null&&mSessionId!=null) {
+            mMyIcon.setImageURI(parse);
+            mMyName.setText(mNickName);
+        }
 
     }
 

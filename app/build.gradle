@@ -114,6 +114,7 @@ dependencies {
     implementation 'com.tencent.wup:wup:1.0.0.E-release'
     //mid包
     implementation 'com.tencent.mid:mid:4.0.6-release'
-
+    //依赖，name里的内容和导入libs下的包一样
+    implementation (name: 'alipaySdk-15.5.9-20181123210657-noUtdid', ext: 'aar')
 
 }

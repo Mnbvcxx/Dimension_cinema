@@ -86,6 +86,8 @@ public class LoginActivity extends BaseActivity {
     private Intent mIntent;
     private CustomDialog mCustomDialog;
     private String mDataToKen;
+    private String mNickName;
+    private String mHeadPic;
 
     //布局
     @Override
@@ -177,10 +179,10 @@ public class LoginActivity extends BaseActivity {
                //通过eventbus保存昵称和头像，用到我的信息中
                 EventBusName eventBusName=new EventBusName();
                 LoginBean.ResultBean.UserInfoBean userInfo = loginBean.getResult().getUserInfo();
-                String nickName = userInfo.getNickName();
-                String headPic = userInfo.getHeadPic();
-                eventBusName.setNickName(nickName);
-                eventBusName.setHeadPic(headPic);
+                mNickName = userInfo.getNickName();
+                mHeadPic = userInfo.getHeadPic();
+                eventBusName.setNickName(mNickName);
+                eventBusName.setHeadPic(mHeadPic);
                 eventBusName.setToKen(mDataToKen);
                 EventBus.getDefault().postSticky(eventBusName);
                 mSP.edit()
@@ -293,5 +295,10 @@ public class LoginActivity extends BaseActivity {
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mNickName=null;
+        mHeadPic=null;
+    }
 }

@@ -139,31 +139,23 @@ public class RegisterActivity extends BaseActivity {
             default:
                 break;
             case R.id.reg_button://注册按钮
-
-                for (int i = 0; i < mRegGroup.getChildCount(); i++) {
-                    RadioButton childAt = (RadioButton) mRegGroup.getChildAt(i);
-                    if (childAt.isChecked()) {
-                        mText = childAt.getText().toString();
-                        break;
-                    }
-                    mOnSex = SexUtils.onSex(mText);
-                }
                 if (!JudgeNetWorkUtils.hasNetwork(this)) {
                     ToastUtil.showToast("无可用网络，请检查网络是否连接");
                 } else {
                     mCustomDialog = new CustomDialog(this);
                     mCustomDialog.show();//显示,显示时页面不可点击,只能点击返回
-                    /**
-                     * 通过handler进行延时
-                     */
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            mCustomDialog.dismiss();
+
+                    for (int i = 0; i < mRegGroup.getChildCount(); i++) {
+                        RadioButton childAt = (RadioButton) mRegGroup.getChildAt(i);
+                        if (childAt.isChecked()) {
+                            mText = childAt.getText().toString();
+                            mOnSex = SexUtils.onSex(mText);
                         }
-                    }, 1500); //停留3秒钟
+                    }
+
                     initButton();
+
+
                 }
                 break;
         }
@@ -221,6 +213,7 @@ public class RegisterActivity extends BaseActivity {
             //注册
             RegisterBean registerBean = (RegisterBean) object;
             if (registerBean.getStatus().equals("0000")) {
+                        mCustomDialog.dismiss();
                 ToastUtil.showToast(registerBean.getMessage());
                 //当用户注册成功时不要跳转到登录页面,应该直接访问登录接口进入首页
                 Map<String, String> map = new HashMap<>();
@@ -229,14 +222,7 @@ public class RegisterActivity extends BaseActivity {
                 doPost(Apis.LOGIN_URL, map, LoginBean.class);
             } else {
                 ToastUtil.showToast(registerBean.getMessage());
-                mCustomDialog.show();
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mCustomDialog.dismiss();
-                    }
-                }, 1500);
+                mCustomDialog.dismiss();
             }
         } else if (object instanceof LoginBean) {
             LoginBean loginBean = (LoginBean) object;
