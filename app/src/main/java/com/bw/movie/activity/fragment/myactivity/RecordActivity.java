@@ -174,7 +174,7 @@ public class RecordActivity extends BaseActivity {
             if (recordPayBean.getStatus().equals("0000")) {
                 mPopupWindow.dismiss();
                 //跳转到支付宝
-                if (recordPayBean.getResult().length()>0){
+                if (recordPayBean.getResult()!=null){
                     AlipayUntil.Alipay(RecordActivity.this,recordPayBean.getResult());
                 }else {
                     //带值到微信支付页
