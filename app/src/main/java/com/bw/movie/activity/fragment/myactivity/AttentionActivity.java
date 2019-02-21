@@ -152,4 +152,5 @@ public class AttentionActivity extends BaseActivity {
     protected void netFailed(String s) {
         ToastUtil.showToast(s);
     }
+
 }
