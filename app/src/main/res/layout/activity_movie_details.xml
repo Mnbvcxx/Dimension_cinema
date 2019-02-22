@@ -56,6 +56,8 @@
             android:id="@+id/dy_details_img"
             android:layout_width="@dimen/dp_259"
             android:layout_height="@dimen/dp_360"
+            app:progressBarAutoRotateInterval="1000"
+            app:progressBarImage="@drawable/loading_"
             android:layout_below="@id/dy_details_name"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_30" />

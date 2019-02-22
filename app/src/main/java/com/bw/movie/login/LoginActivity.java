@@ -79,17 +79,14 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.login_zd_login)
     RelativeLayout mLoginZdLogin;
     private boolean showPassword;
-    private SharedPreferences mSP;
+    private SharedPreferences mSP,mUser;
     private SharedPreferences.Editor mEdit;
     private String mPhone;
     private String mPwd;
     private Intent mIntent;
     private CustomDialog mCustomDialog;
     private String mDataToKen;
-    private String mNickName;
-    private String mHeadPic;
-    private SharedPreferences mUser;
-    private SharedPreferences.Editor mMUserEdit;
+    private SharedPreferences.Editor mEditor;
 
     //布局
     @Override
@@ -108,13 +105,13 @@ public class LoginActivity extends BaseActivity {
         //创建SharedPreferences储存数据
         mSP = getSharedPreferences("config", MODE_PRIVATE);
         mUser = getSharedPreferences("user", MODE_PRIVATE);
-        mMUserEdit = mUser.edit();
-        boolean isCheck = mUser.getBoolean("isCheck", false);//是否记住密码
-        boolean isLogin = mUser.getBoolean("isLogin", false);//是否自动登录
+        boolean isCheck = mSP.getBoolean("isCheck", false);//是否记住密码
+        boolean isLogin = mSP.getBoolean("isLogin", false);//是否自动登录
         mEdit = mSP.edit();
+        mEditor = mUser.edit();
         if (isCheck) {
-            mLoginPhone.setText(mUser.getString("phone", mPhone));
-            mLoginPwd.setText(mUser.getString("pwd", mPwd));
+            mLoginPhone.setText(mSP.getString("phone", mPhone));
+            mLoginPwd.setText(mSP.getString("pwd", mPwd));
             mLoginCheckbox.setChecked(true);
             //判断自动登录多选状态
             if (isLogin) {
@@ -137,9 +134,9 @@ public class LoginActivity extends BaseActivity {
                 //判断是否自动登录
                 if (mLoginCheckboxLogin.isChecked()) {
                     mLoginCheckbox.setChecked(true);
-                    mMUserEdit.putBoolean("isLogin", true).commit();
+                    mEditor.putBoolean("isLogin", true).commit();
                 } else {
-                    mMUserEdit.putBoolean("isLogin", false).commit();
+                    mEditor.putBoolean("isLogin", false).commit();
                 }
             }
         });
@@ -153,13 +150,13 @@ public class LoginActivity extends BaseActivity {
             if (loginBean.getStatus().equals("0000")) {
                 //记住密码
                 if (mLoginCheckbox.isChecked()) {
-                    mMUserEdit.putBoolean("isCheck", true);
-                    mMUserEdit.putString("phone", mPhone);
-                    mMUserEdit.putString("pwd", mPwd);
-                    mMUserEdit.commit();
+                    mEditor.putBoolean("isCheck", true);
+                    mEditor.putString("phone", mPhone);
+                    mEditor.putString("pwd", mPwd);
+                    mEditor.commit();
                 } else {//清除记住密码
-                    mMUserEdit.clear();
-                    mMUserEdit.commit();
+                    mEditor.clear();
+                    mEditor.commit();
                 }
                 //信鸽推送获取本机token值
                 XGPushManager.registerPush(this, new XGIOperateCallback() {
@@ -183,10 +180,10 @@ public class LoginActivity extends BaseActivity {
                //通过eventbus保存昵称和头像，用到我的信息中
                 EventBusName eventBusName=new EventBusName();
                 LoginBean.ResultBean.UserInfoBean userInfo = loginBean.getResult().getUserInfo();
-                mNickName = userInfo.getNickName();
-                mHeadPic = userInfo.getHeadPic();
-                eventBusName.setNickName(mNickName);
-                eventBusName.setHeadPic(mHeadPic);
+                String nickName = userInfo.getNickName();
+                String headPic = userInfo.getHeadPic();
+                eventBusName.setNickName(nickName);
+                eventBusName.setHeadPic(headPic);
                 eventBusName.setToKen(mDataToKen);
                 EventBus.getDefault().postSticky(eventBusName);
                 mIntent = new Intent(LoginActivity.this, MainActivity.class);
@@ -301,10 +298,5 @@ public class LoginActivity extends BaseActivity {
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mNickName=null;
-        mHeadPic=null;
-    }
+
 }

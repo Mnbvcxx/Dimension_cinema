@@ -358,7 +358,6 @@ public class MyFragment extends Fragment implements MyView {
     public void onLoginIntent(MoveSeatUserID moveSeatUserID){
          mUserId = moveSeatUserID.getUserId()+"";
          mSessionId = moveSeatUserID.getSessionId();
-
          EventBus.getDefault().removeStickyEvent(moveSeatUserID);
     }
     @Subscribe(sticky = true)
@@ -378,9 +377,14 @@ public class MyFragment extends Fragment implements MyView {
         }else {
             mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
         }
-
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getFourse();
+    }
 
     long exitTime = 0;
     //  点击返回键回退到首页的fragment

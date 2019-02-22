@@ -12,8 +12,9 @@ android {
 
         ndk {
             //根据需要 自行选择添加的对应cpu类型的.so库。
-            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', "x86","x86_64"
             // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+
         }
 
         manifestPlaceholders = [
@@ -117,4 +118,6 @@ dependencies {
 
     //依赖，name里的内容和导入libs下的包一样,集成支付宝支付
     implementation(name: 'alipaySdk-15.5.9-20181123210657-noUtdid', ext: 'aar')
+    //定位功能
+    implementation 'com.amap.api:location:latest.integration'
 }

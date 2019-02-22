@@ -157,6 +157,14 @@
             android:name="XG_V2_ACCESS_KEY"
             android:value="A44FJ9N7N9EY" />
 
+        <!-- 高德定位 -->
+        <!--写在Application标签下,写我们自己的key-->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="1a410f59fcb07153d7d8c18ff2c1f307"></meta-data>
+
+        <service android:name="com.amap.api.location.APSService"></service>
+
     </application>
 
 </manifest>

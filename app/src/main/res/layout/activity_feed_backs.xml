@@ -55,6 +55,8 @@
         <com.facebook.drawee.view.SimpleDraweeView
             android:layout_width="@dimen/dp_70"
             android:layout_height="@dimen/dp_70"
+            fresco:progressBarAutoRotateInterval="1000"
+            fresco:progressBarImage="@drawable/loading_"
             fresco:placeholderImage="@mipmap/group_2"
             android:layout_marginTop="@dimen/dp_142"
             />
@@ -100,6 +102,8 @@
         android:id="@+id/feebak_requst"
         android:layout_width="@dimen/dp_60"
         android:layout_height="@dimen/dp_60"
+        fresco:progressBarAutoRotateInterval="1000"
+        fresco:progressBarImage="@drawable/loading_"
         fresco:placeholderImage="@mipmap/com_icon_default"
         android:layout_marginLeft="@dimen/dp_24"
         android:layout_alignParentBottom="true"

@@ -17,6 +17,8 @@
             android:layout_height="@dimen/dp_258"
             fresco:roundedCornerRadius="@dimen/dp_8"
             fresco:placeholderImage="@color/colorRed"
+            fresco:progressBarAutoRotateInterval="1000"
+            fresco:progressBarImage="@drawable/loading_"
             fresco:roundBottomLeft="true"
             fresco:roundBottomRight="true"
             fresco:roundTopLeft="true"

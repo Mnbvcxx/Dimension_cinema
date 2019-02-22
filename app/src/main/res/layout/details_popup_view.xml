@@ -103,6 +103,8 @@
             android:id="@+id/details_pp_img"
             android:layout_width="@dimen/dp_111"
             android:layout_height="@dimen/dp_149"
+            app:progressBarAutoRotateInterval="1000"
+            app:progressBarImage="@drawable/loading_"
             android:layout_marginLeft="@dimen/dp_24"
             android:layout_marginTop="@dimen/dp_60"
             app:backgroundImage="@mipmap/ydy_2" />

@@ -9,9 +9,11 @@
         android:layout_width="@dimen/dp_151"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_marginLeft="@dimen/dp_10"
-        android:layout_height="@dimen/dp_200"
+        android:layout_height="wrap_content"
         fresco:roundedCornerRadius="@dimen/dp_3"
         fresco:roundingBorderWidth="@dimen/dp_1"
+        fresco:progressBarAutoRotateInterval="1000"
+        fresco:progressBarImage="@drawable/loading_"
         fresco:roundingBorderColor="@color/colorA999"/>
 
 </RelativeLayout>

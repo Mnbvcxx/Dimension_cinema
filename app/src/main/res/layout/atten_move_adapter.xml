@@ -12,6 +12,8 @@
         android:layout_width="@dimen/dp_103"
         android:layout_height="@dimen/dp_128"
         android:layout_margin="@dimen/dp_10"
+        fresco:progressBarAutoRotateInterval="1000"
+        fresco:progressBarImage="@drawable/loading_"
         android:background="@drawable/movie_shape_bg_selecter"
         fresco:placeholderImage="@mipmap/ic_launcher" />
 
