@@ -358,12 +358,7 @@ public class MyFragment extends Fragment implements MyView {
     }
     @Subscribe(sticky = true)
     public void onLoginName(EventBusName eventBusName){
-        String nickName = eventBusName.getNickName();
-        String headPic = eventBusName.getHeadPic();
         mToKen = eventBusName.getToKen();
-        Uri parse = Uri.parse(headPic);
-        //mMyIcon.setImageURI(parse);
-        //mMyName.setText(nickName);
         EventBus.getDefault().removeStickyEvent(eventBusName);
     }
 
