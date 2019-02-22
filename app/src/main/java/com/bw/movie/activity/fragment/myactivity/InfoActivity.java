@@ -9,8 +9,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +39,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,6 +75,7 @@ public class InfoActivity extends BaseActivity {
     private String mInfoemail;
     private String mNewEmail;
     private Object mToKen;
+    private String mPath;
 
     @Override
     protected int getLayoutId() {
@@ -91,6 +95,8 @@ public class InfoActivity extends BaseActivity {
         doGetData(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
         //头像popup
         initsdv();
+        //从照相修改
+        initPhotograph();
         //从相册修改
         initModify();
         //用户
@@ -256,6 +262,24 @@ public class InfoActivity extends BaseActivity {
     }
 
     /**
+     * 照相
+     */
+    private void initPhotograph(){
+        mPhotograph.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPhoto(v);
+                msdvWindow.dismiss();
+                initPermission();
+            }
+        });
+
+    }
+
+
+
+
+    /**
      * 修改用户的弹窗
      */
     private EditText mUserNick, mUserSex, mUserEmail;
@@ -284,7 +308,17 @@ public class InfoActivity extends BaseActivity {
         });
     }
 
-
+    /**
+     * 照片
+     * @param v
+     */
+    private void openPhoto(View v) {
+        mPath = Environment.getExternalStorageDirectory()+"/image.png";
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //在Sdcard存入图片
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(mPath)));
+        startActivityForResult(intent, 300);
+    }
     /**
      * 打开相册
      *
@@ -328,9 +362,27 @@ public class InfoActivity extends BaseActivity {
             startActivityForResult(intent, 200);
 
         }
+        if(requestCode == 300 && resultCode == RESULT_OK ){
+            //调取裁剪功能  com.android.camera.action.CROP调取裁剪功能的动作
+            Intent intent = new Intent("com.android.camera.action.CROP");
+            //将图片设置给裁剪
+            intent.setDataAndType(Uri.fromFile(new File(mPath)), "image/*");
+            //设置是否支持裁剪
+            intent.putExtra("CROP", true);
+            //设置宽高比
+            intent.putExtra("aspectX", 1);
+            intent.putExtra("aspectY", 1);
+            //设置输出的大小
+            intent.putExtra("outputX", 250);
+            intent.putExtra("outputY", 250);
+            //将图片返回给data
+            intent.putExtra("return-data", true);
+            startActivityForResult(intent, 200);
 
+        }
         if (requestCode == 200 && resultCode == RESULT_OK) {
             Bitmap bitmap = data.getParcelableExtra("data");
+            Log.i("TAG","bitmap=="+bitmap);
             FileImageUntils.setBitmap(bitmap, filepath, 50);
             //TODO:网络请求
             HashMap<String, String> map = new HashMap<>();

@@ -88,6 +88,8 @@ public class LoginActivity extends BaseActivity {
     private String mDataToKen;
     private String mNickName;
     private String mHeadPic;
+    private SharedPreferences mUser;
+    private SharedPreferences.Editor mMUserEdit;
 
     //布局
     @Override
@@ -105,12 +107,14 @@ public class LoginActivity extends BaseActivity {
     protected void initData() {
         //创建SharedPreferences储存数据
         mSP = getSharedPreferences("config", MODE_PRIVATE);
-        boolean isCheck = mSP.getBoolean("isCheck", false);//是否记住密码
-        boolean isLogin = mSP.getBoolean("isLogin", false);//是否自动登录
+        mUser = getSharedPreferences("user", MODE_PRIVATE);
+        mMUserEdit = mUser.edit();
+        boolean isCheck = mUser.getBoolean("isCheck", false);//是否记住密码
+        boolean isLogin = mUser.getBoolean("isLogin", false);//是否自动登录
         mEdit = mSP.edit();
         if (isCheck) {
-            mLoginPhone.setText(mSP.getString("phone", mPhone));
-            mLoginPwd.setText(mSP.getString("pwd", mPwd));
+            mLoginPhone.setText(mUser.getString("phone", mPhone));
+            mLoginPwd.setText(mUser.getString("pwd", mPwd));
             mLoginCheckbox.setChecked(true);
             //判断自动登录多选状态
             if (isLogin) {
@@ -133,9 +137,9 @@ public class LoginActivity extends BaseActivity {
                 //判断是否自动登录
                 if (mLoginCheckboxLogin.isChecked()) {
                     mLoginCheckbox.setChecked(true);
-                    mEdit.putBoolean("isLogin", true).commit();
+                    mMUserEdit.putBoolean("isLogin", true).commit();
                 } else {
-                    mEdit.putBoolean("isLogin", false).commit();
+                    mMUserEdit.putBoolean("isLogin", false).commit();
                 }
             }
         });
@@ -149,13 +153,13 @@ public class LoginActivity extends BaseActivity {
             if (loginBean.getStatus().equals("0000")) {
                 //记住密码
                 if (mLoginCheckbox.isChecked()) {
-                    mEdit.putBoolean("isCheck", true);
-                    mEdit.putString("phone", mPhone);
-                    mEdit.putString("pwd", mPwd);
-                    mEdit.commit();
+                    mMUserEdit.putBoolean("isCheck", true);
+                    mMUserEdit.putString("phone", mPhone);
+                    mMUserEdit.putString("pwd", mPwd);
+                    mMUserEdit.commit();
                 } else {//清除记住密码
-                    mEdit.clear();
-                    mEdit.commit();
+                    mMUserEdit.clear();
+                    mMUserEdit.commit();
                 }
                 //信鸽推送获取本机token值
                 XGPushManager.registerPush(this, new XGIOperateCallback() {

@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -126,11 +127,15 @@ public class MyFragment extends Fragment implements MyView {
         //绑定ButterKnife
         unbinder = ButterKnife.bind(this, view);
         mMyPresenter = new MyPresenter(this);
-        sharedPreferences = getActivity().getSharedPreferences("config", MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences("user", MODE_PRIVATE);
         editor = sharedPreferences.edit();
         return view;
     }
-    //点击事件
+
+    /**
+     * 点击事件
+     * @param v
+     */
     @OnClick({R.id.my_message, R.id.my_icon, R.id.my_name, R.id.my_sign_in, R.id.my_info, R.id.my_attentions, R.id.my_rccord, R.id.my_feedbacks, R.id.my_version, R.id.my_logout})
     public void onClick(View v) {
         switch (v.getId()) {
@@ -169,8 +174,8 @@ public class MyFragment extends Fragment implements MyView {
                 break;
             case R.id.my_logout:
                 //清空跳转到登录页
-                //editor.clear();
-                //editor.commit();
+                editor.clear();
+                editor.commit();
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();
@@ -185,6 +190,7 @@ public class MyFragment extends Fragment implements MyView {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -198,8 +204,7 @@ public class MyFragment extends Fragment implements MyView {
                 String nickName = result.getNickName();
                 mMyIcon.setImageURI(parse);
                 mMyName.setText(nickName);
-                //根据用户ID查询用户信息
-                mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
+
             }
         } else if (data instanceof RegisterBean) {
             RegisterBean registerBean = (RegisterBean) data;
@@ -353,16 +358,14 @@ public class MyFragment extends Fragment implements MyView {
     public void onLoginIntent(MoveSeatUserID moveSeatUserID){
          mUserId = moveSeatUserID.getUserId()+"";
          mSessionId = moveSeatUserID.getSessionId();
+
+         EventBus.getDefault().removeStickyEvent(moveSeatUserID);
     }
     @Subscribe(sticky = true)
     public void onLoginName(EventBusName eventBusName){
-        String nickName = eventBusName.getNickName();
-        String headPic = eventBusName.getHeadPic();
+        //信鸽Token值
         mToKen = eventBusName.getToKen();
-        Uri parse = Uri.parse(headPic);
-        mMyIcon.setImageURI(parse);
-        mMyName.setText(nickName);
-
+        EventBus.getDefault().removeStickyEvent(eventBusName);
     }
 
     /**
@@ -371,14 +374,13 @@ public class MyFragment extends Fragment implements MyView {
     @Override
     public void onStart() {
         super.onStart();
-        mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
+        if ((mUserId==null|mUserId=="")&&(mSessionId==null|mSessionId=="")){
+        }else {
+            mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
+        }
+
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getFourse();
-    }
 
     long exitTime = 0;
     //  点击返回键回退到首页的fragment
