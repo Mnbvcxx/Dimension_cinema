@@ -10,6 +10,8 @@
         android:layout_height="@dimen/dp_40"
         fresco:placeholderImage="@mipmap/icon"
         fresco:roundAsCircle="true"
+        fresco:progressBarAutoRotateInterval="1000"
+        fresco:progressBarImage="@drawable/loading_"
         fresco:roundingBorderWidth="2dp"
         fresco:roundingBorderColor="@color/colorA999"/>
 

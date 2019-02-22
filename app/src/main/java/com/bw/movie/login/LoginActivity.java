@@ -79,13 +79,14 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.login_zd_login)
     RelativeLayout mLoginZdLogin;
     private boolean showPassword;
-    private SharedPreferences mSP;
+    private SharedPreferences mSP,mUser;
     private SharedPreferences.Editor mEdit;
     private String mPhone;
     private String mPwd;
     private Intent mIntent;
     private CustomDialog mCustomDialog;
     private String mDataToKen;
+    private SharedPreferences.Editor mEditor;
 
     //布局
     @Override
@@ -103,9 +104,11 @@ public class LoginActivity extends BaseActivity {
     protected void initData() {
         //创建SharedPreferences储存数据
         mSP = getSharedPreferences("config", MODE_PRIVATE);
+        mUser = getSharedPreferences("user", MODE_PRIVATE);
         boolean isCheck = mSP.getBoolean("isCheck", false);//是否记住密码
         boolean isLogin = mSP.getBoolean("isLogin", false);//是否自动登录
         mEdit = mSP.edit();
+        mEditor = mUser.edit();
         if (isCheck) {
             mLoginPhone.setText(mSP.getString("phone", mPhone));
             mLoginPwd.setText(mSP.getString("pwd", mPwd));
@@ -131,9 +134,9 @@ public class LoginActivity extends BaseActivity {
                 //判断是否自动登录
                 if (mLoginCheckboxLogin.isChecked()) {
                     mLoginCheckbox.setChecked(true);
-                    mEdit.putBoolean("isLogin", true).commit();
+                    mEditor.putBoolean("isLogin", true).commit();
                 } else {
-                    mEdit.putBoolean("isLogin", false).commit();
+                    mEditor.putBoolean("isLogin", false).commit();
                 }
             }
         });
@@ -147,13 +150,13 @@ public class LoginActivity extends BaseActivity {
             if (loginBean.getStatus().equals("0000")) {
                 //记住密码
                 if (mLoginCheckbox.isChecked()) {
-                    mEdit.putBoolean("isCheck", true);
-                    mEdit.putString("phone", mPhone);
-                    mEdit.putString("pwd", mPwd);
-                    mEdit.commit();
+                    mEditor.putBoolean("isCheck", true);
+                    mEditor.putString("phone", mPhone);
+                    mEditor.putString("pwd", mPwd);
+                    mEditor.commit();
                 } else {//清除记住密码
-                    mEdit.clear();
-                    mEdit.commit();
+                    mEditor.clear();
+                    mEditor.commit();
                 }
                 //信鸽推送获取本机token值
                 XGPushManager.registerPush(this, new XGIOperateCallback() {

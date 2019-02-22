@@ -109,7 +109,6 @@ public class MyFragment extends Fragment implements MyView {
         if (!EventBus.getDefault().isRegistered(this)){
             EventBus.getDefault().register(this);
         }
-
         mCustomDialog = new CustomDialog(getActivity());
         mCustomDialog.show();//显示,显示时页面不可点击,只能点击返回
 
@@ -126,7 +125,7 @@ public class MyFragment extends Fragment implements MyView {
         //绑定ButterKnife
         unbinder = ButterKnife.bind(this, view);
         mMyPresenter = new MyPresenter(this);
-        sharedPreferences = getActivity().getSharedPreferences("config", MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences("user", MODE_PRIVATE);
         editor = sharedPreferences.edit();
         return view;
     }
@@ -169,8 +168,10 @@ public class MyFragment extends Fragment implements MyView {
                 break;
             case R.id.my_logout:
                 //清空跳转到登录页
-                //editor.clear();
-                //editor.commit();
+                editor.clear();
+                editor.commit();
+                mMyIcon.setBackgroundResource(R.mipmap.icon);
+                mMyName.setText("昵称");
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();
@@ -199,7 +200,7 @@ public class MyFragment extends Fragment implements MyView {
                 mMyIcon.setImageURI(parse);
                 mMyName.setText(nickName);
                 //根据用户ID查询用户信息
-                mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
+                //mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
             }
         } else if (data instanceof RegisterBean) {
             RegisterBean registerBean = (RegisterBean) data;
@@ -353,6 +354,7 @@ public class MyFragment extends Fragment implements MyView {
     public void onLoginIntent(MoveSeatUserID moveSeatUserID){
          mUserId = moveSeatUserID.getUserId()+"";
          mSessionId = moveSeatUserID.getSessionId();
+         EventBus.getDefault().removeStickyEvent(moveSeatUserID);
     }
     @Subscribe(sticky = true)
     public void onLoginName(EventBusName eventBusName){
@@ -360,9 +362,9 @@ public class MyFragment extends Fragment implements MyView {
         String headPic = eventBusName.getHeadPic();
         mToKen = eventBusName.getToKen();
         Uri parse = Uri.parse(headPic);
-        mMyIcon.setImageURI(parse);
-        mMyName.setText(nickName);
-
+        //mMyIcon.setImageURI(parse);
+        //mMyName.setText(nickName);
+        EventBus.getDefault().removeStickyEvent(eventBusName);
     }
 
     /**
@@ -371,8 +373,12 @@ public class MyFragment extends Fragment implements MyView {
     @Override
     public void onStart() {
         super.onStart();
-        mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
+        if ((mUserId==null|mUserId=="")&&(mSessionId==null|mSessionId=="")){
+        }else {
+            mMyPresenter.onGetDatas(Apis.MESSAGE_USERINFO, MessageInfoBean.class);
+        }
     }
+
 
     @Override
     public void onResume() {

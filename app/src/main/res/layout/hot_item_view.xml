@@ -20,6 +20,8 @@
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/rm_img"
             android:layout_marginBottom="@dimen/dp_10"
+            app:progressBarAutoRotateInterval="1000"
+            app:progressBarImage="@drawable/loading_"
             android:layout_width="@dimen/dp_103"
             android:layout_height="@dimen/dp_129"
             android:layout_marginLeft="@dimen/dp_10"

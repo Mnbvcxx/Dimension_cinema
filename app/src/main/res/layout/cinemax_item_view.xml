@@ -16,6 +16,8 @@
             android:layout_height="@dimen/dp_164"
             app:roundedCornerRadius="@dimen/dp_8"
             app:roundBottomLeft="true"
+            app:progressBarAutoRotateInterval="1000"
+            app:progressBarImage="@drawable/loading_"
             app:roundBottomRight="true"
             app:roundTopLeft="true"
             app:roundTopRight="true"/>

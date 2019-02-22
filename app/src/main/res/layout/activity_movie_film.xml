@@ -54,6 +54,8 @@
             fresco:roundBottomRight="true"
             fresco:roundTopLeft="true"
             fresco:roundTopRight="true"
+            fresco:progressBarAutoRotateInterval="1000"
+            fresco:progressBarImage="@drawable/loading_"
             fresco:roundedCornerRadius="@dimen/dp_4"
             fresco:roundingBorderColor="@color/colorA999"
             fresco:roundingBorderWidth="@dimen/dp_2" />

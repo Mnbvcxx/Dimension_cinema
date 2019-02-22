@@ -7,6 +7,8 @@
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/comment_adapter_sdv"
         android:layout_width="@dimen/dp_40"
+        fresco:progressBarAutoRotateInterval="1000"
+        fresco:progressBarImage="@drawable/loading_"
         android:layout_height="@dimen/dp_40"
         fresco:placeholderImage="@mipmap/ic_launcher"
          />

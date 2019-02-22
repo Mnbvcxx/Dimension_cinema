@@ -19,6 +19,8 @@
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/cin_img"
+            app:progressBarAutoRotateInterval="1000"
+            app:progressBarImage="@drawable/loading_"
             android:layout_width="@dimen/dp_55"
             android:layout_height="@dimen/dp_55" />
 

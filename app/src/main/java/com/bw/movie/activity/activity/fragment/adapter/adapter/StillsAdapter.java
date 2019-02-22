@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 
 import com.bw.movie.R;
 import com.bw.movie.activity.activity.fragment.adapter.bean.DetailsMovieBean;
+import com.bw.movie.activity.activity.fragment.adapter.bean.PersonCard;
 import com.bw.movie.activity.activity.fragment.adapter.bean.StillsBean;
+import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
@@ -25,9 +27,9 @@ import java.util.List;
 public class StillsAdapter extends RecyclerView.Adapter<StillsAdapter.MyStillsViewHolder> {
 
     private Context mContext;
-    private List<String> mList = new ArrayList<>();
+    private List<PersonCard> mList = new ArrayList<>();
 
-    public StillsAdapter(Context context, List<String> list) {
+    public StillsAdapter(Context context, List<PersonCard> list) {
         mContext = context;
         mList = list;
     }
@@ -41,8 +43,10 @@ public class StillsAdapter extends RecyclerView.Adapter<StillsAdapter.MyStillsVi
 
     @Override
     public void onBindViewHolder(@NonNull MyStillsViewHolder myStillsViewHolder, int i) {
-        Uri parse = Uri.parse(mList.get(i));
-        myStillsViewHolder.mSimpleDraweeView.setImageURI(parse);
+        PersonCard personCard = mList.get(i);
+        Uri uri = Uri.parse(personCard.avatarUrl);
+        myStillsViewHolder.mSimpleDraweeView.setImageURI(uri);
+        myStillsViewHolder.mSimpleDraweeView.getLayoutParams().height = personCard.imgHeight; //从数据源中获取图片高度，动态设置到控件上
     }
 
     @Override
@@ -55,6 +59,7 @@ public class StillsAdapter extends RecyclerView.Adapter<StillsAdapter.MyStillsVi
         public MyStillsViewHolder(@NonNull View itemView) {
             super(itemView);
             mSimpleDraweeView = itemView.findViewById(R.id.stils_img);
+            mSimpleDraweeView.getHierarchy().setActualImageScaleType(ScalingUtils.ScaleType.FIT_XY);
         }
     }
 }

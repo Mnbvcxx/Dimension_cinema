@@ -26,6 +26,8 @@
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/my_icon"
+                fresco:progressBarAutoRotateInterval="1000"
+                fresco:progressBarImage="@drawable/loading_"
                 android:layout_width="@dimen/dp_72"
                 android:layout_height="@dimen/dp_72"
                 android:layout_centerHorizontal="true"

@@ -18,6 +18,8 @@
             app:roundedCornerRadius="@dimen/dp_3"
             android:layout_margin="@dimen/dp_10"
             app:roundingBorderWidth="@dimen/dp_1"
+            app:progressBarAutoRotateInterval="1000"
+            app:progressBarImage="@drawable/loading_"
             app:roundingBorderColor="@color/colorA999" />
 
         <TextView

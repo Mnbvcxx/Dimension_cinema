@@ -11,6 +11,8 @@
         android:layout_width="@dimen/dp_70"
         android:layout_height="@dimen/dp_70"
         android:layout_margin="@dimen/dp_10"
+        fresco:progressBarAutoRotateInterval="1000"
+        fresco:progressBarImage="@drawable/loading_"
         fresco:placeholderImage="@mipmap/ic_launcher" />
 
     <TextView
