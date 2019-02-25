@@ -470,6 +470,8 @@ public class FilmFragment extends Fragment implements MyView, View.OnClickListen
                 if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
 
                     if ((System.currentTimeMillis() - exitTime) > 1000) {
+                        mHomePagerLayout.setVisibility(View.VISIBLE);
+                        mHomePagerRv.setVisibility(View.GONE);
                         Toast.makeText(getActivity(), "再按一次退出", Toast.LENGTH_SHORT).show();
                         exitTime = System.currentTimeMillis();
                     } else {

@@ -262,14 +262,15 @@ public class InfoActivity extends BaseActivity {
     }
 
     /**
-     * 照相
+     * 打开相机
      */
     private void initPhotograph(){
         mPhotograph.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openPhoto(v);
                 msdvWindow.dismiss();
+                ToastUtil.showToast("敬请期待");
+                openPhoto(v);
                 initPermission();
             }
         });
@@ -309,7 +310,7 @@ public class InfoActivity extends BaseActivity {
     }
 
     /**
-     * 照片
+     * 打开相机
      * @param v
      */
     private void openPhoto(View v) {
@@ -363,22 +364,8 @@ public class InfoActivity extends BaseActivity {
 
         }
         if(requestCode == 300 && resultCode == RESULT_OK ){
-            //调取裁剪功能  com.android.camera.action.CROP调取裁剪功能的动作
-            Intent intent = new Intent("com.android.camera.action.CROP");
             //将图片设置给裁剪
-            intent.setDataAndType(Uri.fromFile(new File(mPath)), "image/*");
-            //设置是否支持裁剪
-            intent.putExtra("CROP", true);
-            //设置宽高比
-            intent.putExtra("aspectX", 1);
-            intent.putExtra("aspectY", 1);
-            //设置输出的大小
-            intent.putExtra("outputX", 250);
-            intent.putExtra("outputY", 250);
-            //将图片返回给data
-            intent.putExtra("return-data", true);
-            startActivityForResult(intent, 200);
-
+            crop(Uri.fromFile(new File(mPath)));
         }
         if (requestCode == 200 && resultCode == RESULT_OK) {
             Bitmap bitmap = data.getParcelableExtra("data");
@@ -389,6 +376,19 @@ public class InfoActivity extends BaseActivity {
             map.put("image", filepath);
             doPostImageData(Apis.MESSAGE_INFO_HEAD, map, InfoHeadBean.class);
         }
+    }
+
+    // 裁剪方法
+    private void crop(Uri data) {
+        Intent cIntent = new Intent("com.android.camera.action.CROP");
+        cIntent.setDataAndType(data, "file.png");
+        cIntent.putExtra("crop", true);
+        cIntent.putExtra("aspectX", 1);
+        cIntent.putExtra("aspectY", 1);
+        cIntent.putExtra("outputX", 249);
+        cIntent.putExtra("outputY", 249);
+        cIntent.putExtra("return-data", true);
+        startActivityForResult(cIntent, 200);
     }
 
     /**
